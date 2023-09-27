@@ -1,0 +1,15 @@
+.base-logo {
+  height: 40px;
+  width: 120px;
+  background-color: cyan;
+  display: block;
+}
+header {
+  padding: 0 110px;
+  width: 100%;
+  background-color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 75px;
+}

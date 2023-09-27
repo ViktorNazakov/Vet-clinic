@@ -1,0 +1,7 @@
+{
+  "name": "vet-app",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular-standalone"
+}
