@@ -1,7 +1,7 @@
 package com.uni.vetclinicapi.service;
 
-import com.uni.vetclinicapi.persistaence.entity.Role;
-import com.uni.vetclinicapi.persistaence.repository.RoleRepository;
+import com.uni.vetclinicapi.persistance.entity.Role;
+import com.uni.vetclinicapi.persistance.repository.RoleRepository;
 import com.uni.vetclinicapi.presentation.exceptions.RoleNotFoundException;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;

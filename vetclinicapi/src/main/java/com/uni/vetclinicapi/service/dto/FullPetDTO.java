@@ -1,6 +1,6 @@
 package com.uni.vetclinicapi.service.dto;
 
-import com.uni.vetclinicapi.persistaence.entity.User;
+import com.uni.vetclinicapi.persistance.entity.User;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -10,7 +10,6 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 
-import java.sql.Date;
 import java.util.UUID;
 
 /**

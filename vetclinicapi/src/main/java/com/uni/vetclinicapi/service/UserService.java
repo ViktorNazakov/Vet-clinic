@@ -1,10 +1,12 @@
 package com.uni.vetclinicapi.service;
 
-import com.uni.vetclinicapi.persistaence.entity.Pet;
-import com.uni.vetclinicapi.persistaence.entity.User;
-import com.uni.vetclinicapi.persistaence.repository.PetRepository;
-import com.uni.vetclinicapi.persistaence.repository.UserRepository;
-import com.uni.vetclinicapi.service.dto.PetDTO;
+import com.uni.vetclinicapi.persistance.entity.Pet;
+import com.uni.vetclinicapi.persistance.entity.User;
+import com.uni.vetclinicapi.persistance.repository.PetRepository;
+import com.uni.vetclinicapi.persistance.repository.UserRepository;
+import com.uni.vetclinicapi.presentation.exceptions.PetAlreadyExistsException;
+import com.uni.vetclinicapi.presentation.exceptions.PetNotFoundException;
+import com.uni.vetclinicapi.service.dto.FullPetDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -12,6 +14,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 /**
  * This service is used to load user by username from database.
@@ -36,25 +40,24 @@ public class UserService implements UserDetailsService {
     }
 
     /**
-     * Sets the current logged user to an existing car, which isn't owned by anybody.
+     * Sets the current logged user to an existing pet, which isn't owned by anybody.
      *
-     * @param carId - the id of the car.
-     * @return - FullCarDTO with all the information about the given car.
+     * @param petId - the id of the pet.
+     * @return - FullPetDTO with all the information about the given pet.
      */
-/*    public PetDTO addPetToProfile(Integer carId, PetDTO preServiceDescriptionDTO) {
-        Pet petToAddToProfile = petRepository.findById(carId).orElseThrow(() -> {
-            log.warn("Attempted to fetch car with id : {}, which doesn't exist.", carId);
-            throw new PetNotFoundException(String.format("Car with id : %s doesn't exist!", carId));
+    public FullPetDTO addPetToUser(UUID petId) {
+        Pet petToAddToUser = petRepository.findById(petId).orElseThrow(() -> {
+            log.warn("Attempted to fetch pet with id : {}, which doesn't exist.", petId);
+            throw new PetNotFoundException(String.format("Pet with id : %s doesn't exist!", petId));
         });
-        if (petToAddToProfile.getUser() != null) {
-            log.warn("Attempted to add to profile car with id : {}, which is already owned by another user.", carId);
-            throw new CarIsTakenException(String.format("Attempted to add to profile Car with id : %s, which is already owned by another user!", carId));
+        if (petToAddToUser.getUser() != null) {
+            log.warn("Attempted to add to profile pet with id : {}, which is already owned by another user.", petId);
+            throw new PetAlreadyExistsException(String.format("Attempted to add to profile Pet with id : %s, which is already owned by another user!", petId));
         }
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        petToAddToProfile.setPreServiceDescription(preServiceDescriptionDTO.getPreServiceDescription());
-        petToAddToProfile.setUser(user);
-        Pet updatedCar = carRepository.save(carToAddToProfile);
-        log.info("Successfully added and saved pre service description and owner (user) with id : {}, to car with id : {}.", user.getId(), carId);
-        return modelMapper.map(updatedCar, FullCarDTO.class);
-    }*/
+        petToAddToUser.setUser(user);
+        Pet updatedCar = petRepository.save(petToAddToUser);
+        log.info("Successfully added and saved owner (user) with id : {}, to pet with id : {}.", user.getId(), petId);
+        return modelMapper.map(updatedCar, FullPetDTO.class);
+    }
 }

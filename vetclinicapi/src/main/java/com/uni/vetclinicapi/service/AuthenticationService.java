@@ -1,8 +1,8 @@
 package com.uni.vetclinicapi.service;
 
-import com.uni.vetclinicapi.persistaence.entity.Role;
-import com.uni.vetclinicapi.persistaence.entity.User;
-import com.uni.vetclinicapi.persistaence.repository.UserRepository;
+import com.uni.vetclinicapi.persistance.entity.Role;
+import com.uni.vetclinicapi.persistance.entity.User;
+import com.uni.vetclinicapi.persistance.repository.UserRepository;
 import com.uni.vetclinicapi.presentation.exceptions.UsernameAlreadyExistsException;
 import com.uni.vetclinicapi.security.util.JwtUtils;
 import com.uni.vetclinicapi.service.dto.*;
