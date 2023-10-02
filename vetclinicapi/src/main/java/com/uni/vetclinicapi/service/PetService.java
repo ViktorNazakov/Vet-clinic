@@ -4,6 +4,7 @@ import com.uni.vetclinicapi.persistaence.entity.Pet;
 import com.uni.vetclinicapi.persistaence.entity.User;
 import com.uni.vetclinicapi.persistaence.repository.PetRepository;
 import com.uni.vetclinicapi.presentation.exceptions.PetAlreadyExistsException;
+import com.uni.vetclinicapi.presentation.exceptions.PetNotFoundException;
 import com.uni.vetclinicapi.service.dto.FullPetDTO;
 import com.uni.vetclinicapi.service.dto.PetDTO;
 import lombok.RequiredArgsConstructor;
@@ -16,6 +17,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.stream.Collectors;
 
 /**
@@ -107,7 +109,7 @@ public class PetService {
      * Checks if car with such id exists.
      * Checks if car is already out of service.
      *
-     * @param carId - the id of the car we want to put into service.
+     * @param  - the id of the car we want to put into service.
      * @return - FullCarDTO object, containing all the information for the Car Entity.
      */
 //    public FullCarDTO returnCarToOwner(Integer carId, PostServiceDescriptionDTO postServiceDescriptionDTO) {
@@ -138,5 +140,24 @@ public class PetService {
             log.info("{} number of Pets for user with id : {}, have been fetched from database.", fullPetDTOList.size(), user.getId());
         }
         return fullPetDTOList;
+    }
+
+    /**
+     * Deletes a pet from a user - Returns the deleted pet.
+     * Checks if pet with such id exists.
+     *
+     * @param petId - the id of the pet we want to delete from a user.
+     * @return - FullPetDTO object, containing all the information for the deleted Pet Entity.
+     */
+    public FullPetDTO deletePetFromUser(UUID petId) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Pet pet = petRepository.findById(petId).orElseThrow(() -> {
+            log.warn("Attempted to delete a Pet with id: {} for User with id: {}, which does not exist.", petId,user.getId());
+            throw new PetNotFoundException(String.format("Pet with id: %s and owner: %s does not exist!", petId,user.getUsername()));
+        });
+
+        petRepository.deleteById(pet.getId());
+        log.info("Pet with details : {}, was deleted!", pet);
+        return modelMapper.map(pet, FullPetDTO.class);
     }
 }

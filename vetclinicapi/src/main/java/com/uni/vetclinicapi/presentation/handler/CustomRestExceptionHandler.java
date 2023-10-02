@@ -2,6 +2,7 @@ package com.uni.vetclinicapi.presentation.handler;
 
 import com.uni.vetclinicapi.presentation.exceptions.EmailAlreadyExistsException;
 import com.uni.vetclinicapi.presentation.exceptions.PetAlreadyExistsException;
+import com.uni.vetclinicapi.presentation.exceptions.PetNotFoundException;
 import com.uni.vetclinicapi.presentation.exceptions.UsernameAlreadyExistsException;
 import com.uni.vetclinicapi.service.dto.ApiErrorResponseDTO;
 import lombok.extern.slf4j.Slf4j;
@@ -111,6 +112,19 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
         String exceptionMessage = e.getLocalizedMessage();
         log.warn(exceptionMessage);
         return new ResponseEntity<>(new ApiErrorResponseDTO(HttpStatus.CONFLICT, exceptionMessage, List.of(e.getMessage())), HttpStatus.CONFLICT);
+    }
+
+    /**
+     * Returns exception message with status code not found, when we try to delete a pet with id, which does not exist in database.
+     *
+     * @param e - the exception thrown.
+     * @return - response, containing the exception message and appropriate status code.
+     */
+    @ExceptionHandler(PetNotFoundException.class)
+    public ResponseEntity<ApiErrorResponseDTO> handlePetNotFound(PetNotFoundException e) {
+        String exceptionMessage = e.getLocalizedMessage();
+        log.warn(exceptionMessage);
+        return new ResponseEntity<>(new ApiErrorResponseDTO(HttpStatus.NOT_FOUND, exceptionMessage, List.of(e.getMessage())), HttpStatus.NOT_FOUND);
     }
 
     /**
