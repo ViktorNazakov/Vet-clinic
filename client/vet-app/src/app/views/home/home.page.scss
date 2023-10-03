@@ -63,13 +63,14 @@ header {
     &::after {
       content: "";
       background-color: black;
-      width: 95%;
+      width: 110%;
       position: absolute;
       border-radius: 50%;
-      height: 95%;
+      height: 110%;
       transition: 0.5s;
     }
-    &:hover {
+    &:hover,
+    &.active {
       &::after {
         transform: scale(0.3);
         background-color: gray;
@@ -95,5 +96,14 @@ header {
     .slider-nav {
       opacity: 1;
     }
+  }
+}
+.btn-auth {
+  transition: 0.5s;
+  padding: 10px;
+  background-color: transparent;
+  border-radius: 50%;
+  &:hover {
+    background-color: yellow;
   }
 }

@@ -10,12 +10,13 @@
         class="p-button-rounded"
         >088482482</p-button
       >
-      <p-button
-        href="tel:123412351235"
-        icon="pi pi-user"
-        class="p-button-rounded"
-        styleClass="bg-transparent dark"
-      ></p-button>
+      <a
+        pButton
+        [routerLink]="['/login']"
+        icon="pi pi-user text-xl"
+        class="p-button-rounded btn-auth"
+        styleClass="bg-transparent dark text-dark"
+      ></a>
     </div>
   </header>
 </ion-header>
@@ -23,67 +24,51 @@
   <section
     class="container-fluid slider-container relative keen-slider h-full bg-primary"
   >
-    <div class="keen-slider__slide">
+    <div
+      [ngStyle]="{opacity: opacities[i]}"
+      *ngFor="let slide of slides; index as i"
+      class="keen-slider__slide"
+    >
       <div class="container flex h-full justify-content-between">
         <div
           class="h-full flex flex-column align-items-start justify-content-center"
         >
-          <h2 class="slider-subtitle">Professional</h2>
-          <h2 class="slider-title">Services</h2>
-          <p class="slider-description">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Assumenda
-            omnis eius consequuntur molestiae quas.
-          </p>
+          <h2 class="slider-subtitle">{{slide.title}}</h2>
+          <h2 class="slider-title">{{slide.subtitle}}</h2>
+          <p class="slider-description">{{slide.summary}}</p>
         </div>
         <div
           class="h-full align-items-center slider-img overflow-visible flex justify-content-cetner align-items-center"
         >
           <img
             class="absolute right-0 top-0 my-auto"
-            src="assets/images/slider_img_1.png"
+            src="{{slide.img}}"
             alt=""
           />
         </div>
       </div>
     </div>
-    <div class="keen-slider__slide">
-      <div class="container flex h-full justify-content-between">
-        <div
-          class="h-full flex flex-column align-items-start justify-content-center"
-        >
-          <h2 class="slider-subtitle">Professional</h2>
-          <h2 class="slider-title">Services</h2>
-          <p class="slider-description">
-            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Assumenda
-            omnis eius consequuntur molestiae quas.
-          </p>
-        </div>
-        <div
-          class="h-full align-items-center slider-img overflow-visible flex justify-content-cetner align-items-center"
-        >
-          <img
-            class="absolute right-0 top-0 my-auto"
-            src="assets/images/slider-img_1.webp"
-            alt=""
-          />
-        </div>
-      </div>
-    </div>
+
     <div class="slider-nav">
       <div class="absolute top-0 h-full left-0 flex px-2 align-items-center">
-        <button class="slider-nav">
+        <button class="slider-nav" (click)="slider?.prev()">
           <i class="pi pi-arrow-left text-dark text-xl"></i>
         </button>
       </div>
       <div class="absolute top-0 h-full right-0 flex px-2 align-items-center">
-        <button class="slider-nav">
+        <button class="slider-nav" (click)="slider?.next()">
           <i class="pi pi-arrow-right text-dark text-xl"></i>
         </button>
       </div>
       <div
         class="absolute bottom-0 left-0 py-3 w-full flex justify-content-center align-items-center gap-2"
       >
-        <button class="indicator"></button>
+        <button
+          *ngFor="let slide of slides; index as i"
+          class="indicator"
+          [ngClass]="{active: activeSlide === i}"
+          (click)="slider?.moveToIdx(i)"
+        ></button>
       </div>
     </div>
   </section>

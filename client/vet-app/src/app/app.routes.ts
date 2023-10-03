@@ -1,23 +1,21 @@
 import { Routes } from '@angular/router';
+import { LoginComponent } from './views/auth/login/login.component';
+import { HomePage } from './views/home/home.page';
 
 export const routes: Routes = [
   {
     path: 'home',
-    loadComponent: () =>
-      import('./views/home/home.page').then((m) => m.HomePage),
+    loadComponent: () => HomePage,
   },
   {
     path: '',
     redirectTo: 'home',
     pathMatch: 'full',
   },
-  {
-    path: '**',
-    redirectTo: 'home',
-  },
+
   {
     path: 'login',
-    redirectTo: 'home',
+    loadComponent: () => LoginComponent,
   },
   {
     path: 'register',
