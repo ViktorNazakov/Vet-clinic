@@ -90,3 +90,30 @@ RETURNS - DTO with id, name, specie, breed and owner(user) of the deleted pet
 
 Example request: http://localhost:8080/api/v1/users/pets&petId=***
 
+
+
+--------------------------------------------------------------------------
+(NEED TO PASS JWT)
+Visits endpoints:
+
+http://localhost:8080/api/v1/visits{POST}
+
+DESCRIPTION - Creates a Visit with User(Owner), Pet of the User(Owner) and Vet
+
+REQUIRES - Pass date, time, description, Pet and Vet
+
+RETURNS - DTO with id, date, time, description, Pet, Vet and User
+
+Example request:
+
+{
+    "date": "2024-10-05",
+    "time": "12:08:17",
+    "description" : "Random description",
+    "pet" : {
+        "id" : "57cf7587-2e68-4713-8eb0-750aa501941e"
+    },
+    "vet" : {
+        "id" : "266cd58b-263c-4bed-823a-f1065e3c3b4a"
+    }
+}
