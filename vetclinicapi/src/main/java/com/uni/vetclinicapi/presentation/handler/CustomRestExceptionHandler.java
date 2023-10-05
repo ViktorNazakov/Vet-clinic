@@ -1,9 +1,6 @@
 package com.uni.vetclinicapi.presentation.handler;
 
-import com.uni.vetclinicapi.presentation.exceptions.EmailAlreadyExistsException;
-import com.uni.vetclinicapi.presentation.exceptions.PetAlreadyExistsException;
-import com.uni.vetclinicapi.presentation.exceptions.PetNotFoundException;
-import com.uni.vetclinicapi.presentation.exceptions.UsernameAlreadyExistsException;
+import com.uni.vetclinicapi.presentation.exceptions.*;
 import com.uni.vetclinicapi.service.dto.ApiErrorResponseDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -125,6 +122,32 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
         String exceptionMessage = e.getLocalizedMessage();
         log.warn(exceptionMessage);
         return new ResponseEntity<>(new ApiErrorResponseDTO(HttpStatus.NOT_FOUND, exceptionMessage, List.of(e.getMessage())), HttpStatus.NOT_FOUND);
+    }
+
+    /**
+     * Returns exception message with status code not found, when we try to get a vet with id, which does not exist in database.
+     *
+     * @param e - the exception thrown.
+     * @return - response, containing the exception message and appropriate status code.
+     */
+    @ExceptionHandler(VetNotFoundException.class)
+    public ResponseEntity<ApiErrorResponseDTO> handleVetNotFound(VetNotFoundException e) {
+        String exceptionMessage = e.getLocalizedMessage();
+        log.warn(exceptionMessage);
+        return new ResponseEntity<>(new ApiErrorResponseDTO(HttpStatus.NOT_FOUND, exceptionMessage, List.of(e.getMessage())), HttpStatus.NOT_FOUND);
+    }
+
+    /**
+     * Returns exception message with status code bad request, when we try to create a visit with date and hour, which already exists in database or is before the time of creating.
+     *
+     * @param e - the exception thrown.
+     * @return - response, containing the exception message and appropriate status code.
+     */
+    @ExceptionHandler(InvalidVisitDateException.class)
+    public ResponseEntity<ApiErrorResponseDTO> handleInvalidVisitDate(InvalidVisitDateException e) {
+        String exceptionMessage = e.getLocalizedMessage();
+        log.warn(exceptionMessage);
+        return new ResponseEntity<>(new ApiErrorResponseDTO(HttpStatus.BAD_REQUEST, exceptionMessage, List.of(e.getMessage())), HttpStatus.BAD_REQUEST);
     }
 
     /**

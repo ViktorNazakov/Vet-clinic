@@ -22,7 +22,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Processes requests regarding "/pet" endpoint coming to the api, and returns responses based on them.
+ * Processes requests regarding "/pets" endpoint coming to the api, and returns responses based on them.
  */
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/pets")
