@@ -1,76 +1,24 @@
-<ion-header class="px-base">
-  <header class="flex w-100 justify-content-between">
-    <a class="base-logo" routerLink="home">
-      <div>Test 123</div>
-    </a>
-    <div class="flex flex-row gap-4 align-items-center">
-      <p-button
-        href="tel:123412351235"
-        styleClass="btn-cta"
-        class="p-button-rounded"
-        >088482482</p-button
-      >
-      <a
-        pButton
-        [routerLink]="['/login']"
-        icon="pi pi-user text-xl"
-        class="p-button-rounded btn-auth"
-        styleClass="bg-transparent dark text-dark"
-      ></a>
-    </div>
-  </header>
-</ion-header>
-<ion-content>
-  <section
-    class="container-fluid slider-container relative keen-slider h-full bg-primary"
-  >
-    <div
-      [ngStyle]="{opacity: opacities[i]}"
-      *ngFor="let slide of slides; index as i"
-      class="keen-slider__slide"
-    >
-      <div class="container flex h-full justify-content-between">
-        <div
-          class="h-full flex flex-column align-items-start justify-content-center"
-        >
-          <h2 class="slider-subtitle">{{slide.title}}</h2>
-          <h2 class="slider-title">{{slide.subtitle}}</h2>
-          <p class="slider-description">{{slide.summary}}</p>
+<ion-content [scrollEvents]="true" (ionScroll)="showPos($event)">
+  <div class="slider-container keen-slider">
+    <div class="slider-mask"></div>
+    <div *ngFor="let slide of slides; index as i" class="keen-slider__slide">
+      <div class="slide-content" [ngClass]="{active : activeSlide === i}">
+        <div class="side-overlay">
+          <div class="text-box">
+            <p class="title">{{slide.title}}</p>
+            <p class="subtitle">{{slide.subtitle}}</p>
+            <p>
+              <a class="btn-cta" href="{{slide.redirect?.link}}"
+                >{{slide.redirect?.text}}</a
+              >
+            </p>
+          </div>
         </div>
-        <div
-          class="h-full align-items-center slider-img overflow-visible flex justify-content-cetner align-items-center"
-        >
-          <img
-            class="absolute right-0 top-0 my-auto"
-            src="{{slide.img}}"
-            alt=""
-          />
+        <div class="bg-image">
+          <img src="{{slide.img}}" alt="" />
         </div>
       </div>
     </div>
-
-    <div class="slider-nav">
-      <div class="absolute top-0 h-full left-0 flex px-2 align-items-center">
-        <button class="slider-nav" (click)="slider?.prev()">
-          <i class="pi pi-arrow-left text-dark text-xl"></i>
-        </button>
-      </div>
-      <div class="absolute top-0 h-full right-0 flex px-2 align-items-center">
-        <button class="slider-nav" (click)="slider?.next()">
-          <i class="pi pi-arrow-right text-dark text-xl"></i>
-        </button>
-      </div>
-      <div
-        class="absolute bottom-0 left-0 py-3 w-full flex justify-content-center align-items-center gap-2"
-      >
-        <button
-          *ngFor="let slide of slides; index as i"
-          class="indicator"
-          [ngClass]="{active: activeSlide === i}"
-          (click)="slider?.moveToIdx(i)"
-        ></button>
-      </div>
-    </div>
-  </section>
-  <section>13r13r</section>
+  </div>
+  123512345
 </ion-content>

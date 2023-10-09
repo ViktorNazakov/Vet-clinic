@@ -1,1 +1,23 @@
-<p>Test</p>
+<ion-header class="px-base">
+  <header class="flex w-100 justify-content-between">
+    <a class="base-logo" routerLink="home">
+      <div>Test 123</div>
+    </a>
+    <div class="flex flex-row gap-4 align-items-center">
+      <p-button
+        href="tel:123412351235"
+        styleClass="btn-cta"
+        class="p-button-rounded"
+        >088482482</p-button
+      >
+      <a
+        pButton
+        [routerLink]="['/login']"
+        icon="pi pi-user text-xl"
+        class="p-button-rounded btn-auth"
+        styleClass="bg-transparent dark text-dark"
+      ></a>
+    </div>
+  </header>
+</ion-header>
+<ion-content> </ion-content>

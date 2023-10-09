@@ -13,58 +13,66 @@ import { CommonModule } from '@angular/common';
 })
 export class HomePage {
   activeSlide = 0;
-  opacities: any[] = [];
+  ratios: any[] = [];
+  contentOpacity = 0;
   slides: {
     title: string;
     subtitle: string;
-    summary: string;
+    redirect: {
+      text: string;
+      link: string;
+    };
     img: string;
   }[] = [
     {
       title: 'Professional',
-      img: 'assets/images/slider_img_1.png',
-      subtitle: 'Services',
-      summary: `Lorem, ipsum dolor sit amet consectetur adipisicing elit. Assumenda
-      omnis eius consequuntur molestiae quas.`,
+      img: 'assets/images/slider-1.jpg',
+      subtitle: 'Certified veterinarians with diplomas',
+      redirect: {
+        link: 'home',
+        text: 'Home',
+      },
     },
     {
       title: 'Caring',
-      img: 'assets/images/slider_img_1.png',
+      img: 'assets/images/slider-2.jpg',
       subtitle: 'Staff',
-      summary: `Lorem, ipsum dolor sit amet consectetur adipisicing elit. Assumenda
-      omnis eius consequuntur molestiae quas.`,
+      redirect: {
+        link: 'home',
+        text: 'Home',
+      },
     },
     {
       title: 'Caring',
-      img: 'assets/images/slider_img_1.png',
+      img: 'assets/images/slider-3.jpg',
       subtitle: 'Staff',
-      summary: `Lorem, ipsum dolor sit amet consectetur adipisicing elit. Assumenda
-      omnis eius consequuntur molestiae quas.`,
+      redirect: {
+        link: 'home',
+        text: 'Home',
+      },
     },
   ];
   slider: KeenSliderInstance | undefined;
   ionViewWillEnter() {
-    this.opacities = [];
+    this.contentOpacity = 1;
+    this.ratios = [];
     this.slider = new KeenSlider('.slider-container', {
-      drag: false,
-      loop: true,
       slides: this.slides.length,
-      defaultAnimation: {
-        duration: 0,
-      },
       created: (inst) => {
         this.activeSlide = 0;
       },
       slideChanged: (inst) => {
         this.activeSlide = inst.track.details.rel;
-        this.opacities = inst.track.details.slides.map(
-          (slide) => slide.portion
-        );
+        this.ratios = inst.track.details.slides.map((slide) => slide.portion);
       },
     });
   }
   ionViewWillLeave() {
+    this.contentOpacity = 0;
     this.slider?.destroy();
+  }
+  showPos(ev: any) {
+    console.log(ev);
   }
   constructor() {}
 }
