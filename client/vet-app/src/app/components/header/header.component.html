@@ -1,19 +1,25 @@
 <header class="bg-tetiary">
   <nav class="w-full">
     <ul class="flex justify-content-center">
-      <li class="menu-item"><a href="">Home</a></li>
-      <li class="menu-item"><a href="">About</a></li>
-      <li class="menu-item"><a href="">Blog</a></li>
+      <li class="menu-item">
+        <a routerLinkActive="active" routerLink="/home">Home</a>
+      </li>
+      <li class="menu-item"><a routerLinkActive="active" href="">About</a></li>
+      <li class="menu-item"><a routerLinkActive="active" href="">Blog</a></li>
       <li class="logo">
-        <a href="#">
+        <a routerLink="/home">
           <img src="assets/icon/pet-logo.svg" alt="" />
         </a>
       </li>
-      <li class="menu-item"><a href="">Contact</a></li>
       <li class="menu-item">
-        <a href="">Reservation</a>
+        <a routerLinkActive="active" href="">Contact</a>
       </li>
-      <li class="menu-item"><a href="">Login</a></li>
+      <li class="menu-item">
+        <a routerLinkActive="active" href="">Reservation</a>
+      </li>
+      <li class="menu-item">
+        <a routerLinkActive="active" routerLink="/login">Login</a>
+      </li>
     </ul>
   </nav>
 </header>

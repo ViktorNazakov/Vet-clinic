@@ -10,8 +10,14 @@
  */
 
 /* Core CSS required for Ionic components to work properly */
-@import url("https://fonts.googleapis.com/css2?family=Baloo+Thambi+2:wght@400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Baloo+Thambi+2:wght@400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap");
 @import "@ionic/angular/css/core.css";
+
+/* PrimeNG Styles*/
+@import "primeng/resources/themes/lara-light-blue/theme.css";
+@import "primeng/resources/primeng.css";
+@import url("../node_modules/primeflex/primeflex.css");
+@import url("../node_modules/primeicons/primeicons.css");
 
 /* Basic CSS for apps built with Ionic */
 @import "@ionic/angular/css/normalize.css";
@@ -26,8 +32,6 @@
 @import "@ionic/angular/css/text-transformation.css";
 @import "@ionic/angular/css/flex-utils.css";
 
-@import url("../node_modules/primeflex/primeflex.css");
-@import url("../node_modules/primeicons/primeicons.css");
 @import url("../node_modules/keen-slider/keen-slider.css");
 :root {
   --base-padding: 175px;
@@ -62,22 +66,23 @@ section {
   background-color: var(--tetiary-color);
 }
 .btn-cta {
-  font-family: "Baloo Thambi", Sans-serif;
   font-size: 15px;
-  font-weight: 400;
+  font-weight: 700;
+  text-transform: uppercase;
   color: #ffffff;
   background-color: var(--primary-color);
   border-radius: 50px;
-  padding: 0 10px;
+  padding: 0 30px;
   min-height: 56px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: inset 1px 1px 1px black;
-  aspect-ratio: 4/3;
+  box-shadow: inset 9px 0px 0px 0px #f19f1f !important;
   transition: 0.5s;
   &:hover {
     border-width: 0;
+    box-shadow: none !important;
+    background-color: var(--secondary-color);
   }
 }
 .p-button {
@@ -98,4 +103,48 @@ nav {
 }
 .text-dark {
   color: #333333 !important;
+}
+.heading {
+  color: var(--secondary-color);
+  font-size: 60px;
+  font-weight: 700;
+  text-align: center;
+  text-transform: uppercase;
+  display: block;
+  position: relative;
+  width: fit-content;
+  margin: 0 auto;
+  padding: 30px 120px;
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 120px;
+    background-color: rgba(255, 166, 0, 0.336);
+    height: 3px;
+  }
+  &::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 120px;
+    background-color: rgba(255, 166, 0, 0.336);
+    height: 3px;
+  }
+}
+.base-text {
+  font-size: 17px;
+  line-height: 140%;
+  color: #7a7a7a;
+  font-family: "Roboto" !important;
+}
+h1 {
+  font-family: "Baloo Thambi 2";
+  font-weight: 600;
+  letter-spacing: 0px;
+  text-transform: none;
+  font-size: 75px;
+  color: #000000;
 }

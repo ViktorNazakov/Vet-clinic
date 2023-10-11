@@ -1,24 +1,43 @@
-<ion-content [scrollEvents]="true" (ionScroll)="showPos($event)">
-  <div class="slider-container keen-slider">
-    <div class="slider-mask"></div>
-    <div *ngFor="let slide of slides; index as i" class="keen-slider__slide">
-      <div class="slide-content" [ngClass]="{active : activeSlide === i}">
-        <div class="side-overlay">
-          <div class="text-box">
-            <p class="title">{{slide.title}}</p>
-            <p class="subtitle">{{slide.subtitle}}</p>
-            <p>
-              <a class="btn-cta" href="{{slide.redirect?.link}}"
-                >{{slide.redirect?.text}}</a
-              >
-            </p>
+<ion-content [scrollEvents]="true">
+  <section class="p-0">
+    <div class="slider-container keen-slider">
+      <div class="slider-mask"></div>
+      <div *ngFor="let slide of slides; index as i" class="keen-slider__slide">
+        <div class="slide-content" [ngClass]="{active : activeSlide === i}">
+          <div class="side-overlay">
+            <div class="text-box">
+              <p class="title">{{slide.title}}</p>
+              <p class="subtitle">{{slide.subtitle}}</p>
+              <p>
+                <a class="btn-cta" href="{{slide.redirect?.link}}"
+                  >{{slide.redirect?.text}}</a
+                >
+              </p>
+            </div>
+          </div>
+          <div class="bg-image">
+            <img src="{{slide.img}}" alt="" />
           </div>
         </div>
-        <div class="bg-image">
-          <img src="{{slide.img}}" alt="" />
-        </div>
+      </div>
+      <div class="indicators">
+        <button
+          [ngClass]="{active: activeSlide === i}"
+          (click)="slider?.moveToIdx(i)"
+          *ngFor="let slide of slides; index as i"
+        ></button>
       </div>
     </div>
-  </div>
-  123512345
+  </section>
+  <section>
+    <div class="container">
+      <div class="heading">Our Services</div>
+      <p class="base-text text-center">
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptate vero
+        ipsam blanditiis quas consequatur quaerat quam. In suscipit ipsam magni
+        eaque necessitatibus quidem soluta quis nostrum sint reiciendis fugiat
+        minus, et mollitia a aliquid ullam voluptatum accusamus enim ipsum at!
+      </p>
+    </div>
+  </section>
 </ion-content>

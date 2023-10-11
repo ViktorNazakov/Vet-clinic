@@ -10,11 +10,12 @@ header {
     display: flex;
     width: 100%;
     justify-content: space-between;
-    align-items: center;
+    align-items: stretch;
     height: 100%;
     padding: 0;
     list-style: none !important;
     .menu-item > a {
+      display: block;
       padding: 18px 25px;
       text-decoration: none;
       color: white;

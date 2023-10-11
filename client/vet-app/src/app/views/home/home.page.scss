@@ -51,7 +51,7 @@
 }
 .slider-container {
   position: relative;
-  max-height: 100%;
+  max-height: 900px;
 }
 .slider-mask {
   width: 110%;
@@ -61,4 +61,43 @@
   position: absolute;
   border-radius: 25% 80% 0 0;
   background-color: white;
+}
+.indicators {
+  bottom: 22%;
+  position: absolute;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  gap: 10px;
+
+  button {
+    transition: 0.5s;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: transparent;
+    border: 2px solid lightgray;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &::before {
+      content: "";
+      background-color: lightgray;
+      width: 140%;
+      height: 140%;
+      position: absolute;
+      transform: scale(0);
+      transition: 0.5s;
+      border-radius: 50%;
+    }
+    &:hover {
+      background-color: lightgray;
+    }
+    &.active::before {
+      transform: scale(1);
+    }
+  }
 }

@@ -1,23 +1,36 @@
-<ion-header class="px-base">
-  <header class="flex w-100 justify-content-between">
-    <a class="base-logo" routerLink="home">
-      <div>Test 123</div>
-    </a>
-    <div class="flex flex-row gap-4 align-items-center">
-      <p-button
-        href="tel:123412351235"
-        styleClass="btn-cta"
-        class="p-button-rounded"
-        >088482482</p-button
-      >
-      <a
-        pButton
-        [routerLink]="['/login']"
-        icon="pi pi-user text-xl"
-        class="p-button-rounded btn-auth"
-        styleClass="bg-transparent dark text-dark"
-      ></a>
+<ion-content>
+  <app-page-title title="Login"> </app-page-title>
+  <form
+    [formGroup]="loginForm"
+    (submit)="$event.preventDefault(); attemptLogin()"
+    class="container login-form"
+    action=""
+    autocomplete="off"
+  >
+    <span class="p-float-label">
+      <input
+        autocomplete="false"
+        formControlName="username"
+        pInputText
+        id="username"
+      />
+      <label htmlFor="username">Username</label>
+    </span>
+    <span class="p-float-label">
+      <input
+        autocomplete="false"
+        formControlName="password"
+        type="password"
+        pInputText
+        id="password"
+      />
+      <label htmlFor="password">Password</label>
+    </span>
+    <div *ngIf="loginStatus | async as status" class="status-box">
+      <div class="error-box">
+        {{ status.error }}
+      </div>
     </div>
-  </header>
-</ion-header>
-<ion-content> </ion-content>
+    <button type="submit" class="btn-cta">Login</button>
+  </form>
+</ion-content>

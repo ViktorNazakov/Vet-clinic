@@ -68,11 +68,8 @@ export class HomePage {
     });
   }
   ionViewWillLeave() {
-    this.contentOpacity = 0;
     this.slider?.destroy();
   }
-  showPos(ev: any) {
-    console.log(ev);
-  }
+
   constructor() {}
 }

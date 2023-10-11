@@ -1,0 +1,32 @@
+.bg-container {
+  position: relative;
+  height: 400px;
+  width: 100%;
+  display: block;
+  margin-bottom: 150px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.bg-image {
+  background-image: url("/assets/images/title-image.jpg");
+  background-attachment: fixed;
+  object-fit: cover;
+  border-radius: 0 0 25% 25%;
+  background-position: center center;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100%;
+}
+.container-title {
+  padding: 40px 70px;
+  border: 10px solid #ffffff;
+  border-radius: 50%;
+  margin: 0;
+  color: #ffffff !important;
+  background: #108896;
+  line-height: 1;
+  text-align: center;
+  position: absolute;
+  bottom: -85px;
+}

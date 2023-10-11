@@ -1,6 +1,8 @@
 <ion-app>
   <div class="flex flex-column relative h-full">
     <app-header></app-header>
-    <div class="relative h-full"><ion-router-outlet></ion-router-outlet></div>
+    <div class="relative h-full">
+      <ion-router-outlet [animation]="transtion"></ion-router-outlet>
+    </div>
   </div>
 </ion-app>
