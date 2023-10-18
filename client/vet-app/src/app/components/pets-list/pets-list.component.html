@@ -1,0 +1,36 @@
+<p-dataView emptyMessage="No Pets Created Yet" [value]="_pets">
+  <ng-template let-pet pTemplate="listItem">
+    <div *ngIf="pet !== 1; else createItem" class="col-12 pet-col">
+      <div class="flex flex-column xl:flex-row xl:align-items-start p-4 gap-4">
+        <img
+          class="w-9 sm:w-16rem xl:w-10rem shadow-2 block xl:block mx-auto border-round"
+          src="assets/images/pet-pfp.png"
+          [alt]="pet.name"
+        />
+        <div
+          class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4"
+        >
+          <div
+            class="flex flex-column align-items-center sm:align-items-start gap-3"
+          >
+            <div class="text-2xl font-bold text-900">{{ pet.name }}</div>
+
+            <div
+              class="flex lg:align-items-start align-items-center flex-column gap-3"
+            >
+              <span class="font-semibold">{{ pet.specie }}</span>
+              <span class="font-semibold">Healthy</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template></p-dataView
+>
+<ng-template #createItem>
+  <div class="col-12 border-0">
+    <button (click)="addPet()" class="w-full btn-create btn-cta" pButton>
+      Add a Pet +
+    </button>
+  </div>
+</ng-template>

@@ -54,7 +54,10 @@
   font-family: "Baloo Thambi 2";
 }
 section {
-  padding: 70px 0;
+  padding: 50px 0;
+}
+.w-content {
+  width: fit-content;
 }
 .bg-primary {
   background-color: var(--primary-color);
@@ -83,6 +86,10 @@ section {
     border-width: 0;
     box-shadow: none !important;
     background-color: var(--secondary-color);
+  }
+  &:disabled {
+    background-color: #7a7a7a;
+    box-shadow: inset 9px 0px 0px 0px rgba(255, 255, 255, 0.596) !important;
   }
 }
 .p-button {
@@ -147,4 +154,9 @@ h1 {
   text-transform: none;
   font-size: 75px;
   color: #000000;
+}
+h3 {
+  color: #000000;
+  font-size: 42px;
+  font-weight: 700;
 }

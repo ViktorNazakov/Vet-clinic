@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { HeaderComponent } from './components/header/header.component';
 import { pageTransition } from './fade.transition';
+import { InitialService } from './services/intial.service';
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -9,7 +10,10 @@ import { pageTransition } from './fade.transition';
   standalone: true,
   imports: [IonicModule, HeaderComponent],
 })
-export class AppComponent {
+export class AppComponent implements AfterViewInit {
   transtion = pageTransition;
-  constructor() {}
+  constructor(private initService: InitialService) {}
+  ngAfterViewInit() {
+    this.initService.initialize();
+  }
 }

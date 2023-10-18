@@ -1,0 +1,29 @@
+<div class="slider-container keen-slider">
+  <div class="slider-cover" *ngIf="!revealSlider"></div>
+  <div class="slider-mask"></div>
+  <div *ngFor="let slide of slides; index as i" class="keen-slider__slide">
+    <div class="slide-content" [ngClass]="{ active: activeSlide === i }">
+      <div class="side-overlay">
+        <div class="text-box">
+          <p class="title">{{ slide.title }}</p>
+          <p class="subtitle">{{ slide.subtitle }}</p>
+          <p>
+            <a class="btn-cta" href="{{ slide.redirect?.link }}">{{
+              slide.redirect?.text
+            }}</a>
+          </p>
+        </div>
+      </div>
+      <div class="bg-image">
+        <img src="{{ slide.img }}" alt="" />
+      </div>
+    </div>
+  </div>
+  <div class="indicators">
+    <button
+      [ngClass]="{ active: activeSlide === i }"
+      (click)="slider?.moveToIdx(i)"
+      *ngFor="let slide of slides; index as i"
+    ></button>
+  </div>
+</div>

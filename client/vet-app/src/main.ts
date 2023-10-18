@@ -12,16 +12,30 @@ import {
   provideStoreDevtools,
 } from '@ngrx/store-devtools';
 import { AuthReducer } from './app/store/reducers/auth.reducer';
-
+import { EffectsModule, provideEffects } from '@ngrx/effects';
+import { AuthEffects } from './app/store/effects/auth.effects';
+import { ProfileReducer } from './app/store/reducers/profile.reducer';
+import { ProfileEffects } from './app/store/effects/profile.effects';
+import { DialogService } from 'primeng/dynamicdialog';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 if (environment.production) {
   enableProdMode();
 }
 
 bootstrapApplication(AppComponent, {
   providers: [
+    /** Required Services */
+    DialogService,
+
+    /** */
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
-    importProvidersFrom(IonicModule.forRoot({})),
-    provideStore({ AUTH: AuthReducer }),
+    importProvidersFrom(
+      IonicModule.forRoot({}),
+      EffectsModule.forRoot([AuthEffects, ProfileEffects]),
+      BrowserAnimationsModule
+    ),
+    provideStore({ AUTH: AuthReducer, PROFILE: ProfileReducer }),
+
     provideStoreDevtools({
       maxAge: 25, // Retains last 25 states
       logOnly: !isDevMode(), // Restrict extension to log-only mode

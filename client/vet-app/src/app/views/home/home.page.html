@@ -1,43 +1,44 @@
 <ion-content [scrollEvents]="true">
   <section class="p-0">
-    <div class="slider-container keen-slider">
-      <div class="slider-mask"></div>
-      <div *ngFor="let slide of slides; index as i" class="keen-slider__slide">
-        <div class="slide-content" [ngClass]="{active : activeSlide === i}">
-          <div class="side-overlay">
-            <div class="text-box">
-              <p class="title">{{slide.title}}</p>
-              <p class="subtitle">{{slide.subtitle}}</p>
-              <p>
-                <a class="btn-cta" href="{{slide.redirect?.link}}"
-                  >{{slide.redirect?.text}}</a
-                >
-              </p>
-            </div>
+    <app-home-slider></app-home-slider>
+  </section>
+  <div class="bg-parallax bg-bones">
+    <section>
+      <div class="container">
+        <div class="heading">Our Services</div>
+        <p class="base-text text-center">
+          Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptate
+          vero ipsam blanditiis quas consequatur quaerat quam. In suscipit ipsam
+          magni eaque necessitatibus quidem soluta quis nostrum sint reiciendis
+          fugiat minus, et mollitia a aliquid ullam voluptatum accusamus enim
+          ipsum at!
+        </p>
+      </div>
+    </section>
+    <section>
+      <div class="container">
+        <div class="flex flex-wrap-1 justify-content-between">
+          <div class="flex flex-column gap-2 col-12 lg:col-7">
+            <h3 class="heading-title">Quality Service for your pets</h3>
+            <p class="font-semibold">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit.
+              Perspiciatis quibusdam aperiam sapiente. Error, sed!
+            </p>
+            <p>
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Iure
+              illum architecto laborum repellat esse velit porro a omnis impedit
+              nam quas rerum aliquid saepe sapiente sunt natus eaque dolorum,
+              excepturi assumenda harum voluptas, accusamus odio! Nemo provident
+              reprehenderit voluptas facilis dolorum enim autem nulla porro,
+              corporis vitae quia sed illo?
+            </p>
+            <button class="btn-cta w-content my-2">Contact Us</button>
           </div>
-          <div class="bg-image">
-            <img src="{{slide.img}}" alt="" />
+          <div class="flex flex-column gap-2 col-12 lg:col-5">
+            <img src="/assets/images/pets-1-home.png" alt="" />
           </div>
         </div>
       </div>
-      <div class="indicators">
-        <button
-          [ngClass]="{active: activeSlide === i}"
-          (click)="slider?.moveToIdx(i)"
-          *ngFor="let slide of slides; index as i"
-        ></button>
-      </div>
-    </div>
-  </section>
-  <section>
-    <div class="container">
-      <div class="heading">Our Services</div>
-      <p class="base-text text-center">
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptate vero
-        ipsam blanditiis quas consequatur quaerat quam. In suscipit ipsam magni
-        eaque necessitatibus quidem soluta quis nostrum sint reiciendis fugiat
-        minus, et mollitia a aliquid ullam voluptatum accusamus enim ipsum at!
-      </p>
-    </div>
-  </section>
+    </section>
+  </div>
 </ion-content>

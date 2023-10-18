@@ -1,36 +1,50 @@
 <ion-content>
   <app-page-title title="Login"> </app-page-title>
-  <form
-    [formGroup]="loginForm"
-    (submit)="$event.preventDefault(); attemptLogin()"
-    class="container login-form"
-    action=""
-    autocomplete="off"
-  >
-    <span class="p-float-label">
-      <input
-        autocomplete="false"
-        formControlName="username"
-        pInputText
-        id="username"
-      />
-      <label htmlFor="username">Username</label>
-    </span>
-    <span class="p-float-label">
-      <input
-        autocomplete="false"
-        formControlName="password"
-        type="password"
-        pInputText
-        id="password"
-      />
-      <label htmlFor="password">Password</label>
-    </span>
-    <div *ngIf="loginStatus | async as status" class="status-box">
-      <div class="error-box">
-        {{ status.error }}
+  <section class="pt-0">
+    <form
+      [formGroup]="loginForm"
+      (submit)="$event.preventDefault(); attemptLogin()"
+      class="container login-form"
+      action=""
+      autocomplete="off"
+    >
+      <span class="p-float-label">
+        <input
+          autocomplete="false"
+          formControlName="username"
+          pInputText
+          id="username"
+        />
+        <label htmlFor="username">Username</label>
+      </span>
+      <span class="p-float-label">
+        <input
+          autocomplete="false"
+          formControlName="password"
+          type="password"
+          pInputText
+          id="password"
+        />
+        <label htmlFor="password">Password</label>
+      </span>
+      <div *ngIf="loginStatus | async as status" class="status-box">
+        <div
+          class="hide-initial"
+          [ngClass]="{ expand: status.loading || status.error !== '' }"
+        >
+          <div class="error-box error" *ngIf="status.error !== ''">
+            {{ status.error }}
+          </div>
+          <ion-spinner name="dots" *ngIf="status.loading"></ion-spinner>
+        </div>
       </div>
-    </div>
-    <button type="submit" class="btn-cta">Login</button>
-  </form>
+      <button
+        type="submit"
+        [disabled]="(loginStatus | async)?.loading"
+        class="btn-cta"
+      >
+        Login
+      </button>
+    </form>
+  </section>
 </ion-content>

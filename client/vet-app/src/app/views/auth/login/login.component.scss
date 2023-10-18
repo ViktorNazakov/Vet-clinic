@@ -8,3 +8,15 @@
     width: 400px;
   }
 }
+.hide-initial {
+  height: 0;
+  overflow: hidden;
+  transition: 0.5s;
+}
+.expand {
+  height: 70px;
+}
+ion-spinner {
+  height: 40px;
+  width: 100px;
+}

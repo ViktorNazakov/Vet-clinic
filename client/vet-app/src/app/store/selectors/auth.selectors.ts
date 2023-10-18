@@ -6,3 +6,12 @@ export const getLoginStatus = createSelector(
   authKey,
   (state: AuthState) => state.login
 );
+export const getAuthReqs = createSelector(authKey, (state: AuthState) => ({
+  token: state.token,
+  isAuth: state.isAuth,
+  role: state.role,
+}));
+export const getValidation = createSelector(
+  authKey,
+  (state: AuthState) => state.validated
+);
