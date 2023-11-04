@@ -6,6 +6,10 @@ export const getLoginStatus = createSelector(
   authKey,
   (state: AuthState) => state.login
 );
+export const getRegisterStatus = createSelector(
+  authKey,
+  (state: AuthState) => state.register
+);
 export const getAuthReqs = createSelector(authKey, (state: AuthState) => ({
   token: state.token,
   isAuth: state.isAuth,

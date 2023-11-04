@@ -90,6 +90,7 @@
       height: 140%;
       position: absolute;
       transform: scale(0);
+      transform-origin: center;
       transition: 0.5s;
       border-radius: 50%;
     }

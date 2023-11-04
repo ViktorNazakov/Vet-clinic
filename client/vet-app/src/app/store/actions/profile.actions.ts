@@ -11,5 +11,7 @@ export const ProfileActions = createActionGroup({
       lastName: string;
     }>(),
     'Load Error': props<{ error: String; code: number }>(),
+    'Load Pets': emptyProps(),
+    'Load Pets Success': props<{ pets: Pet[] }>(),
   },
 });

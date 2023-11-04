@@ -40,5 +40,171 @@
         </div>
       </div>
     </section>
+    <section>
+      <app-home-services></app-home-services>
+    </section>
   </div>
+  <div class="bg-darken">
+    <section>
+      <div class="container">
+        <div class="heading">About Us</div>
+        <div class="flex flex-wrap justify-content-between">
+          <div class="lg:col-8 text-center flex flex-column gap-3">
+            <h3 class="font-semibold">The Best For Your Pets</h3>
+            <p class="base-text text-center">
+              Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+              Voluptate vero ipsam blanditiis quas consequatur quaerat quam. In
+              suscipit ipsam magni eaque necessitatibus quidem soluta quis
+              nostrum sint reiciendis fugiat minus, et mollitia a aliquid ullam
+              voluptatum accusamus enim ipsum at!
+            </p>
+            <p-accordion [activeIndex]="0" [multiple]="false" class="w-full">
+              <p-accordionTab>
+                <ng-template pTemplate="header">
+                  <div class="flex align-items-center">
+                    <span class="vertical-align-middle">Special Needs</span>
+                  </div>
+                </ng-template>
+                <ng-template pTemplate="content">
+                  <p class="m-0">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                    Duis aute irure dolor in reprehenderit in voluptate velit
+                    esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
+                    occaecat cupidatat non proident, sunt in culpa qui officia
+                    deserunt mollit anim id est laborum.
+                  </p>
+                </ng-template>
+              </p-accordionTab>
+              <p-accordionTab>
+                <ng-template pTemplate="header">
+                  <div class="flex align-items-center">
+                    <span class="vertical-align-middle">Adequate Care</span>
+                  </div>
+                </ng-template>
+                <ng-template pTemplate="content">
+                  <p class="m-0">
+                    At vero eos et accusamus et iusto odio dignissimos ducimus
+                    qui blanditiis praesentium voluptatum deleniti atque
+                    corrupti quos dolores et quas molestias excepturi sint
+                    occaecati cupiditate non provident, similique sunt in culpa
+                    qui officia deserunt mollitia animi, id est laborum et
+                    dolorum fuga. Et harum quidem rerum facilis est et expedita
+                    distinctio. Nam libero tempore, cum soluta nobis est
+                    eligendi optio cumque nihil impedit quo minus.
+                  </p>
+                </ng-template>
+              </p-accordionTab>
+              <p-accordionTab>
+                <ng-template pTemplate="header">
+                  <div class="flex align-items-center">
+                    <span class="vertical-align-middle"
+                      >Certified Medicine</span
+                    >
+                  </div>
+                </ng-template>
+                <ng-template pTemplate="content">
+                  <p class="m-0">
+                    Sed ut perspiciatis unde omnis iste natus error sit
+                    voluptatem accusantium doloremque laudantium, totam rem
+                    aperiam, eaque ipsa quae ab illo inventore veritatis et
+                    quasi architecto beatae vitae dicta sunt explicabo. Nemo
+                    enim ipsam voluptatem quia voluptas sit aspernatur aut odit
+                    aut fugit, sed quia consequuntur magni dolores eos qui
+                    ratione voluptatem sequi nesciunt. Consectetur, adipisci
+                    velit, sed quia non numquam eius modi.
+                  </p>
+                </ng-template>
+              </p-accordionTab>
+            </p-accordion>
+          </div>
+          <div class="lg:col-4">
+            <img
+              class="about-img"
+              src="/assets/images/about-us-img.png"
+              alt=""
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+    <section>
+      <div class="newsletter">
+        <div class="container">
+          <div class="newsletter-prompt mx-auto">
+            <h3 class="text-white text-center">Subscribe to our Newsletter</h3>
+            <p class="py-2 m-0 base-text text-white">
+              Lorem, ipsum dolor sit amet consectetur adipisicing elit. Harum
+              iusto adipisci, commodi ipsa recusandae nemo?
+            </p>
+            <form class="py-2" [formGroup]="newsletterForm">
+              <div class="email-input">
+                <input
+                  type="email"
+                  name="email"
+                  id=""
+                  placeholder="Your Email..."
+                />
+                <button class="btn-cta">Subscribe</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+    <section>
+      <div class="container">
+        <div class="heading">Contact Us</div>
+        <p class="base-text text-center">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim
+          necessitatibus excepturi, quas assumenda quidem labore quod tenetur ex
+          laboriosam suscipit veritatis, in molestias quisquam commodi officia
+          fugit ab aliquam repellat corporis voluptatibus dignissimos
+          voluptates. Molestias quae autem quas voluptate ipsum!
+        </p>
+        <form
+          [formGroup]="contactForm"
+          class="py-2 contact-form flex flex-column gap-4 align-items-center"
+        >
+          <h3>Send Us A Message</h3>
+
+          <input
+            placeholder="Full Name*"
+            pInputText
+            formControlName="fullName"
+            id="fullName"
+          />
+
+          <input
+            placeholder="Email*"
+            pInputText
+            formControlName="email"
+            id="email"
+          />
+
+          <input
+            placeholder="Subject*"
+            pInputText
+            formControlName="subject"
+            id="subject"
+          />
+
+          <textarea
+            placeholder="Message"
+            pInputText
+            id="message"
+            formControlName="message"
+          >
+          </textarea>
+
+          <div class="flex justify-content-center py-2">
+            <button class="btn-cta">Submit</button>
+          </div>
+        </form>
+      </div>
+    </section>
+  </div>
+  <app-footer></app-footer>
 </ion-content>

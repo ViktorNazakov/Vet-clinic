@@ -11,6 +11,10 @@ export interface AuthState {
     loading: boolean;
     error: string;
   };
+  register: {
+    loading: boolean;
+    error: string;
+  };
 }
 
 const initialState: AuthState = {
@@ -20,6 +24,10 @@ const initialState: AuthState = {
   role: '',
   validated: false,
   login: {
+    loading: false,
+    error: '',
+  },
+  register: {
     loading: false,
     error: '',
   },
@@ -40,7 +48,19 @@ export const AuthReducer = createReducer(
   })),
   on(AuthAPIActions.loginError, (state: AuthState, props) => ({
     ...state,
-    login: { error: '' + props.error, loading: false },
+    register: { error: '' + props.error, loading: false },
+  })),
+  on(AuthAPIActions.registerAttempt, (state: AuthState) => ({
+    ...state,
+    register: { error: '', loading: true },
+  })),
+  on(AuthAPIActions.registerSuccess, (state: AuthState, props) => ({
+    ...state,
+    register: { error: '', loading: false },
+  })),
+  on(AuthAPIActions.registerError, (state: AuthState, props) => ({
+    ...state,
+    register: { error: '' + props.error, loading: false },
   })),
   on(AuthAPIActions.accountCheck, (state: AuthState, props) => ({
     ...state,
@@ -51,5 +71,17 @@ export const AuthReducer = createReducer(
     ...state,
     validated: true,
     isAuth: true,
+  })),
+  on(AuthAPIActions.logoutAttempt, (state: AuthState) => ({
+    ...state,
+    isAuth: false,
+    validated: false,
+    role: '',
+    token: '',
+    userId: '',
+  })),
+  on(AuthAPIActions.logout, (state: AuthState) => ({
+    ...state,
+    validated: true,
   }))
 );

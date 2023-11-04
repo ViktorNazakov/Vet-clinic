@@ -68,6 +68,9 @@ section {
 .bg-tetiary {
   background-color: var(--tetiary-color);
 }
+.bg-darken {
+  background-color: #f5f3ee;
+}
 .btn-cta {
   font-size: 15px;
   font-weight: 700;
@@ -158,5 +161,11 @@ h1 {
 h3 {
   color: #000000;
   font-size: 42px;
+  font-weight: 700;
+}
+h5 {
+  font-size: 24px;
+  letter-spacing: -0.2px;
+  line-height: 34px;
   font-weight: 700;
 }

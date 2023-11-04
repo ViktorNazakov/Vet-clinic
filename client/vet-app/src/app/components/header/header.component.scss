@@ -14,7 +14,8 @@ header {
     height: 100%;
     padding: 0;
     list-style: none !important;
-    .menu-item > a {
+    .menu-item > a,
+    .menu-item > button {
       display: block;
       padding: 18px 25px;
       text-decoration: none;
@@ -23,8 +24,9 @@ header {
       font-weight: 700;
       height: 100%;
       transition: 0.25s;
+      background-color: transparent;
       &:hover:not(.active) {
-        background-color: var(--secondary-color);
+        background-color: var(--secondary-color) !important;
       }
       &.active {
         background-color: var(--primary-color);
@@ -54,5 +56,20 @@ header {
 @media screen and (max-width: 1024px) {
   .menu-item {
     display: none;
+  }
+}
+.loading-bar {
+  background-color: var(--secondary-color);
+  z-index: -10;
+  opacity: 0;
+  transition: opacity 0.5s;
+  &.show {
+    z-index: 1;
+    opacity: 1;
+  }
+  p-progressBar {
+    height: 10px;
+    border-radius: 20px;
+    overflow: hidden;
   }
 }

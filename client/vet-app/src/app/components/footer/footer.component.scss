@@ -1,0 +1,56 @@
+footer {
+  width: 100%;
+  background-color: #363636;
+  padding: 20px;
+}
+a {
+  text-decoration: none;
+}
+.logo {
+  max-height: 140px;
+  object-fit: contain;
+  margin: auto;
+  text-align: center;
+}
+.pi {
+  color: white;
+}
+.contacts {
+  a {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 18px;
+  }
+}
+.follow-icons {
+  display: flex;
+  gap: 20px;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  a {
+    border-radius: 50%;
+    height: 50px;
+    width: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--secondary-color);
+    transition: 0.5s;
+    border: 3px solid var(--secondary-color);
+    transform: scale(1);
+    .pi {
+      transition: 0.5s;
+    }
+    &:hover {
+      transform: scale(1.2);
+      background-color: white;
+      .pi {
+        color: var(--secondary-color);
+      }
+    }
+  }
+}

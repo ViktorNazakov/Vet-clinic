@@ -1,0 +1,72 @@
+<ion-content>
+  <app-page-title title="Appointment"></app-page-title>
+  <section class="pt-0">
+    <div class="container">
+      <div class="heading w-full"></div>
+      <p class="base-text text-center">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim
+        necessitatibus excepturi, quas assumenda quidem labore quod tenetur ex
+        laboriosam suscipit veritatis, in molestias quisquam commodi officia
+        fugit ab aliquam repellat corporis voluptatibus dignissimos voluptates.
+        Molestias quae autem quas voluptate ipsum!
+      </p>
+      <form
+        *ngIf="(userDetails | async )?.loaded === 1; else loadForm"
+        [formGroup]="appForm"
+        class="py-3 appointment-form flex flex-column gap-4 align-items-center"
+      >
+        <input
+          [disabled]="true"
+          pInputText
+          formControlName="fullName"
+          id="fullName"
+          placeholder="Full Name*"
+        />
+        <p-dropdown
+          [filter]="true"
+          filterBy="name"
+          [options]="(pets | async) || []"
+          optionLabel="name"
+          [showClear]="true"
+          placeholder="Select a Pet"
+        >
+          <ng-template pTemplate="selectedItem">
+            <div class="flex align-items-center gap-2" *ngIf="selectedPet">
+              <img
+                src="https://primefaces.org/cdn/primeng/images/demo/flag/flag_placeholder.png"
+                style="width: 18px"
+              />
+              <div>{{ selectedPet.name }}</div>
+            </div>
+          </ng-template>
+          <ng-template let-country pTemplate="item">
+            <div class="flex align-items-center gap-2">
+              <img
+                src="https://primefaces.org/cdn/primeng/images/demo/flag/flag_placeholder.png"
+                [class]="'flag flag-' + country.code.toLowerCase()"
+                style="width: 18px"
+              />
+              <div>{{ country.name }}</div>
+            </div>
+          </ng-template>
+        </p-dropdown>
+
+        <div class="flex justify-content-center py-2">
+          <button class="btn-cta">Request</button>
+        </div>
+      </form>
+      <ng-template #loadForm>
+        <div class="py-3 flex justify-content-center align-items-center">
+          <p-progressSpinner
+            styleClass="w-4rem h-4rem"
+            strokeWidth="8"
+            fill="var(--surface-ground)"
+            animationDuration=".5s"
+          ></p-progressSpinner>
+        </div>
+      </ng-template>
+    </div>
+  </section>
+
+  <app-footer></app-footer>
+</ion-content>

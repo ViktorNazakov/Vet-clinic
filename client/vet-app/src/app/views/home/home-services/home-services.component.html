@@ -1,0 +1,37 @@
+<div
+  class="slider-container relative flex justify-content-center align-items-center"
+>
+  <div class="services-container keen-slider container border-rounded">
+    <div class="slider-cover" *ngIf="!revealSlider"></div>
+    <div class="slider-mask"></div>
+    <div *ngFor="let slide of slides; index as i" class="keen-slider__slide">
+      <div
+        class="slide-content flex flex-column h-full"
+        [ngClass]="{ active: activeSlide === i }"
+      >
+        <div class="flex z-0 justify-content-center align-items-center">
+          <img src="{{ slide.img }}" alt="" class="img-expand" />
+        </div>
+
+        <div class="slide-label z-2">
+          <p>{{ slide.title }}</p>
+        </div>
+        <div class="flex text-center">
+          <p class="text-center">{{ slide.description }}</p>
+        </div>
+        <div class="flex mt-auto justify-content-center py-3">
+          <button class="btn-cta">View More</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="indicators container">
+    <button
+      class=""
+      icon="pi pi-arrow-left"
+      pButton
+      (click)="slider?.prev()"
+    ></button>
+    <button icon="pi pi-arrow-right" pButton (click)="slider?.next()"></button>
+  </div>
+</div>

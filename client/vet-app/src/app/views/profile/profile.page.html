@@ -5,35 +5,39 @@
     <div class="container">
       <div class="heading w-full"></div>
       <div
+        [ngClass]="{loading: (loaded | async) === false}"
         class="flex lg:flex-row flex-column justify-content-between profile-container"
       >
+        <div *ngIf="(loaded | async) === false" class="status-box">
+          <ion-spinner color="light" name="dots"></ion-spinner>
+        </div>
         <div class="details flex flex-column gap-3">
           <img src="assets/images/pfp.webp" class="pfp" alt="" />
           <div class="flex text-white gap-3 align-items-start">
             <div class="pi text-xl pi-user"></div>
-            <div class="flex flex-column gap-2">
-              <p class="text-xl font-semibold">Jonathan</p>
-              <p class="text-md">Ferbissun</p>
+            <div
+              *ngIf="userDetails | async as details"
+              class="flex flex-column gap-2"
+            >
+              <p class="text-xl font-semibold">{{details.firstName}}</p>
+              <p class="text-md">{{details.lastName}}</p>
             </div>
           </div>
         </div>
         <p-tabView>
           <p-tabPanel header="Pets">
-            <app-pets-list [canCreate]="true" [pets]="[]"></app-pets-list>
+            <app-pets-list
+              [canCreate]="true"
+              [pets]="(pets | async) || []"
+            ></app-pets-list>
           </p-tabPanel>
           <p-tabPanel header="Appointments">
-            <p>
-              At vero eos et accusamus et iusto odio dignissimos ducimus qui
-              blanditiis praesentium voluptatum deleniti atque corrupti quos
-              dolores et quas molestias excepturi sint occaecati cupiditate non
-              provident, similique sunt in culpa qui officia deserunt mollitia
-              animi, id est laborum et dolorum fuga. Et harum quidem rerum
-              facilis est et expedita distinctio. Nam libero tempore, cum soluta
-              nobis est eligendi optio cumque nihil impedit quo minus.
-            </p>
+            <app-appointments-list
+              [canCreate]="true"
+              [appointments]="[]"
+            ></app-appointments-list>
           </p-tabPanel>
         </p-tabView>
       </div>
-    </div>
-  </section></ion-content
->
+    </div></section
+></ion-content>

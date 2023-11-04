@@ -2,5 +2,99 @@
   background: url("/assets/images/cartoonbones1.png") center left no-repeat,
     url("/assets/images/cartoonbones1.png") center right no-repeat;
   background-repeat: no-repeat;
-  background-attachment: scroll !important;
+  background-attachment: fixed;
+}
+:host::ng-deep {
+  .p-accordion-header-link {
+    padding: 5px 0;
+    background-color: var(--secondary-color);
+    transition: 0.5s;
+    color: white;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    position: relative;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 18px;
+    &[aria-expanded="true"] {
+      background-color: var(--primary-color);
+    }
+  }
+  .p-accordion-content {
+    border: none !important;
+    background-color: transparent !important;
+  }
+  .p-accordion-toggle-icon {
+    position: absolute;
+    right: 10px;
+  }
+  .p-accordion {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+}
+.about-img {
+  min-height: 120%;
+  object-fit: contain;
+  object-position: top;
+}
+.newsletter {
+  padding: 100px 0;
+  background-image: url("/assets/images/newsletter-parallax.jpg");
+  background-attachment: fixed;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100%;
+  position: static;
+  display: block;
+  input {
+    width: 100%;
+    outline: none !important;
+    box-shadow: none !important;
+    border: 0;
+    padding: 10px 140px 10px 10px;
+    color: black;
+  }
+  .email-input {
+    display: flex;
+    border: 2px solid var(--tetiary-color);
+    align-items: center;
+    border-radius: 20px;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+    .btn-cta {
+      position: absolute;
+      right: 0;
+    }
+  }
+}
+.newsletter-prompt {
+  padding: 40px;
+  background-color: var(--secondary-color);
+  color: white;
+  width: fit-content;
+  border-radius: 20px;
+  width: min(400px, 80vw);
+}
+.contact-form {
+  max-width: 600px;
+  margin: auto;
+
+  input,
+  textarea {
+    padding: 10px;
+    width: 100%;
+    border-radius: 20px;
+    outline: none;
+    border: 2px solid var(--tetiary-color);
+  }
+  textarea {
+    resize: vertical;
+  }
+  .p-float-label {
+    width: 100%;
+  }
 }
