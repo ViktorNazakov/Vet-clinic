@@ -18,5 +18,18 @@ export class AuthService {
         },
       }
     );
+  loginAccount = (username: String, password: String) =>
+    this.http.post(
+      this.BASE_ENDPOINT + 'auth/login',
+      JSON.stringify({
+        username,
+        password,
+      }),
+      {
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+        },
+      }
+    );
   constructor(private http: HttpClient) {}
 }

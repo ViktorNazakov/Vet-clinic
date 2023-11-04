@@ -48,7 +48,10 @@ export const AuthReducer = createReducer(
   })),
   on(AuthAPIActions.loginError, (state: AuthState, props) => ({
     ...state,
-    register: { error: '' + props.error, loading: false },
+    login: {
+      error: '' + (props.error || 'Invalid Login Details '),
+      loading: false,
+    },
   })),
   on(AuthAPIActions.registerAttempt, (state: AuthState) => ({
     ...state,
@@ -67,10 +70,17 @@ export const AuthReducer = createReducer(
     validated: false,
     token: !!props.token ? props.token : state.token,
   })),
-  on(AuthAPIActions.accountCheckSuccess, (state: AuthState) => ({
+  on(AuthAPIActions.accountCheckSuccess, (state: AuthState, props) => ({
     ...state,
     validated: true,
     isAuth: true,
+    token: props.token,
+  })),
+  on(AuthAPIActions.accountCheckError, (state: AuthState, props) => ({
+    ...state,
+    validated: true,
+    isAuth: false,
+    token: '',
   })),
   on(AuthAPIActions.logoutAttempt, (state: AuthState) => ({
     ...state,

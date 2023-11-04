@@ -3,6 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ProfileActions } from '../actions/profile.actions';
 import { catchError, first, map, of, switchMap, timer } from 'rxjs';
 import { Appointment, Pet } from 'src/app/models/user.models';
+import { ProfileService } from 'src/app/services/profile.service';
 
 @Injectable()
 export class ProfileEffects {
@@ -39,15 +40,39 @@ export class ProfileEffects {
     this.actions$.pipe(
       ofType(ProfileActions.loadPets, ProfileActions.loadSuccess),
       switchMap(() =>
-        timer(500).pipe(
+        this.pService.getUserPets().pipe(
           first(),
-          map(() => ({
-            type: '[Profile] Load Pets Success',
-            pets: this.tempDetails.pets,
-          }))
+          map((res) => {
+            return { type: '[Profile] Load Pets Success', pets: res };
+          })
         )
       )
     )
   );
-  constructor(private actions$: Actions) {}
+  onCreatePet$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ProfileActions.createPet),
+      switchMap((data) =>
+        this.pService.createUserPet(data.name, data.specie, data.breed).pipe(
+          first(),
+          map(() => {
+            return { type: '[Profile] Load Pets' };
+          }),
+          catchError(() => of({ type: '[Profile] Create Pet Error' }))
+        )
+      )
+    )
+  );
+  onDeletePet$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ProfileActions.deletePet),
+      switchMap((data) =>
+        this.pService.deleteUserPet(data.petId).pipe(
+          first(),
+          map(() => ({ type: '[Profile] Load Pets' }))
+        )
+      )
+    )
+  );
+  constructor(private actions$: Actions, private pService: ProfileService) {}
 }

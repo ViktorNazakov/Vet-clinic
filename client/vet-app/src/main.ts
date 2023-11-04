@@ -18,7 +18,12 @@ import { ProfileReducer } from './app/store/reducers/profile.reducer';
 import { ProfileEffects } from './app/store/effects/profile.effects';
 import { DialogService } from 'primeng/dynamicdialog';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { provideHttpClient } from '@angular/common/http';
+import {
+  HTTP_INTERCEPTORS,
+  provideHttpClient,
+  withInterceptorsFromDi,
+} from '@angular/common/http';
+import { AuthInterceptor } from './app/interceptors/auth.interceptor';
 if (environment.production) {
   enableProdMode();
 }
@@ -35,8 +40,13 @@ bootstrapApplication(AppComponent, {
       EffectsModule.forRoot([AuthEffects, ProfileEffects]),
       BrowserAnimationsModule
     ),
+    provideHttpClient(withInterceptorsFromDi()),
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true,
+    },
     provideStore({ AUTH: AuthReducer, PROFILE: ProfileReducer }),
-    provideHttpClient(),
     provideStoreDevtools({
       maxAge: 25, // Retains last 25 states
       logOnly: !isDevMode(), // Restrict extension to log-only mode

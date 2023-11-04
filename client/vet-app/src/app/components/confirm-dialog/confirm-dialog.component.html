@@ -1,0 +1,10 @@
+<div
+  class="flex flex-column gap-3 justify-content-center align-items-center"
+  style="max-width: 500px"
+>
+  <h5 class="text-center">{{ message }}</h5>
+  <div class="flex gap-3 py-3">
+    <button class="btn btn-deny" (click)="close()">Close</button>
+    <button class="btn btn-accept" (click)="accept()">Confirm</button>
+  </div>
+</div>

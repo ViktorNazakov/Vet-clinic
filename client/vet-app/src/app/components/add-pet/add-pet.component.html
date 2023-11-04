@@ -1,14 +1,17 @@
-<form (submit)="$event.preventDefault()">
+<form [formGroup]="petForm" (submit)="$event.preventDefault(); createPet()">
   <span class="p-float-label">
-    <input pInputText id="name" />
+    <input formControlName="name" pInputText id="name" />
     <label htmlFor="name">Name</label>
   </span>
   <span class="p-float-label">
-    <input pInputText id="specie" />
+    <input formControlName="specie" pInputText id="specie" />
     <label htmlFor="specie">Specie</label>
   </span>
   <span class="p-float-label">
-    <input pInputText id="breed" />
-    <label htmlFor="breed">Breed / Specialisation</label>
+    <input formControlName="breed" pInputText id="breed" />
+    <label htmlFor="breed">Breed</label>
   </span>
+  <div class="flex justify-content-center py-2">
+    <button class="btn-cta">Create +</button>
+  </div>
 </form>

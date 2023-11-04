@@ -6,6 +6,7 @@ export class StorageService {
     localStorage.setItem('vet_token', token);
   };
   getToken = () => localStorage.getItem('vet_token');
+  clearToken = () => localStorage.removeItem('vet_token');
   setItem = (loc: string, val: string) => {
     localStorage.setItem('vet_' + loc, val);
   };

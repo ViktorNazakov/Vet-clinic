@@ -7,7 +7,6 @@ import { AuthAPIActions } from '../store/actions/auth.actions';
 export class InitialService {
   initialize = () => {
     const token = this.sService.getToken();
-    console.log(token);
     this.store.dispatch(
       AuthAPIActions.accountCheck({ token: token ? token : undefined })
     );
