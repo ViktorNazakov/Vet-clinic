@@ -5,6 +5,7 @@ import com.uni.vetclinicapi.service.dto.ApiErrorResponseDTO;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -31,20 +32,20 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
      * @param webRequest - not being used, required by the overridden method.
      * @return - contains the information about the error that has occurred - time of occurrence of error, http status code of the error, body with description about the errors.
      */
-//    @Override
-//    protected ResponseEntity<Object> handleMethodArgumentNotValid(
-//            MethodArgumentNotValidException ex,
-//            HttpHeaders headers,
-//            HttpStatus status,
-//            WebRequest webRequest) {
-//        List<String> errors = new ArrayList<>();
-//        ex.getBindingResult().getFieldErrors().forEach(fieldError -> errors.add(fieldError.getField() + ": " + fieldError.getDefaultMessage()));
-//        ex.getBindingResult().getGlobalErrors().forEach(objectError -> errors.add(objectError.getObjectName() + ": " + objectError.getDefaultMessage()));
-//
-//        ApiErrorResponseDTO apiErrorResponseDTO = new ApiErrorResponseDTO(status, ex.getLocalizedMessage(), errors);
-//
-//        return new ResponseEntity<>(apiErrorResponseDTO, headers, status);
-//    }
+    @Override
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(
+            MethodArgumentNotValidException ex,
+            HttpHeaders headers,
+            HttpStatusCode status,
+            WebRequest webRequest) {
+        List<String> errors = new ArrayList<>();
+        ex.getBindingResult().getFieldErrors().forEach(fieldError -> errors.add(fieldError.getField() + ": " + fieldError.getDefaultMessage()));
+        ex.getBindingResult().getGlobalErrors().forEach(objectError -> errors.add(objectError.getObjectName() + ": " + objectError.getDefaultMessage()));
+
+        ApiErrorResponseDTO apiErrorResponseDTO = new ApiErrorResponseDTO((HttpStatus) status, ex.getLocalizedMessage(), errors);
+
+        return new ResponseEntity<>(apiErrorResponseDTO, headers, status);
+    }
 
     /**
      * Returns exception message with status code conflict, when we try to create a car with registration number, which already exists in some Car Entity in database.
