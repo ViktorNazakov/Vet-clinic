@@ -3,7 +3,7 @@ http://localhost:8080/api/v1/
 -----------------------------------------------------------------------
 Authentication endpoints:
 
-http://localhost:8080/api/v1/auth/register{POST}
+http://localhost:8080/api/v1/register{POST}
 
 REQUIRES - pass JSON with username,email and password
 
@@ -19,7 +19,7 @@ Example request:
 
 
 
-http://localhost:8080/api/v1/auth/login{POST}
+http://localhost:8080/api/v1/login{POST}
 
 REQUIRES - pass JSON with username, password
 
@@ -53,6 +53,19 @@ Example reuqest:
 (NEED TO PASS JWT)
 User endpoints:
 
+http://localhost:8080/api/v1/users{GET}
+
+DESCRIPTION - Returns information about the currently logged user
+
+REQUIRES -
+
+RETURNS - DTO with information about the logged user
+
+Example request: http://localhost:8080/api/v1/users
+
+
+
+
 http://localhost:8080/api/v1/users/pets{PUT}
 
 DESCRIPTION - Add an existing Pet to an Owner(User)
@@ -61,7 +74,7 @@ REQUIRES - Pass the pet id as path variable with name petId
 
 RETURNS - DTO with id, name, specie, breed and owner(user) of the pet
 
-Example request: http://localhost:8080/api/v1/users/addPet&petId=***
+Example request: http://localhost:8080/api/v1/users/pets?petId=***
 
 
 
@@ -88,7 +101,7 @@ REQUIRES - pet id as Path Variable with name "petId"
 
 RETURNS - DTO with id, name, specie, breed and owner(user) of the deleted pet
 
-Example request: http://localhost:8080/api/v1/users/pets&petId=***
+Example request: http://localhost:8080/api/v1/users/pet?&petId=***
 
 
 
