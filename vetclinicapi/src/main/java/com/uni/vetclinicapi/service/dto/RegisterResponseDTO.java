@@ -20,6 +20,4 @@ public class RegisterResponseDTO {
     @Schema(description = "The email of the user")
     private String email;
 
-    @Schema(description = "The password of the user")
-    private String password;
 }

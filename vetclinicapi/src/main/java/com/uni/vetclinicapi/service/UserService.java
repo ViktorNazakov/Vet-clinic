@@ -40,12 +40,12 @@ public class UserService implements UserDetailsService {
         return user;
     }
 
-    /**
+/*    *//**
      * Sets the current logged user to an existing pet, which isn't owned by anybody.
      *
      * @param petId - the id of the pet.
      * @return - FullPetDTO with all the information about the given pet.
-     */
+     *//*
     public FullPetDTO addPetToUser(UUID petId) {
         Pet petToAddToUser = petRepository.findById(petId).orElseThrow(() -> {
             log.warn("Attempted to fetch pet with id : {}, which doesn't exist.", petId);
@@ -60,7 +60,7 @@ public class UserService implements UserDetailsService {
         Pet updatedCar = petRepository.save(petToAddToUser);
         log.info("Successfully added and saved owner (user) with id : {}, to pet with id : {}.", user.getId(), petId);
         return modelMapper.map(updatedCar, FullPetDTO.class);
-    }
+    }*/
 
     /**
      * Returns currently logged-in user's info.

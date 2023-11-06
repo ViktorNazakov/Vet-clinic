@@ -30,11 +30,6 @@ public class PetService {
 
     private final ModelMapper modelMapper;
 
-/*    @PostConstruct
-    public void initPets() {
-        Pet pet
-    }*/
-
     /**
      * Checks if a Pet with name and owner like the one of PetDTO exists.
      * If it doesn't, Pet entity is created.
@@ -52,6 +47,7 @@ public class PetService {
         }
 
         Pet pet = modelMapper.map(petDTO, Pet.class);
+        pet.setUser(user);
         Pet persistedPet = petRepository.save(pet);
         log.info("Pet with details : {}, was created!", pet);
         return modelMapper.map(persistedPet, FullPetDTO.class);

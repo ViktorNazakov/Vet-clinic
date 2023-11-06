@@ -20,4 +20,12 @@ public class UserInfoDTO {
     @Schema(description = "The email of the user")
     private String email;
 
+    @Schema(description = "The first name of the user")
+    private String fName;
+
+    @Schema(description = "The last name of the user")
+    private String lName;
+
+    @Schema(description = "The phone number of the user")
+    private String phoneNumber;
 }

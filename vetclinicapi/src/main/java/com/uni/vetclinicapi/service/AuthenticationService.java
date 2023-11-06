@@ -12,11 +12,14 @@ import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * This service takes care of the authentication of a user, registration and login operations.
@@ -55,6 +58,9 @@ public class AuthenticationService {
                 username,
                 passwordEncoder.encode(createUserDto.getPassword()),
                 createUserDto.getEmail(),
+                createUserDto.getFName(),
+                createUserDto.getLName(),
+                createUserDto.getPhoneNumber(),
                 Set.of(role));
         userRepository.save(user);
         log.info("User with details : username: {}, email: {}, was successfully registered and saved!", username, createUserDto.getEmail());
@@ -74,7 +80,10 @@ public class AuthenticationService {
 
         String jwt = jwtUtils.generateJwtToken(authentication);
 
+        Set<String> role = authentication.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority).collect(Collectors.toSet());
+
         log.info("User with username : {}, has been successfully authenticated and jwt token was delivered!", loginRequestDTO.getUsername());
-        return new JwtResponseDTO(jwt);
+        return new JwtResponseDTO(jwt, role.iterator().next());
     }
 }

@@ -15,19 +15,33 @@ import lombok.Data;
 @Data
 public class RegisterRequestDTO {
 
-    @Schema(description = "The username of the client")
+    @Schema(description = "The username of the user")
     @NotBlank(message = "Username is required!")
     @Size(max = 20, min = 5)
     private String username;
 
-    @Schema(description = "The email of the client")
+    @Schema(description = "The email of the user")
     @NotBlank(message = "Email is required!")
     @Email
     @Size(max = 30, min = 10)
     private String email;
 
-    @Schema(description = "The password of the client")
+    @Schema(description = "The password of the user")
     @NotBlank(message = "Password is required!")
     @Size(max = 20, min = 5)
     private String password;
+
+    @Schema(description = "The first name of the user")
+    @NotBlank
+    @Size(min = 3, max = 15)
+    private String fName;
+
+    @Schema(description = "The last name of the user")
+    @NotBlank
+    @Size(min = 3, max = 15)
+    private String lName;
+
+    @Schema(description = "The phone number of the user")
+    @Size(min = 8, max = 15)
+    private String phoneNumber;
 }

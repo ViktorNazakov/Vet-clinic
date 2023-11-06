@@ -48,12 +48,12 @@ public class UserController {
         return new ResponseEntity<>(userService.getLoggedUserInfo(), HttpStatus.OK);
     }
 
-    /**
+/*    *//**
      * Add a pet to the current logged user's profile.
      *
      * @param petId - the id of the pet.
      * @return - FullPetDTO with status code OK(200).
-     */
+     *//*
     @Operation(summary = "Add pet to user profile.", description = "Add car to current logged user profile.", tags = {"users"})
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully added car to user profile and returned Full Pet DTO.", content = @Content(schema = @Schema(implementation = FullPetDTO.class))),
@@ -66,7 +66,7 @@ public class UserController {
             @Parameter(description = "Pet id.")
             @RequestParam("petId") @NotNull UUID petId){
         return new ResponseEntity<>(userService.addPetToUser(petId), HttpStatus.OK);
-    }
+    }*/
 
     /**
      * Delivers all the pets for current User.
