@@ -4,13 +4,23 @@ import { HttpClient } from '@angular/common/http';
 @Injectable({ providedIn: 'root' })
 export class AuthService {
   BASE_ENDPOINT = environment.endpoint;
-  registerAccount = (username: String, email: String, password: String) =>
+  registerAccount = (
+    username: String,
+    email: String,
+    password: String,
+    fName: string,
+    lName: string,
+    phoneNumber?: string
+  ) =>
     this.http.post(
       this.BASE_ENDPOINT + 'auth/register',
       JSON.stringify({
         username,
         email,
         password,
+        fName,
+        lName,
+        phoneNumber,
       }),
       {
         headers: {

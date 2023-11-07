@@ -13,7 +13,7 @@ import { ProfileActions } from 'src/app/store/actions/profile.actions';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { Subscription } from 'rxjs';
 import { DropdownModule } from 'primeng/dropdown';
-import { Pet } from 'src/app/models/user.models';
+import { Pet, Vet } from 'src/app/models/user.models';
 @Component({
   standalone: true,
   imports: [
@@ -37,6 +37,7 @@ export class AppointmentPage {
     fullName: { value: '', validators: [Validators.required], disabled: true },
   });
   selectedPet!: Pet;
+  selectedVet!: Vet;
   constructor(private fBuilder: FormBuilder, private store: Store) {}
 
   ionViewWillEnter() {

@@ -23,6 +23,7 @@
           placeholder="Full Name*"
         />
         <p-dropdown
+          (onChange)="selectedPet = $event.value"
           [filter]="true"
           filterBy="name"
           [options]="(pets | async) || []"
@@ -32,21 +33,44 @@
         >
           <ng-template pTemplate="selectedItem">
             <div class="flex align-items-center gap-2" *ngIf="selectedPet">
-              <img
-                src="https://primefaces.org/cdn/primeng/images/demo/flag/flag_placeholder.png"
-                style="width: 18px"
-              />
+              <img src="assets/images/pet-pfp.png" style="width: 18px" />
               <div>{{ selectedPet.name }}</div>
             </div>
           </ng-template>
-          <ng-template let-country pTemplate="item">
-            <div class="flex align-items-center gap-2">
-              <img
-                src="https://primefaces.org/cdn/primeng/images/demo/flag/flag_placeholder.png"
-                [class]="'flag flag-' + country.code.toLowerCase()"
-                style="width: 18px"
-              />
-              <div>{{ country.name }}</div>
+          <ng-template let-pet pTemplate="item">
+            <div class="flex align-items-center gap-2 pet-item">
+              <div class="flex gap-3 align-items-center">
+                <img src="assets/images/pet-pfp.png" alt="" />
+                <div class="flex flex-column justify-content-center gap-2">
+                  <p>{{ pet.name }} - {{ pet.specie }} - {{ pet.breed }}</p>
+                </div>
+              </div>
+            </div>
+          </ng-template>
+        </p-dropdown>
+        <p-dropdown
+          (onChange)="selectedVet = $event.value"
+          [filter]="true"
+          filterBy="name"
+          [options]="(vets | async) || []"
+          optionLabel="name"
+          [showClear]="true"
+          placeholder="Select a Pet"
+        >
+          <ng-template pTemplate="selectedItem">
+            <div class="flex align-items-center gap-2" *ngIf="selectedVet">
+              <img src="assets/images/pet-pfp.png" style="width: 18px" />
+              <div>{{ selectedVet.name }}</div>
+            </div>
+          </ng-template>
+          <ng-template let-pet pTemplate="item">
+            <div class="flex align-items-center gap-2 pet-item">
+              <div class="flex gap-3 align-items-center">
+                <img src="assets/images/pet-pfp.png" alt="" />
+                <div class="flex flex-column justify-content-center gap-2">
+                  <p>{{ vet.name }}</p>
+                </div>
+              </div>
             </div>
           </ng-template>
         </p-dropdown>

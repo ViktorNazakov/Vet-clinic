@@ -1,5 +1,13 @@
-<div class="bg-container">
-  <div class="bg-image"></div>
-
-  <h1 class="container-title">{{ title }}</h1>
+<div class="flex flex-column title-container">
+  <div class="bg-container">
+    <div class="bg-image"></div>
+    <h1 class="container-title">{{ title }}</h1>
+  </div>
+  <div class="breadcrumbs container flex justify-content-center gap-2">
+    <p-breadcrumb
+      class="max-w-full"
+      [model]="breadcrumbs"
+      [home]="home"
+    ></p-breadcrumb>
+  </div>
 </div>

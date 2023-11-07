@@ -13,8 +13,25 @@
       border: 2px solid var(--tetiary-color);
     }
     .p-float-label,
-    .p-dropdown {
+    .p-dropdown,
+    p-dropdown {
       width: 100%;
+      padding: 0 !important;
     }
+  }
+  .pet-item {
+    img {
+      height: 30px;
+      width: 30px;
+      border-radius: 50%;
+      box-shadow: 1px 1px 1px black;
+    }
+    p {
+      font-size: 14px;
+      font-weight: 800;
+    }
+  }
+  .p-dropdown-panel .p-dropdown-items .p-dropdown-item.p-highlight {
+    color: var(--secondary-color);
   }
 }

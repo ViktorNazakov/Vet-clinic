@@ -5,6 +5,8 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { StorageService } from 'src/app/services/storage.service';
 import { AuthService } from 'src/app/services/auth.service';
+import { ProfileService } from 'src/app/services/profile.service';
+import { Store } from '@ngrx/store';
 
 @Injectable({ providedIn: 'root' })
 export class AuthEffects {
@@ -30,7 +32,14 @@ export class AuthEffects {
       switchMap((data) =>
         /** Replace With API Request */
         this.aService
-          .registerAccount(data.username, data.email, data.password)
+          .registerAccount(
+            data.username,
+            data.email,
+            data.password,
+            data.firstName,
+            data.lastName,
+            data.phone
+          )
           .pipe(
             first(),
             map((res: any) => {
@@ -52,22 +61,25 @@ export class AuthEffects {
   onAccountCheck$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthAPIActions.accountCheck),
-      switchMap((data) =>
-        timer(500).pipe(
-          first(),
-          map(() => {
-            if (data.token) {
-              return {
-                type: '[Auth API] Account Check Success',
-                token: data.token,
-              };
-            } else
-              return {
-                type: '[Auth API] Account Check Error',
-              };
-          })
-        )
-      )
+      switchMap((data) => {
+        const token = this.sService.getToken();
+        if (!!token)
+          return this.pService.getUserProfile().pipe(
+            first(),
+            map(() => {
+              if (data.token) {
+                return {
+                  type: '[Auth API] Account Check Success',
+                  token: data.token,
+                };
+              } else
+                return {
+                  type: '[Auth API] Account Check Error',
+                };
+            })
+          );
+        else return of({ type: '[Auth API] Account Check Error' });
+      })
     )
   );
 
@@ -78,6 +90,7 @@ export class AuthEffects {
         timer(500).pipe(
           first(),
           map(() => {
+            this.router.navigate(['/home']);
             this.sService.clearToken();
             return { type: '[Auth API] Logout' };
           })
@@ -89,6 +102,8 @@ export class AuthEffects {
     private actions$: Actions,
     private router: Router,
     private sService: StorageService,
-    private aService: AuthService
+    private aService: AuthService,
+    private pService: ProfileService,
+    private store: Store
   ) {}
 }

@@ -5,11 +5,21 @@ import { ProfilePage } from './views/profile/profile.page';
 import { authGuard } from './guards/auth.guard';
 import { AppointmentPage } from './views/appointment/appointment.page';
 import { RegisterPage } from './views/auth/register/register.page';
+import { AboutPage } from './views/about/about.page';
+import { ContactPage } from './views/contact/contact.page';
 
 export const routes: Routes = [
   {
     path: 'home',
     loadComponent: () => HomePage,
+  },
+  {
+    path: 'about',
+    loadComponent: () => AboutPage,
+  },
+  {
+    path: 'contact',
+    loadComponent: () => ContactPage,
   },
   {
     path: '',

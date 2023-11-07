@@ -13,3 +13,8 @@ export interface Appointment {
   doctor: string;
   _id: string;
 }
+export interface Vet {
+  name: string;
+  specialty: string;
+  _id: string;
+}

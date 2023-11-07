@@ -24,13 +24,18 @@ export class ProfileEffects {
     this.actions$.pipe(
       ofType(ProfileActions.loadAttempt),
       switchMap(() =>
-        timer(2000).pipe(
+        this.pService.getUserProfile().pipe(
           first(),
-          map(() => ({
-            type: '[Profile] Load Success',
-            firstName: 'John',
-            lastName: 'Einstein',
-          })),
+          map((res: any) => {
+            console.log(res);
+            return {
+              type: '[Profile] Load Success',
+              firstName: res.fname,
+              lastName: res.lname,
+              username: res.username,
+              email: res.email,
+            };
+          }),
           catchError(() => of({ type: '[Profile] Load Error' }))
         )
       )

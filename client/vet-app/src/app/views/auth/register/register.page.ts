@@ -35,6 +35,9 @@ export class RegisterPage {
       password: ['', [Validators.required, Validators.minLength(8)]],
       repeatPassword: ['', [Validators.required, Validators.minLength(8)]],
       email: ['', [Validators.required, Validators.email]],
+      firstName: ['', [Validators.required]],
+      lastName: ['', [Validators.required]],
+      phone: ['', [Validators.required]],
     },
     { validator: this.ComparePassword('password', 'repeatPassword') }
   );
@@ -42,11 +45,7 @@ export class RegisterPage {
   attemptRegister() {
     if (this.registerForm.valid) {
       this.store.dispatch(
-        AuthAPIActions.registerAttempt({
-          username: this.registerForm.value.username,
-          password: this.registerForm.value.password,
-          email: this.registerForm.value.email,
-        })
+        AuthAPIActions.registerAttempt(this.registerForm.value)
       );
     }
   }
@@ -65,5 +64,8 @@ export class RegisterPage {
         matchingControl.setErrors(null);
       }
     };
+  }
+  ionViewWillLeave() {
+    this.registerForm.reset();
   }
 }

@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 @Injectable({ providedIn: 'root' })
 export class ProfileService {
   BASE_ENDPOINT = environment.endpoint;
+  getUserProfile = () => this.http.get(this.BASE_ENDPOINT + 'users');
   getUserPets = () => this.http.get(this.BASE_ENDPOINT + 'users/pets');
   createUserPet = (name: string, specie: string, breed: string) =>
     this.http.post(
@@ -21,6 +22,6 @@ export class ProfileService {
       }
     );
   deleteUserPet = (petId: string) =>
-    this.http.delete(`http://localhost:8080/api/v1/users/pets&petId=${petId}`);
+    this.http.delete(`http://localhost:8080/api/v1/users/pets?&petId=${petId}`);
   constructor(private http: HttpClient) {}
 }

@@ -10,6 +10,9 @@ export const AuthAPIActions = createActionGroup({
       username: string;
       password: string;
       email: string;
+      phone: string;
+      firstName: string;
+      lastName: string;
     }>(),
     'Register Error': props<{ error: String }>(),
     'Register Success': props<{ token: String; role: string }>(),

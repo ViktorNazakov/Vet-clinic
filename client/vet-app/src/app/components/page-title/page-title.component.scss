@@ -3,10 +3,13 @@
   height: 400px;
   width: 100%;
   display: block;
-  margin-bottom: 150px;
+  margin-bottom: 100px;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+.title-container {
+  margin-bottom: 70px;
 }
 .bg-image {
   background-image: url("/assets/images/title-image.jpg");
@@ -28,6 +31,24 @@
   line-height: 1;
   text-align: center;
   position: absolute;
-  bottom: -85px;
+  margin-top: 85px;
+  bottom: 0;
   user-select: none;
+  margin-bottom: -85px;
+}
+:host::ng-deep {
+  .p-breadcrumb-list {
+    li:not(.p-menuitem-separataor) {
+      font-size: 16px;
+      font-weight: 800;
+      .pi {
+        font-size: 16px;
+        font-weight: 800;
+      }
+    }
+  }
+  .p-breadcrumb {
+    padding: 5px 10px;
+    border: 0;
+  }
 }

@@ -45,4 +45,7 @@ export class LoginComponent {
       );
     }
   }
+  ionViewWillLeave() {
+    this.loginForm.reset();
+  }
 }
