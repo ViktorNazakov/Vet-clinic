@@ -26,6 +26,9 @@ public class Visit extends BaseEntity{
     @Column(name = "time")
     private Time time;
 
+    @Column(name = "approved")
+    private boolean isApproved = false;
+
     @NotBlank
     @Column(name = "description")
     private String description;

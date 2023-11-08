@@ -48,32 +48,6 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     /**
-     * Returns exception message with status code conflict, when we try to create a car with registration number, which already exists in some Car Entity in database.
-     *
-     * @param e - the exception thrown.
-     * @return - response, containing the exception message and appropriate status code.
-     */
-//    @ExceptionHandler(CarAlreadyExistsException.class)
-//    public ResponseEntity<ApiErrorResponseDTO> handleCarAlreadyExists(CarAlreadyExistsException e) {
-//        String exceptionMessage = e.getLocalizedMessage();
-//        log.warn(exceptionMessage);
-//        return new ResponseEntity<>(new ApiErrorResponseDTO(HttpStatus.CONFLICT, exceptionMessage, List.of(e.getMessage())), HttpStatus.CONFLICT);
-//    }
-
-    /**
-     * Returns exception message with status code bad request, when we try to get a page with size less than 0 or index less than 0.
-     *
-     * @param e - the exception thrown.
-     * @return - response, containing the exception message and appropriate status code.
-     */
-//    @ExceptionHandler(InvalidPagePropertiesException.class)
-//    public ResponseEntity<ApiErrorResponseDTO> handleInvalidPageProperties(InvalidPagePropertiesException e) {
-//        String exceptionMessage = e.getLocalizedMessage();
-//        log.warn(exceptionMessage);
-//        return new ResponseEntity<>(new ApiErrorResponseDTO(HttpStatus.BAD_REQUEST, exceptionMessage, List.of(e.getMessage())), HttpStatus.BAD_REQUEST);
-//    }
-
-    /**
      * Returns exception message with status code conflict, when we try to create a User with username, which already exists in some User Entity in database.
      *
      * @param e - the exception thrown.
@@ -152,93 +126,28 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
     }
 
     /**
-     * Returns exception message with status code conflict, when we try to create a User with username, which already exists in some User Entity in database.
+     * Returns exception message with status code bad request, when we try to delete a user with id, which does not exist in database.
      *
      * @param e - the exception thrown.
      * @return - response, containing the exception message and appropriate status code.
      */
-/*    @ExceptionHandler(RoleNotFoundException.class)
-    public ResponseEntity<ApiErrorResponseDTO> handleRoleNotFound(RoleNotFoundException e) {
-        String exceptionMessage = e.getLocalizedMessage();
-        log.warn(exceptionMessage);
-        return new ResponseEntity<>(new ApiErrorResponseDTO(HttpStatus.NOT_FOUND, exceptionMessage, List.of(e.getMessage())), HttpStatus.NOT_FOUND);
-    }*/
-
-    /**
-     * Returns exception message with status code bad_request, when we try to access non existent car service.
-     *
-     * @param e - the exception thrown.
-     * @return - response, containing the exception message and appropriate status code.
-     */
-/*    @ExceptionHandler(CarServiceNotFoundException.class)
-    public ResponseEntity<ApiErrorResponseDTO> handleCarServiceNotFoundException(CarServiceNotFoundException e) {
+    @ExceptionHandler(UserNotFoundException.class)
+    public ResponseEntity<ApiErrorResponseDTO> handleUserNotFound(UserNotFoundException e) {
         String exceptionMessage = e.getLocalizedMessage();
         log.warn(exceptionMessage);
         return new ResponseEntity<>(new ApiErrorResponseDTO(HttpStatus.BAD_REQUEST, exceptionMessage, List.of(e.getMessage())), HttpStatus.BAD_REQUEST);
-    }*/
+    }
 
     /**
-     * Returns exception message with status code bad_request, when we try to set an invalid value for the capacity of a car service.
+     * Returns exception message with status code unauthorized, when we try to update a different user from currently logged or currently logged user does not have ADMIN authorities to update other users.
      *
      * @param e - the exception thrown.
      * @return - response, containing the exception message and appropriate status code.
      */
-/*    @ExceptionHandler(InvalidCarServiceCapacityValueException.class)
-    public ResponseEntity<ApiErrorResponseDTO> handleInvalidCarServiceCapacityValueException(InvalidCarServiceCapacityValueException e) {
+    @ExceptionHandler(InvalidAuthoritiesException.class)
+    public ResponseEntity<ApiErrorResponseDTO> handleInvalidAuthorities(InvalidAuthoritiesException e) {
         String exceptionMessage = e.getLocalizedMessage();
         log.warn(exceptionMessage);
-        return new ResponseEntity<>(new ApiErrorResponseDTO(HttpStatus.BAD_REQUEST, exceptionMessage, List.of(e.getMessage())), HttpStatus.BAD_REQUEST);
-    }*/
-
-    /**
-     * Returns exception message with status code bad_request, when we try to access non existent car.
-     *
-     * @param e - the exception thrown.
-     * @return - response, containing the exception message and appropriate status code.
-     */
-/*    @ExceptionHandler(CarNotFoundException.class)
-    public ResponseEntity<ApiErrorResponseDTO> handleCarNotFoundException(CarNotFoundException e) {
-        String exceptionMessage = e.getLocalizedMessage();
-        log.warn(exceptionMessage);
-        return new ResponseEntity<>(new ApiErrorResponseDTO(HttpStatus.BAD_REQUEST, exceptionMessage, List.of(e.getMessage())), HttpStatus.BAD_REQUEST);
-    }*/
-
-    /**
-     * Returns exception message with status code bad_request, when we try to put into service car that already is in service.
-     *
-     * @param e - the exception thrown.
-     * @return - response, containing the exception message and appropriate status code.
-     */
-/*    @ExceptionHandler(CarAlreadyInServiceException.class)
-    public ResponseEntity<ApiErrorResponseDTO> handleCarAlreadyInServiceException(CarAlreadyInServiceException e) {
-        String exceptionMessage = e.getLocalizedMessage();
-        log.warn(exceptionMessage);
-        return new ResponseEntity<>(new ApiErrorResponseDTO(HttpStatus.CONFLICT, exceptionMessage, List.of(e.getMessage())), HttpStatus.CONFLICT);
-    }*/
-
-    /**
-     * Returns exception message with status code bad_request, when we try to add a car to our profile, which is owned by another user already.
-     *
-     * @param e - the exception thrown.
-     * @return - response, containing the exception message and appropriate status code.
-     */
-/*    @ExceptionHandler(CarIsTakenException.class)
-    public ResponseEntity<ApiErrorResponseDTO> handleCarIsTakenException(CarIsTakenException e) {
-        String exceptionMessage = e.getLocalizedMessage();
-        log.warn(exceptionMessage);
-        return new ResponseEntity<>(new ApiErrorResponseDTO(HttpStatus.CONFLICT, exceptionMessage, List.of(e.getMessage())), HttpStatus.CONFLICT);
-    }*/
-
-    /**
-     * Returns exception message with status code bad_request, when we try to add a car to our profile, which is owned by another user already.
-     *
-     * @param e - the exception thrown.
-     * @return - response, containing the exception message and appropriate status code.
-     */
-/*    @ExceptionHandler(CarAlreadyOutOfServiceException.class)
-    public ResponseEntity<ApiErrorResponseDTO> handleCarAlreadyOutOfServiceException(CarAlreadyOutOfServiceException e) {
-        String exceptionMessage = e.getLocalizedMessage();
-        log.warn(exceptionMessage);
-        return new ResponseEntity<>(new ApiErrorResponseDTO(HttpStatus.CONFLICT, exceptionMessage, List.of(e.getMessage())), HttpStatus.CONFLICT);
-    }*/
+        return new ResponseEntity<>(new ApiErrorResponseDTO(HttpStatus.UNAUTHORIZED, exceptionMessage, List.of(e.getMessage())), HttpStatus.UNAUTHORIZED);
+    }
 }

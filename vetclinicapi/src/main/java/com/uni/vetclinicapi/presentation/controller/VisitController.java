@@ -47,4 +47,6 @@ public class VisitController {
             @Valid @RequestBody VisitDTO visitDTO) {
         return new ResponseEntity<>(visitService.addVisit(visitDTO), HttpStatus.CREATED);
     }
+
+
 }

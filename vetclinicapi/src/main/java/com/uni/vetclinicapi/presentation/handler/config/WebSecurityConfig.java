@@ -40,6 +40,8 @@ import java.util.Arrays;
 public class WebSecurityConfig{
 
     private static final String MANAGER_AUTHORITY = "MANAGER";
+
+    private static final String ADMIN_AUTHORITY = "ADMIN";
     private static final String CUSTOMER_AUTHORITY = "CUSTOMER";
     //TODO
     // add the other authorities
@@ -79,9 +81,12 @@ public class WebSecurityConfig{
                 .exceptionHandling(httpSecurityExceptionHandlingConfigurer -> httpSecurityExceptionHandlingConfigurer.authenticationEntryPoint(unauthorizedHandler))
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> authorizationManagerRequestMatcherRegistry.requestMatchers("/api/v1/auth/register","/api/v1/auth/login").permitAll()
                         .requestMatchers("/api/v1/users").hasAuthority(CUSTOMER_AUTHORITY)
+                        .requestMatchers(HttpMethod.PATCH, "/api/v1/users").hasAnyAuthority(CUSTOMER_AUTHORITY, ADMIN_AUTHORITY)
                         .requestMatchers("/api/v1/users/pets").hasAuthority(CUSTOMER_AUTHORITY)
+                        .requestMatchers(HttpMethod.PATCH, "/api/v1/users/pets").hasAnyAuthority(CUSTOMER_AUTHORITY, ADMIN_AUTHORITY)
                         .requestMatchers("/api/v1/pets").hasAuthority(CUSTOMER_AUTHORITY)
-                        .requestMatchers("/api/v1/visits").hasAuthority(CUSTOMER_AUTHORITY));
+                        .requestMatchers("/api/v1/visits").hasAuthority(CUSTOMER_AUTHORITY)
+                        .requestMatchers("/api/v1/admin", "/api/v1/admin/**").hasAuthority(ADMIN_AUTHORITY));
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }

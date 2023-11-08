@@ -42,6 +42,10 @@ public class FullVisitDTO {
     @NotNull(message = "Time should be specified.")
     private Time time;
 
+    @Schema(description = "Whether the is approved or not")
+    @NotNull
+    private boolean isApproved;
+
     @Schema(description = "Description/summery of the visit.")
     @NotNull(message = "Description should be specified.")
     @Size(min = 10, max = 100, message = "Description should be of length from 10 to 100 symbols.")

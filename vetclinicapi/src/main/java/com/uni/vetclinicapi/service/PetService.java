@@ -3,10 +3,13 @@ package com.uni.vetclinicapi.service;
 import com.uni.vetclinicapi.persistance.entity.Pet;
 import com.uni.vetclinicapi.persistance.entity.User;
 import com.uni.vetclinicapi.persistance.repository.PetRepository;
+import com.uni.vetclinicapi.persistance.repository.UserRepository;
 import com.uni.vetclinicapi.presentation.exceptions.PetAlreadyExistsException;
 import com.uni.vetclinicapi.presentation.exceptions.PetNotFoundException;
+import com.uni.vetclinicapi.presentation.exceptions.UserNotFoundException;
 import com.uni.vetclinicapi.service.dto.FullPetDTO;
 import com.uni.vetclinicapi.service.dto.PetDTO;
+import com.uni.vetclinicapi.service.dto.UserInfoDTO;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.function.BiConsumer;
 
 /**
  * Provides the necessary methods regarding CRUD operations with Car Entities.
@@ -88,5 +92,38 @@ public class PetService {
         petRepository.deleteById(pet.getId());
         log.info("Pet with details : {}, was deleted!", pet);
         return modelMapper.map(pet, FullPetDTO.class);
+    }
+
+
+    /**
+     * Updates a pet's property - Returns the updated pet.
+     * Checks if pet with such id exists.
+     * Checks which property is changed.
+     *
+     * @param petId - the id of the pet.
+     * @param petDTO - the id of the user.
+     * @return - FullPetDTO object, containing all the information about the updated Pet entity.
+     */
+    public FullPetDTO updatePetProperty(UUID petId, FullPetDTO petDTO) {
+        Pet pet = petRepository.findById(petId).orElseThrow(() -> {
+            log.warn("Attempted to fetch a Pet with id: {} , which does not exist.", petId);
+            throw new UserNotFoundException(String.format("Pet with id: %s does not exist!", petId));
+        });
+
+
+        updatePropertyIfNotNull(pet,petDTO.getBreed(),Pet::setBreed);
+        updatePropertyIfNotNull(pet,petDTO.getName(),Pet::setName);
+        updatePropertyIfNotNull(pet,petDTO.getSpecie(),Pet::setSpecie);
+
+        Pet persistedPet = petRepository.save(pet);
+
+        log.info("Pet with details : {}, was updated!", pet);
+        return modelMapper.map(persistedPet, FullPetDTO.class);
+    }
+
+    private <T> void updatePropertyIfNotNull(Pet pet, T value, BiConsumer<Pet, T> setter) {
+        if (value != null) {
+            setter.accept(pet, value);
+        }
     }
 }

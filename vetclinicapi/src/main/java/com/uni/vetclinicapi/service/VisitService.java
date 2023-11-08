@@ -10,6 +10,7 @@ import com.uni.vetclinicapi.persistance.repository.VisitRepository;
 import com.uni.vetclinicapi.presentation.exceptions.InvalidVisitDateException;
 import com.uni.vetclinicapi.presentation.exceptions.PetNotFoundException;
 import com.uni.vetclinicapi.presentation.exceptions.VetNotFoundException;
+import com.uni.vetclinicapi.service.dto.FullPetDTO;
 import com.uni.vetclinicapi.service.dto.FullVisitDTO;
 import com.uni.vetclinicapi.service.dto.VisitDTO;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +20,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 
 @Slf4j
@@ -57,5 +59,18 @@ public class VisitService {
         Visit persistedVisit = visitRepository.save(visit);
         log.warn("Visit by User: {} with pet: {} and vet: {} was created successfully",user.getId(),pet.getId(),vet.getId());
         return modelMapper.map(persistedVisit, FullVisitDTO.class);
+    }
+
+    public List<FullVisitDTO> findAllVisitsForUser() {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        List<FullVisitDTO> fullVisitDTOList = visitRepository.findAllByUser(user)
+                .stream()
+                .map(visit -> modelMapper.map(visit, FullVisitDTO.class)).toList();
+        if (fullVisitDTOList.isEmpty()) {
+            log.info("There are no Visits present in database!");
+        } else {
+            log.info("{} Visits for user with id : {}, have been fetched from database.", fullVisitDTOList.size(), user.getId());
+        }
+        return fullVisitDTOList;
     }
 }
