@@ -14,6 +14,12 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { Subscription } from 'rxjs';
 import { DropdownModule } from 'primeng/dropdown';
 import { Pet, Vet } from 'src/app/models/user.models';
+import { DATA_ACTIONS } from 'src/app/store/actions/data.actions';
+import {
+  getVetsData,
+  getVetsDataLoading,
+} from 'src/app/store/selectors/data.selectors';
+import { CalendarModule } from 'primeng/calendar';
 @Component({
   standalone: true,
   imports: [
@@ -24,17 +30,22 @@ import { Pet, Vet } from 'src/app/models/user.models';
     ReactiveFormsModule,
     ProgressSpinnerModule,
     DropdownModule,
+    CalendarModule,
   ],
   templateUrl: './appointment.page.html',
   styleUrls: ['./appointment.page.scss'],
 })
 export class AppointmentPage {
   pets = this.store.select(getUserPets);
+  vets = this.store.select(getVetsData);
+  vetsLoading = this.store.select(getVetsDataLoading);
   userDetails = this.store.select(getProfileDetails);
-  userSub!: Subscription;
+  baseDate = new Date(new Date().setHours(0, 0, 0, 0));
   appForm = this.fBuilder.group({
-    pet: [0, Validators.required],
-    fullName: { value: '', validators: [Validators.required], disabled: true },
+    pet: ['', Validators.required],
+    vet: ['', Validators.required],
+    time: [this.baseDate, Validators.required],
+    description: [''],
   });
   selectedPet!: Pet;
   selectedVet!: Vet;
@@ -42,13 +53,20 @@ export class AppointmentPage {
 
   ionViewWillEnter() {
     this.store.dispatch(ProfileActions.loadAttempt());
-    this.userSub = this.userDetails.pipe().subscribe((props) =>
-      this.appForm.patchValue({
-        fullName: props.firstName + ' ' + props.lastName,
-      })
-    );
+    this.store.dispatch(DATA_ACTIONS.loadVets());
   }
-  ionViewWillLeave() {
-    this.userSub?.unsubscribe();
+  ionViewWillLeave() {}
+  createAppointment() {
+    console.log(this.appForm.value);
+    if (this.appForm.valid) {
+      this.store.dispatch(
+        ProfileActions.createAppointment({
+          time: this.appForm.value.time || new Date(),
+          pet: this.appForm.value.pet || '',
+          description: this.appForm.value.description || '',
+          vet: this.appForm.value.vet || '',
+        })
+      );
+    }
   }
 }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { ProfileActions } from '../actions/profile.actions';
-import { catchError, first, map, of, switchMap, timer } from 'rxjs';
+import { catchError, exhaustMap, first, map, of, switchMap, timer } from 'rxjs';
 import { Appointment, Pet } from 'src/app/models/user.models';
 import { ProfileService } from 'src/app/services/profile.service';
 
@@ -12,12 +12,12 @@ export class ProfileEffects {
     appointments: Appointment[];
   } = {
     pets: [
-      { name: 'Chocho', _id: '1', specie: 'dog' },
-      { name: 'Djesa', _id: '2', specie: 'dog' },
+      { name: 'Chocho', id: '1', specie: 'dog' },
+      { name: 'Djesa', id: '2', specie: 'dog' },
     ],
     appointments: [
-      { _id: '1', doctor: 'Dr. John', time: new Date() },
-      { _id: '2', doctor: 'Dr. John 2', time: new Date() },
+      { id: '1', doctor: 'Dr. John', time: new Date() },
+      { id: '2', doctor: 'Dr. John 2', time: new Date() },
     ],
   };
   onProfileLoad$ = createEffect(() =>
@@ -68,6 +68,22 @@ export class ProfileEffects {
       )
     )
   );
+  onEditPet$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ProfileActions.editPet),
+      switchMap((data) =>
+        this.pService
+          .editUserPet(data.petId, data.name, data.breed, data.specie)
+          .pipe(
+            first(),
+            map(() => {
+              return { type: '[Profile] Load Pets' };
+            }),
+            catchError(() => of({ type: '[Profile] Edit Pet Error' }))
+          )
+      )
+    )
+  );
   onDeletePet$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ProfileActions.deletePet),
@@ -76,6 +92,24 @@ export class ProfileEffects {
           first(),
           map(() => ({ type: '[Profile] Load Pets' }))
         )
+      )
+    )
+  );
+  onCreateAppointment$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ProfileActions.createAppointment),
+      exhaustMap((data) =>
+        this.pService
+          .createAppointment(
+            data.time,
+            data.description + '',
+            data.pet,
+            data.vet
+          )
+          .pipe(
+            first(),
+            map(() => ({ type: '[Profile] Create Appointment Success' }))
+          )
       )
     )
   );

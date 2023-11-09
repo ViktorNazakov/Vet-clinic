@@ -26,16 +26,6 @@ export class AuthInterceptor implements HttpInterceptor {
       : req.clone();
     // send cloned request with header to the next handler.
 
-    return next.handle(authReq).pipe(
-      catchError((res) => {
-        console.log(res);
-        if (!!res.status) {
-          if (res.status === 401 && !res.message.includes('auth/login')) {
-            this.store.dispatch(AuthAPIActions.logoutAttempt());
-          }
-        }
-        throw of(res);
-      })
-    );
+    return next.handle(authReq);
   }
 }

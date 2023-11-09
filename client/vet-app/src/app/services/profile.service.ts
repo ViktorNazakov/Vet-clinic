@@ -21,7 +21,51 @@ export class ProfileService {
         },
       }
     );
+  editUserPet = (id: string, name?: string, breed?: string, specie?: string) =>
+    this.http.patch(
+      this.BASE_ENDPOINT + `users/pets?petId=${id}`,
+      JSON.stringify({
+        name,
+        specie,
+        breed,
+      }),
+      {
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+        },
+      }
+    );
   deleteUserPet = (petId: string) =>
-    this.http.delete(`http://localhost:8080/api/v1/users/pets?&petId=${petId}`);
+    this.http.delete(this.BASE_ENDPOINT + `users/pets?&petId=${petId}`);
+  createAppointment = (
+    time: Date,
+    description: string,
+    pet: string,
+    vet: string
+  ) =>
+    this.http.post(
+      this.BASE_ENDPOINT + 'visits',
+      JSON.stringify({
+        date: `${time.getFullYear()}-${('' + (time.getMonth() + 1)).padStart(
+          2,
+          '0'
+        )}-${('' + time.getDate()).padStart(2, '0')}`,
+        time: `${('' + time.getHours()).padStart(2, '0')}:${(
+          '' + time.getMinutes()
+        ).padStart(2, '0')}:00`,
+        description,
+        pet: {
+          id: pet,
+        },
+        vet: {
+          id: vet,
+        },
+      }),
+      {
+        headers: {
+          'Content-Type': 'application/json; charset=utf-8',
+        },
+      }
+    );
   constructor(private http: HttpClient) {}
 }

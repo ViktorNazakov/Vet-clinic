@@ -13,6 +13,8 @@ import {
   getUserPets,
   getUserPetsLoading,
 } from 'src/app/store/selectors/profile.selectors';
+import { FormBuilder } from '@angular/forms';
+import { first } from 'rxjs';
 
 @Component({
   standalone: true,
@@ -28,11 +30,33 @@ import {
   styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage {
+  editForm = this.fBuilder.group({
+    fname: [''],
+    lname: [''],
+    phone: [''],
+  });
+  editMode = false;
   userDetails = this.store.select(getProfileDetails);
   pets = this.store.select(getUserPets);
   loaded = this.store.select(getProfileFullLoad);
+
+  constructor(private store: Store, private fBuilder: FormBuilder) {}
+
   ionViewWillEnter() {
     this.store.dispatch(ProfileActions.loadAttempt());
   }
-  constructor(private store: Store) {}
+  swapEdit() {
+    this.editMode = !this.editMode;
+    if (this.editMode) {
+      this.userDetails.pipe(first()).subscribe((det) =>
+        this.editForm.patchValue({
+          fname: det.firstName,
+          lname: det.lastName,
+          phone: det.phone,
+        })
+      );
+    } else {
+      this.editForm.reset();
+    }
+  }
 }

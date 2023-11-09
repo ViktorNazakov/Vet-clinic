@@ -1,4 +1,4 @@
-<form [formGroup]="petForm" (submit)="$event.preventDefault(); createPet()">
+<form [formGroup]="petForm" (submit)="$event.preventDefault(); submitPet()">
   <span class="p-float-label">
     <input formControlName="name" pInputText id="name" />
     <label htmlFor="name">Name</label>
@@ -12,6 +12,6 @@
     <label htmlFor="breed">Breed</label>
   </span>
   <div class="flex justify-content-center py-2">
-    <button class="btn-cta">Create +</button>
+    <button class="btn-cta">{{ editMode ? "Save" : "Create +" }}</button>
   </div>
 </form>

@@ -22,7 +22,7 @@ export class AppointmentsListComponent {
 
   _appointments: (Appointment | number)[] = [];
   temp: Appointment = {
-    _id: '2314234',
+    id: '2314234',
     doctor: 'Dr. John Stevens',
     time: new Date(),
   };

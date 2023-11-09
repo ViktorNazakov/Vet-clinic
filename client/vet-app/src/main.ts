@@ -24,6 +24,10 @@ import {
   withInterceptorsFromDi,
 } from '@angular/common/http';
 import { AuthInterceptor } from './app/interceptors/auth.interceptor';
+import { DataReducer } from './app/store/reducers/data.reducer';
+import { DataEffects } from './app/store/effects/data.effects';
+import { ErrorInterceptor } from './app/interceptors/error.interceptor';
+import { MessageService } from 'primeng/api';
 if (environment.production) {
   enableProdMode();
 }
@@ -32,12 +36,12 @@ bootstrapApplication(AppComponent, {
   providers: [
     /** Required Services */
     DialogService,
-
+    MessageService,
     /** */
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     importProvidersFrom(
       IonicModule.forRoot({}),
-      EffectsModule.forRoot([AuthEffects, ProfileEffects]),
+      EffectsModule.forRoot([AuthEffects, ProfileEffects, DataEffects]),
       BrowserAnimationsModule
     ),
     provideHttpClient(withInterceptorsFromDi()),
@@ -46,7 +50,16 @@ bootstrapApplication(AppComponent, {
       useClass: AuthInterceptor,
       multi: true,
     },
-    provideStore({ AUTH: AuthReducer, PROFILE: ProfileReducer }),
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: ErrorInterceptor,
+      multi: true,
+    },
+    provideStore({
+      AUTH: AuthReducer,
+      PROFILE: ProfileReducer,
+      DATA: DataReducer,
+    }),
     provideStoreDevtools({
       maxAge: 25, // Retains last 25 states
       logOnly: !isDevMode(), // Restrict extension to log-only mode

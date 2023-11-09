@@ -88,7 +88,6 @@ export class HomeSliderComponent implements AfterViewInit, OnDestroy {
       : false;
   }
   ngOnDestroy(): void {
-    console.log('destroy');
     this.slider?.destroy();
   }
 }

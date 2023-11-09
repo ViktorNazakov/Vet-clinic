@@ -27,8 +27,8 @@ import { AuthAPIActions } from 'src/app/store/actions/auth.actions';
 export class LoginComponent {
   loginStatus = this.store.select(getLoginStatus);
   loginForm = this.fBuilder.group({
-    username: ['', [Validators.required, Validators.minLength(8)]],
-    password: ['', [Validators.required, Validators.minLength(8)]],
+    username: ['', [Validators.required, Validators.minLength(4)]],
+    password: ['', [Validators.required, Validators.minLength(4)]],
   });
   constructor(private fBuilder: FormBuilder, private store: Store) {}
   attemptLogin() {

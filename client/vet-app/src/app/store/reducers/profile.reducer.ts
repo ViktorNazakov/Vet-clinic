@@ -7,6 +7,7 @@ export interface ProfileState {
   username: string;
   firstName: string;
   lastName: string;
+  phone: string;
   pets: {
     loaded: number;
     items: Pet[];
@@ -18,6 +19,7 @@ const initialState: ProfileState | undefined = {
   username: '',
   firstName: '',
   lastName: '',
+  phone: '',
   loaded: 0,
   pets: {
     loaded: 0,
@@ -53,5 +55,17 @@ export const ProfileReducer = createReducer(
       loaded: 0,
       items: [],
     },
+  })),
+  on(ProfileActions.createPet, (state: ProfileState) => ({
+    ...state,
+    pets: { ...state.pets, loaded: 0 },
+  })),
+  on(ProfileActions.createPetError, (state: ProfileState) => ({
+    ...state,
+    pets: { ...state.pets, loaded: 1 },
+  })),
+  on(ProfileActions.deletePet, (state: ProfileState) => ({
+    ...state,
+    pets: { ...state.pets, loaded: 0 },
   }))
 );

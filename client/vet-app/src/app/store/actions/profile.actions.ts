@@ -15,6 +15,20 @@ export const ProfileActions = createActionGroup({
     'Load Pets Success': props<{ pets: Pet[] }>(),
     'Create Pet': props<{ name: string; specie: string; breed: string }>(),
     'Create Pet Error': emptyProps(),
+    'Edit Pet': props<{
+      petId: string;
+      specie?: string;
+      name?: string;
+      breed?: string;
+    }>(),
     'Delete Pet': props<{ petId: string }>(),
+    'Create Appointment': props<{
+      time: Date;
+      description?: string;
+      pet: string;
+      vet: string;
+    }>(),
+    'Create Appointment Error': emptyProps(),
+    'Create Appointment Success': emptyProps(),
   },
 });

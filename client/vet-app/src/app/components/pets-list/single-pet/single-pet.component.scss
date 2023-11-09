@@ -1,0 +1,27 @@
+:host::ng-deep {
+  .p-dataview {
+    border: none !important;
+  }
+  .pet-col {
+    margin-bottom: 20px;
+    border-radius: 20px;
+    box-shadow: 0 1px 1px #7a7a7a;
+    img {
+      height: 100%;
+      object-fit: cover;
+      aspect-ratio: 4/3;
+    }
+  }
+  .p-dataview-loading-overlay {
+    font-size: 20px;
+    border-radius: 20px;
+  }
+}
+.options-belt {
+  position: absolute;
+  top: 0;
+  right: 0;
+  button {
+    background-color: transparent;
+  }
+}

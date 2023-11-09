@@ -8,6 +8,7 @@
   p {
     line-height: 100%;
   }
+  transition: background-color 0.5s;
 }
 .pfp {
   border: 1px solid white;
@@ -78,4 +79,19 @@
 ion-spinner {
   height: 50px;
   width: 50px;
+}
+.edit-btn {
+  transition: background-color 0.5s;
+  width: fit-content;
+  border-radius: 20px;
+  padding: 5px 10px;
+  background-color: white;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+}
+.edit {
+  background-color: var(--tetiary-color);
 }

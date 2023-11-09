@@ -1,6 +1,6 @@
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { AuthAPIActions } from '../actions/auth.actions';
-import { catchError, exhaustMap, first, map, of, switchMap, timer } from 'rxjs';
+import { catchError, exhaustMap, first, map, of, mergeMap, timer } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { StorageService } from 'src/app/services/storage.service';
@@ -13,7 +13,7 @@ export class AuthEffects {
   onLoginAttempt$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthAPIActions.loginAttempt),
-      switchMap((data) =>
+      mergeMap((data) =>
         /** Replace With API Request */
         this.aService.loginAccount(data.username, data.password).pipe(
           map((res: any) => {
@@ -29,7 +29,7 @@ export class AuthEffects {
   onRegisterAttempt$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthAPIActions.registerAttempt),
-      switchMap((data) =>
+      mergeMap((data) =>
         /** Replace With API Request */
         this.aService
           .registerAccount(
@@ -61,7 +61,7 @@ export class AuthEffects {
   onAccountCheck$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthAPIActions.accountCheck),
-      switchMap((data) => {
+      mergeMap((data) => {
         const token = this.sService.getToken();
         if (!!token)
           return this.pService.getUserProfile().pipe(
