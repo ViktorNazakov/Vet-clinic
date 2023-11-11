@@ -4,10 +4,6 @@ import com.uni.vetclinicapi.persistance.entity.Pet;
 import com.uni.vetclinicapi.persistance.entity.User;
 import com.uni.vetclinicapi.persistance.entity.Vet;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.persistence.Column;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
@@ -18,10 +14,9 @@ import org.springframework.validation.annotation.Validated;
 
 import java.sql.Date;
 import java.sql.Time;
-import java.time.LocalDateTime;
 import java.util.UUID;
 
-@Schema(description = "Full Visit DTO is used for carrying information about the Visit Entity (ID included).", allowableValues = {"id", "dateAndHour", "description", "pet","vet"})
+@Schema(description = "Full Visit DTO is used for carrying information about the Visit Entity (ID included).", allowableValues = {"id", "date","time","isApproved", "description", "pet","vet","user"})
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode

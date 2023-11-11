@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 /**
  * This class holds the information about a user that has successfully registered.
  */
-@Schema(description = "This DTO holds information about a User that has successfully registered.", allowableValues = {"username", "email", "password"})
+@Schema(description = "This DTO holds information about a User that has successfully registered.", allowableValues = {"username", "email"})
 @AllArgsConstructor
 @NoArgsConstructor
 @Data

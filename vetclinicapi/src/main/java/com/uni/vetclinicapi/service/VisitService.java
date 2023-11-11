@@ -10,7 +10,6 @@ import com.uni.vetclinicapi.persistance.repository.VisitRepository;
 import com.uni.vetclinicapi.presentation.exceptions.InvalidVisitDateException;
 import com.uni.vetclinicapi.presentation.exceptions.PetNotFoundException;
 import com.uni.vetclinicapi.presentation.exceptions.VetNotFoundException;
-import com.uni.vetclinicapi.service.dto.FullPetDTO;
 import com.uni.vetclinicapi.service.dto.FullVisitDTO;
 import com.uni.vetclinicapi.service.dto.VisitDTO;
 import lombok.RequiredArgsConstructor;
@@ -23,6 +22,10 @@ import java.time.LocalDate;
 import java.util.List;
 
 
+/**
+ * Provides the necessary methods regarding CRUD operations with Visit Entities.
+ * Uses the VisitRepository, PetRepository and VetRepository as a connection with the database.
+ */
 @Slf4j
 @RequiredArgsConstructor
 @Service

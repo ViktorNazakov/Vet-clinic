@@ -1,27 +1,26 @@
 package com.uni.vetclinicapi.service;
 
-import com.uni.vetclinicapi.persistance.entity.Pet;
 import com.uni.vetclinicapi.persistance.entity.Role;
 import com.uni.vetclinicapi.persistance.entity.User;
 import com.uni.vetclinicapi.persistance.repository.PetRepository;
 import com.uni.vetclinicapi.persistance.repository.UserRepository;
 import com.uni.vetclinicapi.presentation.exceptions.InvalidAuthoritiesException;
-import com.uni.vetclinicapi.presentation.exceptions.PetAlreadyExistsException;
-import com.uni.vetclinicapi.presentation.exceptions.PetNotFoundException;
 import com.uni.vetclinicapi.presentation.exceptions.UserNotFoundException;
-import com.uni.vetclinicapi.service.dto.FullPetDTO;
 import com.uni.vetclinicapi.service.dto.UserInfoDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import java.util.function.BiConsumer;
+import java.util.stream.Collectors;
 
 /**
  * This service is used to load user by username from database.
@@ -74,7 +73,11 @@ public class UserService implements UserDetailsService {
      */
     public UserInfoDTO getLoggedUserInfo() {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        return modelMapper.map(user, UserInfoDTO.class);
+        Set<String> role = user.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority).collect(Collectors.toSet());
+        UserInfoDTO userInfoDTO = modelMapper.map(user, UserInfoDTO.class);
+        userInfoDTO.setRole(role.iterator().next());
+        return userInfoDTO;
     }
 
     /**

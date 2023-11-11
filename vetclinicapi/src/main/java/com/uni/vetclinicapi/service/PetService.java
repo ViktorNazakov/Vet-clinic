@@ -3,14 +3,11 @@ package com.uni.vetclinicapi.service;
 import com.uni.vetclinicapi.persistance.entity.Pet;
 import com.uni.vetclinicapi.persistance.entity.User;
 import com.uni.vetclinicapi.persistance.repository.PetRepository;
-import com.uni.vetclinicapi.persistance.repository.UserRepository;
 import com.uni.vetclinicapi.presentation.exceptions.PetAlreadyExistsException;
 import com.uni.vetclinicapi.presentation.exceptions.PetNotFoundException;
 import com.uni.vetclinicapi.presentation.exceptions.UserNotFoundException;
 import com.uni.vetclinicapi.service.dto.FullPetDTO;
 import com.uni.vetclinicapi.service.dto.PetDTO;
-import com.uni.vetclinicapi.service.dto.UserInfoDTO;
-import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -22,8 +19,8 @@ import java.util.UUID;
 import java.util.function.BiConsumer;
 
 /**
- * Provides the necessary methods regarding CRUD operations with Car Entities.
- * Uses the CarRepository as a connection with the database.
+ * Provides the necessary methods regarding CRUD operations with Pet Entities.
+ * Uses the PetRepository as a connection with the database.
  */
 @Slf4j
 @RequiredArgsConstructor
@@ -47,7 +44,8 @@ public class PetService {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         boolean exists = petRepository.findAllByUser(user).stream().anyMatch(pet -> pet.getName().equals(petDTO.getName()));
         if (exists) {
-            throw new PetAlreadyExistsException(String.format("Pet with the same name: %s and owner: %s already exists!", petDTO.getName(),user.getUsername()));
+            log.warn("Attempted to create a Pet with name: {} for User with id: {}, which already exists.", petDTO.getName(),user.getId());
+            throw new PetAlreadyExistsException(String.format("Pet with the same name: %s and owner: %s already existsw!", petDTO.getName(),user.getUsername()));
         }
 
         Pet pet = modelMapper.map(petDTO, Pet.class);
@@ -101,7 +99,7 @@ public class PetService {
      * Checks which property is changed.
      *
      * @param petId - the id of the pet.
-     * @param petDTO - the id of the user.
+     * @param petDTO - the DTO with changed property information.
      * @return - FullPetDTO object, containing all the information about the updated Pet entity.
      */
     public FullPetDTO updatePetProperty(UUID petId, FullPetDTO petDTO) {
@@ -121,6 +119,14 @@ public class PetService {
         return modelMapper.map(persistedPet, FullPetDTO.class);
     }
 
+    /**
+     * Helper method
+     *
+     * @param pet - pet which parameter is to be changed
+     * @param value - current value of a pet's parameter
+     * @param setter - setter method of a parameter
+     * @param <T> - generic parameter
+     */
     private <T> void updatePropertyIfNotNull(Pet pet, T value, BiConsumer<Pet, T> setter) {
         if (value != null) {
             setter.accept(pet, value);

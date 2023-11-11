@@ -13,10 +13,8 @@ import org.springframework.validation.annotation.Validated;
 
 import java.sql.Date;
 import java.sql.Time;
-import java.time.LocalDateTime;
-import java.util.UUID;
 
-@Schema(description = "Visit DTO is used for carrying information about the Visit Entity.", allowableValues = {"dateAndHour", "description", "petId","vetId"})
+@Schema(description = "Visit DTO is used for carrying information about the Visit Entity.", allowableValues = {"date", "time", "description", "pet","vet"})
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode

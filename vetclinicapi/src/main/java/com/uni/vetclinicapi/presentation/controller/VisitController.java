@@ -29,10 +29,10 @@ public class VisitController {
     /**
      * Creates a visit.
      *
-     * @param visitDTO - data that the created Pet must include.
-     * @return - response with status code CREATED if the car was created successfully or CONFLICT if the pet or vet does not exist.
+     * @param visitDTO - data that the created Visit must include.
+     * @return - response with status code CREATED if the visit was created successfully or CONFLICT if the pet or vet does not exist.
      */
-    @Operation(summary = "Create new Pet.", description = "Creates new Pet and persists to database.", tags = {"pets"})
+    @Operation(summary = "Create new Visit.", description = "Creates new Visit and persists to database.", tags = {"visits"})
     @ApiResponses(value = {
             @ApiResponse(responseCode = "201", description = "Visit created.", content = @Content(schema = @Schema(implementation = FullVisitDTO.class))),
             @ApiResponse(responseCode = "400", description = "Invalid input.", content = @Content(schema = @Schema(implementation = ApiErrorResponseDTO.class))),

@@ -150,4 +150,30 @@ public class CustomRestExceptionHandler extends ResponseEntityExceptionHandler {
         log.warn(exceptionMessage);
         return new ResponseEntity<>(new ApiErrorResponseDTO(HttpStatus.UNAUTHORIZED, exceptionMessage, List.of(e.getMessage())), HttpStatus.UNAUTHORIZED);
     }
+
+    /**
+     * Returns exception message with status code conflict, when we try to create a medication with name which already exists.
+     *
+     * @param e - the exception thrown.
+     * @return - response, containing the exception message and appropriate status code.
+     */
+    @ExceptionHandler(MedicationAlreadyExistsException.class)
+    public ResponseEntity<ApiErrorResponseDTO> handleMedicationAlreadyExists(MedicationAlreadyExistsException e) {
+        String exceptionMessage = e.getLocalizedMessage();
+        log.warn(exceptionMessage);
+        return new ResponseEntity<>(new ApiErrorResponseDTO(HttpStatus.CONFLICT, exceptionMessage, List.of(e.getMessage())), HttpStatus.CONFLICT);
+    }
+
+    /**
+     * Returns exception message with status code conflict, when we try to fetch a medication with id which does not exist.
+     *
+     * @param e - the exception thrown.
+     * @return - response, containing the exception message and appropriate status code.
+     */
+    @ExceptionHandler(MedicationNotFoundException.class)
+    public ResponseEntity<ApiErrorResponseDTO> handleMedicationNotFound(MedicationNotFoundException e) {
+        String exceptionMessage = e.getLocalizedMessage();
+        log.warn(exceptionMessage);
+        return new ResponseEntity<>(new ApiErrorResponseDTO(HttpStatus.BAD_REQUEST, exceptionMessage, List.of(e.getMessage())), HttpStatus.BAD_REQUEST);
+    }
 }

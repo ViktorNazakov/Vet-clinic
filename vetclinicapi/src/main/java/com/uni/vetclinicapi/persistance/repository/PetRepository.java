@@ -8,6 +8,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.UUID;
 
+/**
+ * Provides basic CRUD operations and other needed query methods, regarding the Pet entities.
+ */
 @Repository
 public interface PetRepository extends JpaRepository<Pet, UUID> {
 

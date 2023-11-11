@@ -6,6 +6,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.UUID;
 
+/**
+ * Provides basic CRUD operations and other needed query methods, regarding the Vet entities.
+ */
 @Repository
 public interface VetRepository extends JpaRepository<Vet, UUID> {
 }

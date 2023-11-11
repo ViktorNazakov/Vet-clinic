@@ -16,7 +16,7 @@ import java.util.UUID;
  * Provides Data transfer objects or DTOs for short.
  * Used to hide data that doesn't need to be exposed to the public and is lighter than the real Entity.
  */
-@Schema(description = "Full Pet DTO is used for carrying information about the Car Entity (ID included).", allowableValues = {"id", "registrationNumber", "color", "creationYear"})
+@Schema(description = "Full Pet DTO is used for carrying information about the Pet Entity (ID included).", allowableValues = {"id", "name", "specie", "breed","user"})
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode

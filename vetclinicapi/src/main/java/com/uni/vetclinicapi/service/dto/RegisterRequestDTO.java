@@ -10,7 +10,7 @@ import lombok.Data;
 /**
  * This class holds the information about a user that's trying to register.
  */
-@Schema(description = "This DTO holds information about a User that's trying to register.", allowableValues = {"username", "email", "password"})
+@Schema(description = "This DTO holds information about a User that's trying to register.", allowableValues = {"username", "email", "password", "fName","lName","phoneNumber"})
 @AllArgsConstructor
 @Data
 public class RegisterRequestDTO {
