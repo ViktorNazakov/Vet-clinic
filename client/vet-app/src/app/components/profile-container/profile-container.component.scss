@@ -1,0 +1,119 @@
+.details {
+  @media screen and (min-width: 991px) {
+    max-width: 300px;
+  }
+  width: 100%;
+  background-color: var(--secondary-color);
+  padding: 20px;
+  p {
+    line-height: 100%;
+  }
+  transition: background-color 0.5s;
+}
+.pfp {
+  border: 1px solid white;
+  border-radius: 20px;
+  aspect-ratio: 4/3;
+  max-height: 300px;
+  width: 100%;
+  object-fit: cover;
+}
+
+.profile-container {
+  overflow: hidden;
+  width: 100%;
+  border-radius: 20px;
+  border: 2px solid var(--secondary-color);
+}
+:host::ng-deep {
+  p-tabview {
+    width: 100%;
+  }
+  .p-tabview-nav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .p-tabview-nav-link {
+  }
+  .p-tabview-title {
+    color: var(--secondary-color);
+  }
+}
+.profile-container {
+  position: relative;
+  overflow: hidden;
+  height: fit-content;
+  transition: 0.5s;
+  &::after {
+    content: "";
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+    opacity: 0;
+    transition: 0.5s;
+    width: 100%;
+    z-index: -1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: gray;
+  }
+  &.loading::after {
+    z-index: 10;
+    opacity: 1;
+  }
+  .status-box {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 11;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+}
+ion-spinner {
+  height: 50px;
+  width: 50px;
+}
+.edit-btn {
+  transition: background-color 0.5s;
+  width: fit-content;
+  border-radius: 20px;
+  padding: 5px 10px;
+  background-color: white;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  justify-content: center;
+}
+.edit {
+  background-color: var(--tetiary-color);
+}
+.edit-form {
+  div {
+    min-width: 0;
+  }
+  min-width: 0;
+  max-width: 100%;
+  input {
+    background-color: transparent;
+    border: 0 !important;
+    border-bottom: 2px solid black !important;
+    outline: none;
+    padding: 0 0 3px 0;
+    max-width: 100%;
+    min-width: auto;
+    line-height: 1.1;
+    width: 100%;
+    transition: 0.5s;
+    &.ng-dirty.ng-invalid {
+      border-color: red !important;
+    }
+  }
+}

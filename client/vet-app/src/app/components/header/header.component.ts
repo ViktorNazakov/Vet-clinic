@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
 import {
   getAuthReqs,
+  getUserRole,
   getValidation,
 } from 'src/app/store/selectors/auth.selectors';
 import { AuthAPIActions } from 'src/app/store/actions/auth.actions';
@@ -19,6 +20,7 @@ import { debounceTime } from 'rxjs';
 })
 export class HeaderComponent {
   auth = this.store.select(getAuthReqs).pipe(debounceTime(0));
+  role = this.store.select(getUserRole).pipe(debounceTime(0));
   validated = this.store.select(getValidation).pipe(debounceTime(0));
   constructor(private store: Store) {}
   logout() {

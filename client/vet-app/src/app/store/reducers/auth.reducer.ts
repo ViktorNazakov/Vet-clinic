@@ -2,10 +2,9 @@ import { createReducer, on } from '@ngrx/store';
 import { AuthAPIActions } from '../actions/auth.actions';
 
 export interface AuthState {
-  userId: String;
   token: String;
   isAuth: boolean;
-  role: string;
+  role: String;
   validated: boolean;
   login: {
     loading: boolean;
@@ -18,11 +17,10 @@ export interface AuthState {
 }
 
 const initialState: AuthState = {
-  userId: '',
   token: '',
   isAuth: false,
-  role: '',
   validated: false,
+  role: '',
   login: {
     loading: false,
     error: '',
@@ -43,7 +41,7 @@ export const AuthReducer = createReducer(
     ...state,
     isAuth: true,
     token: props.token,
-    role: '',
+    role: props.role,
     login: { error: '', loading: false },
   })),
   on(AuthAPIActions.loginError, (state: AuthState, props) => ({
@@ -74,6 +72,7 @@ export const AuthReducer = createReducer(
     ...state,
     validated: true,
     isAuth: true,
+    role: props.role,
     token: props.token,
   })),
   on(AuthAPIActions.accountCheckError, (state: AuthState, props) => ({

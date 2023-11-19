@@ -1,12 +1,20 @@
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { AuthAPIActions } from '../actions/auth.actions';
-import { catchError, exhaustMap, first, map, of, mergeMap, timer } from 'rxjs';
+import {
+  catchError,
+  exhaustMap,
+  first,
+  map,
+  of,
+  mergeMap,
+  timer,
+  switchMap,
+} from 'rxjs';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { StorageService } from 'src/app/services/storage.service';
 import { AuthService } from 'src/app/services/auth.service';
 import { ProfileService } from 'src/app/services/profile.service';
-import { Store } from '@ngrx/store';
 
 @Injectable({ providedIn: 'root' })
 export class AuthEffects {
@@ -14,12 +22,15 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(AuthAPIActions.loginAttempt),
       mergeMap((data) =>
-        /** Replace With API Request */
         this.aService.loginAccount(data.username, data.password).pipe(
           map((res: any) => {
             this.router.navigate(['/home']);
             this.sService.setToken(res.token);
-            return { type: '[Auth API] Login Success', token: res.token };
+            return {
+              type: '[Auth API] Login Success',
+              token: res.token,
+              role: res.role,
+            };
           }),
           catchError(() => of({ type: '[Auth API] Login Error' }))
         )
@@ -29,8 +40,7 @@ export class AuthEffects {
   onRegisterAttempt$ = createEffect(() =>
     this.actions$.pipe(
       ofType(AuthAPIActions.registerAttempt),
-      mergeMap((data) =>
-        /** Replace With API Request */
+      switchMap((data) =>
         this.aService
           .registerAccount(
             data.username,
@@ -51,7 +61,7 @@ export class AuthEffects {
             catchError((err: any) => {
               return of({
                 type: '[Auth API] Register Error',
-                error: err.error.message,
+                error: err?.error?.message,
               });
             })
           )
@@ -66,11 +76,12 @@ export class AuthEffects {
         if (!!token)
           return this.pService.getUserProfile().pipe(
             first(),
-            map(() => {
+            map((res: any) => {
               if (data.token) {
                 return {
                   type: '[Auth API] Account Check Success',
                   token: data.token,
+                  role: res.role,
                 };
               } else
                 return {
@@ -103,7 +114,6 @@ export class AuthEffects {
     private router: Router,
     private sService: StorageService,
     private aService: AuthService,
-    private pService: ProfileService,
-    private store: Store
+    private pService: ProfileService
   ) {}
 }

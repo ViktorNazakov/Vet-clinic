@@ -1,0 +1,97 @@
+<div
+  [ngClass]="{ loading: loaded }"
+  class="flex lg:flex-row flex-column justify-content-between profile-container"
+>
+  <div *ngIf="loaded" class="status-box">
+    <ion-spinner color="light" name="dots"></ion-spinner>
+  </div>
+  <div [ngClass]="{ edit: editMode }" class="details flex flex-column gap-3">
+    <div class="flex gap-2">
+      <button
+        [ngClass]="{ 'bg-red-500 text-white': editMode }"
+        class="edit-btn"
+        (click)="swapEdit()"
+      >
+        <i
+          [ngClass]="{ 'pi-pencil': !editMode, 'pi-times': editMode }"
+          class="pi bg-transparent"
+        ></i>
+        <p>{{ editMode ? "Cancel" : "Edit" }}</p>
+      </button>
+    </div>
+
+    <img src="assets/images/pfp.webp" class="pfp" alt="" />
+    <ng-container *ngIf="!editMode; else editing">
+      <div class="flex text-white gap-3 align-items-start">
+        <div class="pi text-xl pi-user"></div>
+        <div *ngIf="userDetails as details" class="flex flex-column gap-2">
+          <p class="text-xl font-semibold">{{ details.fname }}</p>
+          <p class="text-md">{{ details.lname }}</p>
+        </div>
+      </div>
+      <div
+        *ngIf="userDetails as details"
+        class="flex text-white gap-3 align-items-start"
+      >
+        <ng-container *ngIf="!!details.phoneNumber"
+          ><div class="pi text-xl pi-phone"></div>
+          <div class="flex flex-column gap-2">
+            <p class="text-md">{{ details.phoneNumber }}</p>
+          </div></ng-container
+        >
+      </div></ng-container
+    >
+  </div>
+  <ng-template #editing>
+    <form
+      id="profileForm"
+      (submit)="submitChanges()"
+      [formGroup]="editForm"
+      class="edit-form flex flex-column text-white gap-3"
+    >
+      <div class="flex gap-3 align-items-start">
+        <div class="pi text-xl pi-user"></div>
+        <div class="flex w-full flex-column gap-2">
+          <input
+            placeholder="First Name*"
+            formControlName="fname"
+            type="text"
+            class="text-xl font-semibold"
+          />
+          <input
+            placeholder="Last Name*"
+            formControlName="lname"
+            type="text"
+            class="text-md"
+          />
+        </div>
+      </div>
+      <div class="flex gap-3 align-items-start">
+        <div class="pi text-xl pi-phone"></div>
+        <div class="flex w-full flex-column gap-2">
+          <input
+            placeholder="Phone"
+            formControlName="phone"
+            type="tel"
+            class="text-md"
+          />
+        </div>
+      </div>
+      <button *ngIf="editMode" type="submit" class="edit-btn">
+        <i class="pi bg-transparent pi-check"></i>
+        <p>Save</p>
+      </button>
+    </form>
+  </ng-template>
+  <p-tabView>
+    <p-tabPanel header="Pets">
+      <app-pets-list [canCreate]="true" [pets]="pets"></app-pets-list>
+    </p-tabPanel>
+    <p-tabPanel header="Appointments">
+      <app-appointments-list
+        [canCreate]="true"
+        [appointments]="[]"
+      ></app-appointments-list>
+    </p-tabPanel>
+  </p-tabView>
+</div>

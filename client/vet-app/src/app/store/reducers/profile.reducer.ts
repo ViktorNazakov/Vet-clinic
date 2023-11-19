@@ -5,9 +5,10 @@ import { ProfileActions } from '../actions/profile.actions';
 
 export interface ProfileState {
   username: string;
+  id: string;
   firstName: string;
   lastName: string;
-  phone: string;
+  phoneNumber: string;
   pets: {
     loaded: number;
     items: Pet[];
@@ -17,9 +18,10 @@ export interface ProfileState {
 }
 const initialState: ProfileState | undefined = {
   username: '',
+  id: '',
   firstName: '',
   lastName: '',
-  phone: '',
+  phoneNumber: '',
   loaded: 0,
   pets: {
     loaded: 0,
@@ -41,6 +43,9 @@ export const ProfileReducer = createReducer(
     loaded: 1,
     firstName: props.firstName,
     lastName: props.lastName,
+    role: props.role,
+    id: props.id,
+    phoneNumber: props.phoneNumber,
   })),
   on(ProfileActions.loadPetsSuccess, (state: ProfileState, props) => ({
     ...state,

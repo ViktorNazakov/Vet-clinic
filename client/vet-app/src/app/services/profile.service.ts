@@ -6,6 +6,17 @@ import { environment } from 'src/environments/environment';
 export class ProfileService {
   BASE_ENDPOINT = environment.endpoint;
   getUserProfile = () => this.http.get(this.BASE_ENDPOINT + 'users');
+  editUserProfile = (
+    userId: string,
+    fname?: string,
+    lname?: string,
+    phoneNumber?: string
+  ) =>
+    this.http.patch(this.BASE_ENDPOINT + `users?userId=${userId}`, {
+      fname,
+      lname,
+      phoneNumber,
+    });
   getUserPets = () => this.http.get(this.BASE_ENDPOINT + 'users/pets');
   createUserPet = (name: string, specie: string, breed: string) =>
     this.http.post(

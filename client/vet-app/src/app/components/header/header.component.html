@@ -1,5 +1,8 @@
 <header class="bg-tetiary">
-  <nav *ngIf="{ data: auth | async } as req" class="w-full relative">
+  <nav
+    *ngIf="{ data: (auth | async), role: role | async } as req"
+    class="w-full relative"
+  >
     <div
       [ngClass]="{ show: (validated | async) !== true }"
       class="absolute w-full flex align-items-end h-full loading-bar"
@@ -28,8 +31,17 @@
         </a>
       </li>
       <div class="flex">
-        <ng-container *ngIf="validated | async"
-          ><li class="menu-item" *ngIf="req.data?.isAuth">
+        <li
+          class="menu-item"
+          *ngIf="(req.data?.isAuth && req?.role === 'ADMIN') || true"
+        >
+          <a routerLinkActive="active" routerLink="/admin">Panel</a>
+        </li>
+        <ng-container *ngIf="validated | async">
+          <li
+            class="menu-item"
+            *ngIf="req.data?.isAuth && req?.role === 'CUSTOMER'"
+          >
             <a routerLinkActive="active" routerLink="/appointment"
               >Appointment</a
             >
@@ -40,17 +52,21 @@
           <li class="menu-item" *ngIf="!req.data?.isAuth">
             <a routerLinkActive="active" routerLink="/register">Register</a>
           </li>
-          <li class="menu-item" *ngIf="req.data?.isAuth">
+          <li
+            class="menu-item"
+            *ngIf="req.data?.isAuth && req?.role === 'CUSTOMER'"
+          >
             <a routerLinkActive="active" routerLink="/profile">Profile</a>
+          </li>
+
+          <li
+            class="menu-item"
+            *ngIf="req.data?.isAuth && req?.role === 'ADMIN'"
+          >
+            <a routerLinkActive="active" routerLink="/manage">Manage</a>
           </li>
           <li class="menu-item" *ngIf="req.data?.isAuth">
             <button (click)="logout()">Logout</button>
-          </li>
-          <li
-            class="menu-item"
-            *ngIf="req.data?.isAuth && req.data?.role === 'super'"
-          >
-            <a routerLinkActive="active" routerLink="/manage">Manage</a>
           </li></ng-container
         >
       </div>

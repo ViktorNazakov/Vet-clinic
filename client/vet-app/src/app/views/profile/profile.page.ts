@@ -10,11 +10,15 @@ import { AppointmentsListComponent } from 'src/app/components/appointments-list/
 import {
   getProfileDetails,
   getProfileFullLoad,
+  getProfileUser,
   getUserPets,
   getUserPetsLoading,
 } from 'src/app/store/selectors/profile.selectors';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { first } from 'rxjs';
+import { ModalService } from 'src/app/services/modal.service';
+import { ProfileContainerComponent } from 'src/app/components/profile-container/profile-container.component';
+import { User } from 'src/app/models/user.models';
 
 @Component({
   standalone: true,
@@ -25,38 +29,34 @@ import { first } from 'rxjs';
     TabViewModule,
     PetsListComponent,
     AppointmentsListComponent,
+    ReactiveFormsModule,
+    ProfileContainerComponent,
   ],
   templateUrl: './profile.page.html',
   styleUrls: ['./profile.page.scss'],
 })
 export class ProfilePage {
-  editForm = this.fBuilder.group({
-    fname: [''],
-    lname: [''],
-    phone: [''],
-  });
-  editMode = false;
-  userDetails = this.store.select(getProfileDetails);
+  userDetails = this.store.select(getProfileUser);
   pets = this.store.select(getUserPets);
   loaded = this.store.select(getProfileFullLoad);
-
   constructor(private store: Store, private fBuilder: FormBuilder) {}
 
   ionViewWillEnter() {
     this.store.dispatch(ProfileActions.loadAttempt());
   }
-  swapEdit() {
-    this.editMode = !this.editMode;
-    if (this.editMode) {
-      this.userDetails.pipe(first()).subscribe((det) =>
-        this.editForm.patchValue({
-          fname: det.firstName,
-          lname: det.lastName,
-          phone: det.phone,
-        })
-      );
-    } else {
-      this.editForm.reset();
-    }
+  submitChanges(val: { fname?: string; lname?: string; phone?: string }) {
+    this.store
+      .select(getProfileDetails)
+      .pipe(first())
+      .subscribe((data) => {
+        this.store.dispatch(
+          ProfileActions.editAttempt({
+            userId: data.id,
+            fname: !!val.fname ? val.fname : undefined,
+            lname: !!val.lname ? val.lname : undefined,
+            phoneNumber: !!val.phone ? val.phone : undefined,
+          })
+        );
+      });
   }
 }

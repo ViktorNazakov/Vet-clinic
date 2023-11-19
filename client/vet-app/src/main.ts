@@ -28,6 +28,8 @@ import { DataReducer } from './app/store/reducers/data.reducer';
 import { DataEffects } from './app/store/effects/data.effects';
 import { ErrorInterceptor } from './app/interceptors/error.interceptor';
 import { MessageService } from 'primeng/api';
+import { AdminReducer } from './app/store/reducers/admin.reducer';
+import { AdminEffects } from './app/store/effects/admin.effects';
 if (environment.production) {
   enableProdMode();
 }
@@ -41,7 +43,12 @@ bootstrapApplication(AppComponent, {
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     importProvidersFrom(
       IonicModule.forRoot({}),
-      EffectsModule.forRoot([AuthEffects, ProfileEffects, DataEffects]),
+      EffectsModule.forRoot([
+        AuthEffects,
+        ProfileEffects,
+        DataEffects,
+        AdminEffects,
+      ]),
       BrowserAnimationsModule
     ),
     provideHttpClient(withInterceptorsFromDi()),
@@ -59,6 +66,7 @@ bootstrapApplication(AppComponent, {
       AUTH: AuthReducer,
       PROFILE: ProfileReducer,
       DATA: DataReducer,
+      ADMIN: AdminReducer,
     }),
     provideStoreDevtools({
       maxAge: 25, // Retains last 25 states

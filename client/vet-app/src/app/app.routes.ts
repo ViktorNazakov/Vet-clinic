@@ -7,6 +7,8 @@ import { AppointmentPage } from './views/appointment/appointment.page';
 import { RegisterPage } from './views/auth/register/register.page';
 import { AboutPage } from './views/about/about.page';
 import { ContactPage } from './views/contact/contact.page';
+import { AdminComponent } from './views/admin/admin.component';
+import { adminRoutes } from './views/admin/admin.routing';
 
 export const routes: Routes = [
   {
@@ -48,5 +50,10 @@ export const routes: Routes = [
   {
     path: 'register',
     redirectTo: 'home',
+  },
+  {
+    path: 'admin',
+    loadChildren: () => adminRoutes,
+    loadComponent: () => AdminComponent,
   },
 ];

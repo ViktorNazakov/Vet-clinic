@@ -4,6 +4,7 @@ import { ProfileActions } from '../actions/profile.actions';
 import { catchError, exhaustMap, first, map, of, switchMap, timer } from 'rxjs';
 import { Appointment, Pet } from 'src/app/models/user.models';
 import { ProfileService } from 'src/app/services/profile.service';
+import { AuthAPIActions } from '../actions/auth.actions';
 
 @Injectable()
 export class ProfileEffects {
@@ -23,14 +24,15 @@ export class ProfileEffects {
   onProfileLoad$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ProfileActions.loadAttempt),
-      switchMap(() =>
+      exhaustMap(() =>
         this.pService.getUserProfile().pipe(
           first(),
           map((res: any) => {
-            console.log(res);
             return {
               type: '[Profile] Load Success',
+              id: res.userId,
               firstName: res.fname,
+              phoneNumber: res.phoneNumber,
               lastName: res.lname,
               username: res.username,
               email: res.email,
@@ -38,6 +40,24 @@ export class ProfileEffects {
           }),
           catchError(() => of({ type: '[Profile] Load Error' }))
         )
+      )
+    )
+  );
+  onEditProfile$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ProfileActions.editAttempt),
+      exhaustMap((data) =>
+        this.pService
+          .editUserProfile(
+            data.userId,
+            data.fname,
+            data.lname,
+            data.phoneNumber
+          )
+          .pipe(
+            first(),
+            map(() => ({ type: '[Profile] Load Attempt' }))
+          )
       )
     )
   );

@@ -23,6 +23,7 @@ import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
 })
 export class AddPetComponent implements OnInit {
   editMode = false;
+  adminMode!: boolean;
   changeId!: string;
   petForm = this.fBuilder.group({
     name: ['', [Validators.required, Validators.minLength(2)]],
@@ -83,7 +84,6 @@ export class AddPetComponent implements OnInit {
           })
         );
       }
-
       this.petForm.reset();
     }
   }

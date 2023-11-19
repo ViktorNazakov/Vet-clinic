@@ -4,7 +4,7 @@ import {
   HttpHandler,
 } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, of } from 'rxjs';
+import { catchError, of, throwError } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AuthAPIActions } from '../store/actions/auth.actions';
 import { MessageService } from 'primeng/api';
@@ -30,7 +30,7 @@ export class ErrorInterceptor implements HttpInterceptor {
             this.store.dispatch(AuthAPIActions.logoutAttempt());
           }
         }
-        throw of(res);
+        return throwError(() => new Error(res));
       })
     );
   }

@@ -6,11 +6,21 @@ export const ProfileActions = createActionGroup({
   events: {
     'Load Attempt': emptyProps(),
     'Load Success': props<{
+      id: string;
+      role: string;
       username: string;
       firstName: string;
       lastName: string;
+      phoneNumber: string;
     }>(),
     'Load Error': props<{ error: String; code: number }>(),
+    'Edit Attempt': props<{
+      userId: string;
+      lname?: string;
+      fname?: string;
+      phoneNumber?: string;
+    }>(),
+    'Edit Error': props<{ error: string; code: number }>(),
     'Load Pets': emptyProps(),
     'Load Pets Success': props<{ pets: Pet[] }>(),
     'Create Pet': props<{ name: string; specie: string; breed: string }>(),

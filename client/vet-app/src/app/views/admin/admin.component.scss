@@ -1,0 +1,32 @@
+.header {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 2px;
+}
+.menu-item {
+  padding: 5px 15px;
+  border-radius: 4px 4px 0 0;
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-decoration: none;
+  transition: 0.5s;
+  gap: 5px;
+
+  &.active,
+  &:hover {
+    font-weight: 700;
+    background-color: white;
+    box-shadow: 0.3px -0.3px 6px 0.1px rgba(0, 0, 0, 0.048);
+  }
+}
+.content {
+  padding: 20px 10px;
+  border-radius: 0 4px 4px 4px;
+  box-shadow: 0.3px -0.3px 6px 0.1px rgba(0, 0, 0, 0.048);
+  background-color: white;
+  height: 100%;
+}

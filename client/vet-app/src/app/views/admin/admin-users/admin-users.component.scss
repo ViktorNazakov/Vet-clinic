@@ -1,0 +1,32 @@
+:host::ng-deep {
+  table {
+    overflow: hidden;
+    border-radius: 8px;
+  }
+  tr th {
+    text-align: center;
+    padding: 10px 0;
+    font-size: 18px;
+    font-weight: 800;
+    color: black;
+  }
+  tr td {
+    text-align: center;
+    padding: 10px 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: black;
+    transition: color 0.25s;
+  }
+  .selectable {
+    transition: 0.5s;
+    position: relative;
+    cursor: pointer;
+    &:hover {
+      background-color: var(--tetiary-color);
+      * {
+        color: white;
+      }
+    }
+  }
+}
