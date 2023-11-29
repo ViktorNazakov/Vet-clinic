@@ -229,3 +229,14 @@ Example request://localhost:8080/api/v1/users/pets?petId=***
 {
 	"specie" : "ChangedSpecie"
 }
+
+
+
+http://localhost:8080/api/v1/admin/users?userId***{GET}
+
+DESCRIPTION - Get single user profile details, using UserID
+
+
+
+http://localhost:8080/api/v1/admin/users/{userId}/pets{GET}
+DESCRIPTION - Get pets from profile, using UserID

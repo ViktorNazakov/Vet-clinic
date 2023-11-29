@@ -63,8 +63,8 @@ public class UserController {
             @ApiResponse(responseCode = "401", description = "Unauthorized.", content = @Content(schema = @Schema(implementation = ApiErrorResponseDTO.class))),
     })
     @GetMapping("/pets")
-    public ResponseEntity<List<FullPetDTO>> getAllPetsForUser() {
-        return new ResponseEntity<>(petService.findAllPetsForUser(), HttpStatus.OK);
+    public ResponseEntity<List<FullPetDTO>> getAllPetsForLoggedUser() {
+        return new ResponseEntity<>(petService.findAllPetsForLoggedUser(), HttpStatus.OK);
     }
 
     /**

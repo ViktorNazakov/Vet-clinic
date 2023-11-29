@@ -3,6 +3,7 @@ package com.uni.vetclinicapi.service;
 import com.uni.vetclinicapi.persistance.entity.Pet;
 import com.uni.vetclinicapi.persistance.entity.User;
 import com.uni.vetclinicapi.persistance.repository.PetRepository;
+import com.uni.vetclinicapi.persistance.repository.UserRepository;
 import com.uni.vetclinicapi.presentation.exceptions.PetAlreadyExistsException;
 import com.uni.vetclinicapi.presentation.exceptions.PetNotFoundException;
 import com.uni.vetclinicapi.presentation.exceptions.UserNotFoundException;
@@ -28,6 +29,8 @@ import java.util.function.BiConsumer;
 public class PetService {
 
     private final PetRepository petRepository;
+
+    private final UserRepository userRepository;
 
     private final ModelMapper modelMapper;
 
@@ -57,8 +60,23 @@ public class PetService {
 
 
 
+    public List<FullPetDTO> findAllPetsForUserById(UUID userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> {
+            log.warn("Attempted to fetch a User with id: {} , which does not exist.", userId);
+            throw new UserNotFoundException(String.format("User with id: %s does not exist!", userId));
+        });
+        List<FullPetDTO> fullPetDTOList = petRepository.findAllByUser(user)
+                .stream()
+                .map(pet -> modelMapper.map(pet, FullPetDTO.class)).toList();
+        if (fullPetDTOList.isEmpty()) {
+            log.info("There are no Pets present in database!");
+        } else {
+            log.info("{} Pets for user with id : {}, have been fetched from database.", fullPetDTOList.size(), user.getId());
+        }
+        return fullPetDTOList;
+    }
 
-    public List<FullPetDTO> findAllPetsForUser() {
+    public List<FullPetDTO> findAllPetsForLoggedUser() {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         List<FullPetDTO> fullPetDTOList = petRepository.findAllByUser(user)
                 .stream()

@@ -81,6 +81,21 @@ public class UserService implements UserDetailsService {
     }
 
     /**
+     * Returns a user.
+     *
+     * @return - A UserInfoDTO with all the information the user.
+     */
+    public UserInfoDTO getUserById(UUID userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> {
+            log.warn("Attempted to fetch a User with id: {} , which does not exist.", userId);
+            throw new UserNotFoundException(String.format("User with id: %s does not exist!", userId));
+        });
+
+        log.info("User with details : {}, was fetched!", user);
+        return modelMapper.map(user, UserInfoDTO.class);
+    }
+
+    /**
      * Returns a list with all users.
      *
      * @return - List of UserInfoDTO with all the information about a user.

@@ -15,13 +15,7 @@ import lombok.*;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name = "vets")
-public class Vet extends BaseEntity{
-
-    @Column(nullable = false)
-    private String fName;
-
-    @Column(nullable = false)
-    private String lName;
+public class Vet extends User{
 
     @Column(nullable = false)
     private String typeOfVet;

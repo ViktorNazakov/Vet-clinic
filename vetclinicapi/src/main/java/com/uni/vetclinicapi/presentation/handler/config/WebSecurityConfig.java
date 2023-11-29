@@ -3,17 +3,11 @@ package com.uni.vetclinicapi.presentation.handler.config;
 import com.uni.vetclinicapi.security.filter.JwtAuthenticationTokenFilter;
 import com.uni.vetclinicapi.security.util.JwtAuthenticationEntryPoint;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -26,8 +20,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import java.util.Arrays;
 
@@ -80,7 +72,7 @@ public class WebSecurityConfig{
                 .sessionManagement(httpSecuritySessionManagementConfigurer -> httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling(httpSecurityExceptionHandlingConfigurer -> httpSecurityExceptionHandlingConfigurer.authenticationEntryPoint(unauthorizedHandler))
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> authorizationManagerRequestMatcherRegistry.requestMatchers("/api/v1/auth/register","/api/v1/auth/login").permitAll()
-                        .requestMatchers("/api/v1/users").hasAuthority(CUSTOMER_AUTHORITY)
+                        .requestMatchers("/api/v1/users").hasAnyAuthority(CUSTOMER_AUTHORITY,ADMIN_AUTHORITY)
                         .requestMatchers(HttpMethod.PATCH, "/api/v1/users").hasAnyAuthority(CUSTOMER_AUTHORITY, ADMIN_AUTHORITY)
                         .requestMatchers("/api/v1/users/pets").hasAuthority(CUSTOMER_AUTHORITY)
                         .requestMatchers(HttpMethod.PATCH, "/api/v1/users/pets").hasAnyAuthority(CUSTOMER_AUTHORITY, ADMIN_AUTHORITY)

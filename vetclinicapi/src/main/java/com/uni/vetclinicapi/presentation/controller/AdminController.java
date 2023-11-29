@@ -1,9 +1,9 @@
 package com.uni.vetclinicapi.presentation.controller;
 
+import com.uni.vetclinicapi.service.PetService;
 import com.uni.vetclinicapi.service.UserService;
 import com.uni.vetclinicapi.service.dto.ApiErrorResponseDTO;
 import com.uni.vetclinicapi.service.dto.FullPetDTO;
-import com.uni.vetclinicapi.service.dto.RegisterRequestDTO;
 import com.uni.vetclinicapi.service.dto.UserInfoDTO;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -29,6 +29,8 @@ public class AdminController {
 
     private final UserService userService;
 
+    private final PetService petService;
+
 
     /**
      * Retrieves all users from database
@@ -52,7 +54,7 @@ public class AdminController {
      * @param userId - id for user to delete.
      * @return - response with status code OK if the user was deleted successfully or CONFLICT if the user with this id does not exist.
      */
-    @Operation(summary = "Deletes a User.", description = "Deletes Pet from database.", tags = {"admin"})
+    @Operation(summary = "Deletes a User.", description = "Deletes a User from database.", tags = {"admin"})
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Deletes Pet from database.", content = @Content(schema = @Schema(implementation = UserInfoDTO.class))),
             @ApiResponse(responseCode = "404", description = "User does not exist in the database", content = @Content(schema = @Schema(implementation = ApiErrorResponseDTO.class))),
@@ -66,6 +68,44 @@ public class AdminController {
     }
 
 
+    /**
+     * Fetches a user.
+     *
+     * @param userId - id for user to fetch.
+     * @return - response with status code OK if the user was fetched successfully or CONFLICT if the user with this id does not exist.
+     */
+    @Operation(summary = "Fetches a User.", description = "Fetches a User from database.", tags = {"admin"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Fetches Pet from database.", content = @Content(schema = @Schema(implementation = UserInfoDTO.class))),
+            @ApiResponse(responseCode = "404", description = "User does not exist in the database", content = @Content(schema = @Schema(implementation = ApiErrorResponseDTO.class))),
+            @ApiResponse(responseCode = "401", description = "Unauthorized.", content = @Content(schema = @Schema(implementation = ApiErrorResponseDTO.class))),
+    })
+    @GetMapping("/users")
+    public ResponseEntity<UserInfoDTO> getUserById(
+            @Parameter(description = "User id.")
+            @RequestParam("userId") @NotNull UUID userId) {
+        return new ResponseEntity<>(userService.getUserById(userId), HttpStatus.OK);
+    }
+
+
+    /**
+     * Delivers all the pets for given User.
+     *
+     * @return - response with status code OK if the pets were found successfully.
+     */
+
+    @Operation(summary = "Find all Pets for User.", description = "Delivers Pets from database.", tags = {"admin"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Delivers Pets for User from database.", content = @Content(schema = @Schema(implementation = List.class))),
+            @ApiResponse(responseCode = "404", description = "User does not exist in the database", content = @Content(schema = @Schema(implementation = ApiErrorResponseDTO.class))),
+            @ApiResponse(responseCode = "401", description = "Unauthorized.", content = @Content(schema = @Schema(implementation = ApiErrorResponseDTO.class))),
+    })
+    @GetMapping("/users/{userId}/pets")
+    public ResponseEntity<List<FullPetDTO>> getAllPetsForUserById(
+            @Parameter(description = "User id.")
+            @PathVariable("userId") @NotNull UUID userId) {
+        return new ResponseEntity<>(petService.findAllPetsForUserById(userId), HttpStatus.OK);
+    }
 
 }
 
