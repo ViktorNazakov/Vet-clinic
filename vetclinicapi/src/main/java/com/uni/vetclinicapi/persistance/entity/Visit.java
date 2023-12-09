@@ -35,7 +35,7 @@ public class Visit extends BaseEntity{
 
     @ManyToOne
     @JoinColumn(name = "vet_id")
-    private Vet vet;
+    private User vet;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

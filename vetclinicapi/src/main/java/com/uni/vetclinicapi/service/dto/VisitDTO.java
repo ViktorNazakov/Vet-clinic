@@ -1,7 +1,7 @@
 package com.uni.vetclinicapi.service.dto;
 
 import com.uni.vetclinicapi.persistance.entity.Pet;
-import com.uni.vetclinicapi.persistance.entity.Vet;
+import com.uni.vetclinicapi.persistance.entity.User;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
@@ -45,5 +45,5 @@ public class VisitDTO {
     @Schema(description = "Vet that should check the pet.",
             example = "480d68e4-3f13-48f0-a6ec-c94b4d0d7683")
     @NotNull(message = "Vet  should be specified.")
-    private Vet vet;
+    private User vet;
 }

@@ -5,7 +5,10 @@ import com.uni.vetclinicapi.persistance.entity.User;
 import com.uni.vetclinicapi.persistance.repository.UserRepository;
 import com.uni.vetclinicapi.presentation.exceptions.UsernameAlreadyExistsException;
 import com.uni.vetclinicapi.security.util.JwtUtils;
-import com.uni.vetclinicapi.service.dto.*;
+import com.uni.vetclinicapi.service.dto.JwtResponseDTO;
+import com.uni.vetclinicapi.service.dto.LoginRequestDTO;
+import com.uni.vetclinicapi.service.dto.RegisterRequestDTO;
+import com.uni.vetclinicapi.service.dto.RegisterResponseDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -17,7 +20,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Arrays;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -54,6 +56,15 @@ public class AuthenticationService {
                     throw new UsernameAlreadyExistsException(String.format("Username %s already exists!", username));
                 });
         Role role = roleService.getUserRole(Role.RoleType.CUSTOMER);
+        try {
+            User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+            if (loggedUser.getAuthorities().contains(Role.RoleType.ADMIN)) {
+                role = roleService.getUserRole(Role.RoleType.valueOf(createUserDto.getAuthority()));
+
+            }
+        } catch (Exception e) {
+            log.warn("No user or admin logged in!");
+        }
         User user = new User(
                 username,
                 passwordEncoder.encode(createUserDto.getPassword()),
@@ -61,6 +72,7 @@ public class AuthenticationService {
                 createUserDto.getFName(),
                 createUserDto.getLName(),
                 createUserDto.getPhoneNumber(),
+                null,
                 Set.of(role));
         userRepository.save(user);
         log.info("User with details : username: {}, email: {}, was successfully registered and saved!", username, createUserDto.getEmail());

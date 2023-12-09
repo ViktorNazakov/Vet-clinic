@@ -44,4 +44,8 @@ public class RegisterRequestDTO {
     @Schema(description = "The phone number of the user")
     @Size(min = 8, max = 15)
     private String phoneNumber;
+
+    @Schema(description = "The authority of the user")
+    @Size(min = 3, max = 20)
+    private String authority;
 }

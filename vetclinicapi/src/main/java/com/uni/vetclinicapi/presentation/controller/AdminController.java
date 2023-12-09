@@ -80,10 +80,10 @@ public class AdminController {
             @ApiResponse(responseCode = "404", description = "User does not exist in the database", content = @Content(schema = @Schema(implementation = ApiErrorResponseDTO.class))),
             @ApiResponse(responseCode = "401", description = "Unauthorized.", content = @Content(schema = @Schema(implementation = ApiErrorResponseDTO.class))),
     })
-    @GetMapping("/users")
+    @GetMapping("/users/{id}")
     public ResponseEntity<UserInfoDTO> getUserById(
             @Parameter(description = "User id.")
-            @RequestParam("userId") @NotNull UUID userId) {
+            @PathVariable("userId") @NotNull UUID userId) {
         return new ResponseEntity<>(userService.getUserById(userId), HttpStatus.OK);
     }
 

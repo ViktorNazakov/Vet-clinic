@@ -2,10 +2,9 @@ package com.uni.vetclinicapi.service;
 
 import com.uni.vetclinicapi.persistance.entity.Pet;
 import com.uni.vetclinicapi.persistance.entity.User;
-import com.uni.vetclinicapi.persistance.entity.Vet;
 import com.uni.vetclinicapi.persistance.entity.Visit;
 import com.uni.vetclinicapi.persistance.repository.PetRepository;
-import com.uni.vetclinicapi.persistance.repository.VetRepository;
+import com.uni.vetclinicapi.persistance.repository.UserRepository;
 import com.uni.vetclinicapi.persistance.repository.VisitRepository;
 import com.uni.vetclinicapi.presentation.exceptions.InvalidVisitDateException;
 import com.uni.vetclinicapi.presentation.exceptions.PetNotFoundException;
@@ -33,7 +32,7 @@ public class VisitService {
 
     private final PetRepository petRepository;
 
-    private final VetRepository vetRepository;
+    private final UserRepository userRepository;
 
     private final VisitRepository visitRepository;
 
@@ -46,8 +45,8 @@ public class VisitService {
             throw new PetNotFoundException(String.format("Pet with id: %s and owner: %s does not exist!", visitDTO.getPet().getId(),user.getUsername()));
         });
 
-        Vet vet = vetRepository.findById(visitDTO.getVet().getId()).orElseThrow(() -> {
-            log.warn("Attempted to get a Vet with id: {} which does not exist.", visitDTO.getVet().getId());
+        User vet = userRepository.findById(visitDTO.getVet().getId()).orElseThrow(() -> {
+            log.warn("Attempted to get a Vet(User) with id: {} which does not exist.", visitDTO.getVet().getId());
             throw new VetNotFoundException(String.format("Vet with id: %s does not exist!", visitDTO.getVet().getId()));
         });
 
