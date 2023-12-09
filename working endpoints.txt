@@ -232,8 +232,8 @@ Example request://localhost:8080/api/v1/users/pets?petId=***
 
 
 
-http://localhost:8080/api/v1/admin/users?userId***{GET}
-
+http://localhost:8080/api/v1/admin/users/{userId}
+http://localhost:8080/api/v1/admin/users/15616-156-156165-1156 
 DESCRIPTION - Get single user profile details, using UserID
 
 
