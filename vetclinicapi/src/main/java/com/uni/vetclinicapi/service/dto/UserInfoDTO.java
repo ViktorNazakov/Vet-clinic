@@ -34,6 +34,9 @@ public class UserInfoDTO {
     @Schema(description = "The phone number of the user")
     private String phoneNumber;
 
+    @Schema(description = "The type of vet")
+    private String vetType;
+
     @Schema(name = "role", description = "The user's role")
     private String role;
 }

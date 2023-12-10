@@ -1,7 +1,10 @@
 package com.uni.vetclinicapi.persistance.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -51,7 +54,7 @@ public class User extends BaseEntity implements UserDetails {
     @Size(min = 8, max = 15)
     private String phoneNumber;
 
-    @Size(min = 3, max = 30)
+    @Size(max = 30)
     private String vetType = null;
 
     // Fetch type is set to eager, cause we need to know the roles of each user at all times, they don't have many different roles, so our query won't be that slow and heavy to execute.
