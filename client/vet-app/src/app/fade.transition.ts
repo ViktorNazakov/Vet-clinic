@@ -5,7 +5,7 @@ import {
 } from '@ionic/angular';
 
 export function pageTransition(_: HTMLElement, opts: TransitionOptions) {
-  const DURATION = 500;
+  const DURATION = 200;
 
   // root animation with common setup for the whole transition
   const rootTransition = createAnimation()

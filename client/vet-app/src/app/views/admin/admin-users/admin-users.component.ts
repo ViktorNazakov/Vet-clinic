@@ -8,6 +8,7 @@ import {
 import { TableModule } from 'primeng/table';
 import { AdminActions } from 'src/app/store/actions/admin.actions';
 import { User } from 'src/app/models/user.models';
+import { ModalService } from 'src/app/services/modal.service';
 @Component({
   selector: 'app-admin-users',
   standalone: true,
@@ -19,9 +20,11 @@ export class AdminUsersComponent implements OnInit {
   users = this.store.select(getAdminUsersList);
   loaded = this.store.select(getAdminUsersLoaded);
 
-  constructor(private store: Store) {}
+  constructor(private store: Store, private mService: ModalService) {}
   ngOnInit() {
     this.store.dispatch(AdminActions.loadUsersAttempt());
   }
-  viewUser(user: User) {}
+  viewUser(user: User) {
+    this.mService.modalViewProfile(user);
+  }
 }

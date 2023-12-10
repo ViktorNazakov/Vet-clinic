@@ -11,11 +11,39 @@ import {
 import { AuthAPIActions } from 'src/app/store/actions/auth.actions';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { debounceTime } from 'rxjs';
+import {
+  trigger,
+  state,
+  style,
+  transition,
+  animate,
+} from '@angular/animations';
 @Component({
   selector: 'app-header',
   standalone: true,
   imports: [CommonModule, IonicModule, RouterModule, ProgressBarModule],
   templateUrl: './header.component.html',
+  animations: [
+    trigger('openClose', [
+      // ...
+      state(
+        'open',
+        style({
+          height: '100px',
+          opacity: 1,
+          backgroundColor: 'yellow',
+        })
+      ),
+      state(
+        'closed',
+        style({
+          height: '100px',
+          opacity: 0.8,
+          backgroundColor: 'blue',
+        })
+      ),
+    ]),
+  ],
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {

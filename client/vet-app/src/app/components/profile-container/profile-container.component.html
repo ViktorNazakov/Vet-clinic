@@ -1,6 +1,6 @@
 <div
   [ngClass]="{ loading: loaded }"
-  class="flex lg:flex-row flex-column justify-content-between profile-container"
+  class="flex lg:flex-row px-0 container w-full flex-column justify-content-between profile-container"
 >
   <div *ngIf="loaded" class="status-box">
     <ion-spinner color="light" name="dots"></ion-spinner>
@@ -84,12 +84,12 @@
     </form>
   </ng-template>
   <p-tabView>
-    <p-tabPanel header="Pets">
+    <!-- <p-tabPanel header="Pets">
       <app-pets-list [canCreate]="true" [pets]="pets"></app-pets-list>
-    </p-tabPanel>
+    </p-tabPanel> -->
     <p-tabPanel header="Appointments">
       <app-appointments-list
-        [canCreate]="true"
+        [canCreate]="!fromAdmin"
         [appointments]="[]"
       ></app-appointments-list>
     </p-tabPanel>

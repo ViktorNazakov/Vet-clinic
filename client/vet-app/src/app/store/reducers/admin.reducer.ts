@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { User } from 'src/app/models/user.models';
+import { Pet, User } from 'src/app/models/user.models';
 import { AdminActions } from '../actions/admin.actions';
 
 export interface AdminState {
@@ -8,12 +8,23 @@ export interface AdminState {
     items: User[];
     status: string;
   };
+  currentUser: {
+    userId: string;
+    loaded: number;
+    user?: User;
+    pets?: Pet[];
+  };
 }
 const initialState: AdminState = {
   users: {
     loaded: 0,
     items: [],
     status: '',
+  },
+  currentUser: {
+    userId: '',
+    loaded: 0,
+    pets: [],
   },
 };
 export const AdminReducer = createReducer(

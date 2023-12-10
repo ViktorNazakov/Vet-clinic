@@ -73,3 +73,11 @@ header {
     overflow: hidden;
   }
 }
+.eq-width,
+.logo {
+  width: 33%;
+}
+.logo {
+  flex-shrink: 1;
+  flex-grow: 0;
+}

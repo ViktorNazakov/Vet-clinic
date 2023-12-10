@@ -16,8 +16,11 @@ import { EffectsModule, provideEffects } from '@ngrx/effects';
 import { AuthEffects } from './app/store/effects/auth.effects';
 import { ProfileReducer } from './app/store/reducers/profile.reducer';
 import { ProfileEffects } from './app/store/effects/profile.effects';
-import { DialogService } from 'primeng/dynamicdialog';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DialogService, DynamicDialogConfig } from 'primeng/dynamicdialog';
+import {
+  BrowserAnimationsModule,
+  provideAnimations,
+} from '@angular/platform-browser/animations';
 import {
   HTTP_INTERCEPTORS,
   provideHttpClient,
@@ -39,6 +42,7 @@ bootstrapApplication(AppComponent, {
     /** Required Services */
     DialogService,
     MessageService,
+    DynamicDialogConfig,
     /** */
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     importProvidersFrom(
@@ -52,6 +56,7 @@ bootstrapApplication(AppComponent, {
       BrowserAnimationsModule
     ),
     provideHttpClient(withInterceptorsFromDi()),
+    provideAnimations(),
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

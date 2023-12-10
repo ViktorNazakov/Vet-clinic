@@ -1,12 +1,5 @@
 import { CommonModule } from '@angular/common';
-import {
-  ChangeDetectionStrategy,
-  Component,
-  ComponentRef,
-  Input,
-  OnInit,
-  Output,
-} from '@angular/core';
+import { Component, ComponentRef, Input, OnInit, Output } from '@angular/core';
 import { Validators, FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 import { Store } from '@ngrx/store';
@@ -14,31 +7,26 @@ import { TabViewModule } from 'primeng/tabview';
 import { BehaviorSubject, first } from 'rxjs';
 import { ModalService } from 'src/app/services/modal.service';
 import { ProfileActions } from 'src/app/store/actions/profile.actions';
-import {
-  getProfileDetails,
-  getUserPets,
-  getProfileFullLoad,
-} from 'src/app/store/selectors/profile.selectors';
 import { PetsListComponent } from '../pets-list/pets-list.component';
 import { AppointmentsListComponent } from '../appointments-list/appointments-list.component';
 import { Pet, User } from 'src/app/models/user.models';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 
 @Component({
-  selector: 'app-profile-container',
+  selector: 'app-profile-modal',
   standalone: true,
   imports: [
     CommonModule,
     IonicModule,
     ReactiveFormsModule,
     TabViewModule,
-    PetsListComponent,
+    // PetsListComponent,
     AppointmentsListComponent,
   ],
   templateUrl: './profile-container.component.html',
   styleUrls: ['./profile-container.component.scss'],
 })
-export class ProfileContainerComponent {
+export class ProfileContainerModal implements OnInit {
   @Input() fromAdmin?: boolean;
   @Input() userDetails?: User;
   @Input() pets!: Pet[];
@@ -58,8 +46,17 @@ export class ProfileContainerComponent {
   constructor(
     private store: Store,
     private fBuilder: FormBuilder,
-    private mService: ModalService
+    private mService: ModalService,
+    private _config: DynamicDialogConfig
   ) {}
+  ngOnInit(): void {
+    if (this._config.data) {
+      for (const key in this._config.data) {
+        this.fromAdmin = true;
+        this.userDetails = this._config?.data?.user;
+      }
+    }
+  }
   ionViewWillEnter() {
     this.store.dispatch(ProfileActions.loadAttempt());
   }

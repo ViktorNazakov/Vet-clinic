@@ -1,4 +1,7 @@
-<div class="slider-container keen-slider">
+<div
+  [ngClass]="{ 'opacity-0': !revealSlider }"
+  class="slider-container keen-slider"
+>
   <div class="slider-cover" *ngIf="!revealSlider"></div>
   <div class="slider-mask"></div>
   <div *ngFor="let slide of slides; index as i" class="keen-slider__slide">

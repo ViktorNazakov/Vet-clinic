@@ -143,6 +143,16 @@ nav {
     background-color: rgba(255, 166, 0, 0.336);
     height: 3px;
   }
+  @media screen and (max-width: 800px) {
+    &::before {
+      width: 20px;
+    }
+    &::after {
+      content: "";
+
+      width: 20px;
+    }
+  }
 }
 .base-text {
   font-size: 17px;
