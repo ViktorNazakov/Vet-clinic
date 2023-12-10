@@ -240,3 +240,56 @@ DESCRIPTION - Get single user profile details, using UserID
 
 http://localhost:8080/api/v1/admin/users/{userId}/pets{GET}
 DESCRIPTION - Get pets from profile, using UserID
+
+
+
+--------------------------------------------------------------------------
+(NEED TO PASS JWT AND ADMIN AUTHORITY)
+MEDICATIONS ENDPOINTS:
+
+http://localhost:8080/api/v1/meds{POST}
+
+REQUIRES - 
+{
+        "name": "Asd",
+        "type": "asd",
+        "quantity": 23,
+        "description": "asd"
+}
+
+
+http://localhost:8080/api/v1/meds?medId=***{DELETE}
+
+REQUIRES - Parameter petId
+
+
+
+
+http://localhost:8080/api/v1/meds?medId=***{PATCH}
+
+REQUIRES - (DONT PASS QUANTITY) DTO with changed property/ies 
+{
+        "name": "Asd",
+        "type": "asd",
+        "description": "asd"
+} or
+REQUIRES - 
+{
+        "name": "Asd"
+}
+
+
+http://localhost:8080/api/v1/meds/{medId}{PATCH}
+ONLY TO UPDATE QUANTITY
+
+REQUIRES - DTO with quantity to subtract
+{
+        "quantity": 23
+}
+
+
+
+
+http://localhost:8080/api/v1/meds{GET}
+
+DESCRIPTION - Retrieves all medications
