@@ -16,6 +16,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.UUID;
@@ -102,7 +103,16 @@ public class UserService implements UserDetailsService {
      */
     public List<UserInfoDTO> getAllUsers() {
         List<User> users = userRepository.findAll();
-        return users.stream().map(user -> modelMapper.map(user, UserInfoDTO.class)).toList();
+        List<UserInfoDTO> userInfoDTOList = new ArrayList<>();
+        users.forEach(user -> {
+            Set<String> role = user.getAuthorities().stream()
+                    .map(GrantedAuthority::getAuthority).collect(Collectors.toSet());
+            UserInfoDTO userInfo = modelMapper.map(user,UserInfoDTO.class);
+            userInfo.setRole(role.iterator().next());
+            userInfoDTOList.add(userInfo);
+
+        });
+        return userInfoDTOList;
     }
 
     /**
