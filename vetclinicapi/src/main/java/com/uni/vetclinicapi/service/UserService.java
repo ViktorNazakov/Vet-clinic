@@ -2,7 +2,7 @@ package com.uni.vetclinicapi.service;
 
 import com.uni.vetclinicapi.persistance.entity.Role;
 import com.uni.vetclinicapi.persistance.entity.User;
-import com.uni.vetclinicapi.persistance.repository.PetRepository;
+import com.uni.vetclinicapi.persistance.repository.RoleRepository;
 import com.uni.vetclinicapi.persistance.repository.UserRepository;
 import com.uni.vetclinicapi.presentation.exceptions.InvalidAuthoritiesException;
 import com.uni.vetclinicapi.presentation.exceptions.UserNotFoundException;
@@ -16,10 +16,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.function.BiConsumer;
 import java.util.stream.Collectors;
 
@@ -33,7 +30,7 @@ public class UserService implements UserDetailsService {
 
     private final UserRepository userRepository;
 
-    private final PetRepository petRepository;
+    private final RoleRepository roleRepository;
 
     private final ModelMapper modelMapper;
 
@@ -165,5 +162,26 @@ public class UserService implements UserDetailsService {
         if (value != null) {
             setter.accept(user, value);
         }
+    }
+
+    /**
+     * Returns a list with all users with role VET.
+     *
+     * @return - List of UserInfoDTO with all the information about a user with role VET.
+     */
+    public List<UserInfoDTO> getAllUsersWithRoleVet() {
+        Optional<Role> vetRole = roleRepository.findByAuthority(Role.RoleType.VET);
+        List<User> users = userRepository.findAll();
+        List<User> vets = users.stream().filter(user -> user.getAuthorities().contains(vetRole.get())).toList();
+        List<UserInfoDTO> userInfoDTOList = new ArrayList<>();
+        vets.forEach(user -> {
+            Set<String> role = user.getAuthorities().stream()
+                    .map(GrantedAuthority::getAuthority).collect(Collectors.toSet());
+            UserInfoDTO userInfo = modelMapper.map(user,UserInfoDTO.class);
+            userInfo.setRole(role.iterator().next());
+            userInfoDTOList.add(userInfo);
+
+        });
+        return userInfoDTOList;
     }
 }

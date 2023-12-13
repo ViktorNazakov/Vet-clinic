@@ -125,4 +125,20 @@ public class UserController {
             @RequestParam("userId") @NotNull UUID userId, @RequestBody UserInfoDTO userInfoDTO) {
         return new ResponseEntity<>(userService.updateUserProperty(userId, userInfoDTO), HttpStatus.OK);
     }
+
+
+    /**
+     * Retrieves all users with Vet role from database
+     *
+     * @return - response entity containing a list with all users with Vet role with status code OK.
+     */
+    @Operation(summary = "Retrieves all users with Vet role.", description = "Allows the user to get a list of vets.", tags = {"users"})
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Successfully fetched all users with role Vet.", content = @Content(schema = @Schema(implementation = List.class))),
+            @ApiResponse(responseCode = "401", description = "Unauthorized.", content = @Content(schema = @Schema(implementation = ApiErrorResponseDTO.class))),
+    })
+    @GetMapping("/vets")
+    public ResponseEntity<List<UserInfoDTO>> getAllUsers() {
+        return new ResponseEntity<>(userService.getAllUsersWithRoleVet(), HttpStatus.OK);
+    }
 }

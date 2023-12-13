@@ -35,6 +35,8 @@ public class WebSecurityConfig{
 
     private static final String ADMIN_AUTHORITY = "ADMIN";
     private static final String CUSTOMER_AUTHORITY = "CUSTOMER";
+
+    private static final String VET_AUTHORITY = "VET";
     //TODO
     // add the other authorities
 
@@ -73,12 +75,14 @@ public class WebSecurityConfig{
                 .exceptionHandling(httpSecurityExceptionHandlingConfigurer -> httpSecurityExceptionHandlingConfigurer.authenticationEntryPoint(unauthorizedHandler))
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> authorizationManagerRequestMatcherRegistry.requestMatchers("/api/v1/auth/register","/api/v1/auth/login").permitAll()
                         .requestMatchers("/api/v1/users").hasAnyAuthority(CUSTOMER_AUTHORITY,ADMIN_AUTHORITY)
+                        .requestMatchers("/api/v1/users/vets").hasAnyAuthority(CUSTOMER_AUTHORITY,ADMIN_AUTHORITY)
                         .requestMatchers(HttpMethod.PATCH, "/api/v1/users").hasAnyAuthority(CUSTOMER_AUTHORITY, ADMIN_AUTHORITY)
                         .requestMatchers("/api/v1/users/pets").hasAuthority(CUSTOMER_AUTHORITY)
                         .requestMatchers(HttpMethod.PATCH, "/api/v1/users/pets").hasAnyAuthority(CUSTOMER_AUTHORITY, ADMIN_AUTHORITY)
                         .requestMatchers("/api/v1/pets").hasAuthority(CUSTOMER_AUTHORITY)
                         .requestMatchers("/api/v1/visits").hasAuthority(CUSTOMER_AUTHORITY)
-                        .requestMatchers("/api/v1/meds","/api/v1/meds/**").hasAuthority(ADMIN_AUTHORITY)
+                        .requestMatchers("/api/v1/meds","/api/v1/meds/**").hasAnyAuthority(ADMIN_AUTHORITY,VET_AUTHORITY)
+                        .requestMatchers(HttpMethod.PATCH,"/api/v1/meds/**").hasAuthority(VET_AUTHORITY)
                         .requestMatchers("/api/v1/admin", "/api/v1/admin/**").hasAuthority(ADMIN_AUTHORITY));
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
         return http.build();

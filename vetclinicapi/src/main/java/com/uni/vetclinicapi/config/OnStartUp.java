@@ -42,12 +42,39 @@ public class OnStartUp {
                 Set.of(roleAdmin));
 
         Role roleVet = roleService.getUserRole(Role.RoleType.VET);
-        User vet = new User(
-                "Vet",
+        User vet1 = new User(
+                "Vet1",
                 passwordEncoder.encode("Password"),
                 "email2@gmail.com",
                 "Martin",
                 "Petrov",
+                "0000000001",
+                "Surgeon",
+                Set.of(roleVet));
+        User vet2 = new User(
+                "Vet2",
+                passwordEncoder.encode("Password"),
+                "email2@gmail.com",
+                "Atanas",
+                "Kostadinov",
+                "0000000001",
+                "Exotic Animal",
+                Set.of(roleVet));
+        User vet3 = new User(
+                "Vet3",
+                passwordEncoder.encode("Password"),
+                "email2@gmail.com",
+                "Konstantin",
+                "Velichkov",
+                "0000000001",
+                "Companion Animal",
+                Set.of(roleVet));
+        User vet4 = new User(
+                "Vet3",
+                passwordEncoder.encode("Password"),
+                "email2@gmail.com",
+                "Bogomil",
+                "Simeonov",
                 "0000000001",
                 "Surgeon",
                 Set.of(roleVet));
@@ -62,6 +89,8 @@ public class OnStartUp {
                 "0000000002",
                 null,
                 Set.of(roleCustomer));
+
+
         Medication medication = new Medication(
                 "Asd",
                 "asd",
@@ -70,7 +99,7 @@ public class OnStartUp {
         );
 
         medicationRepository.save(medication);
-        userRepository.saveAll(List.of(admin,customer,vet));
+        userRepository.saveAll(List.of(admin,customer,vet1,vet2,vet3,vet4));
         log.info("Test Entities initialized");
     }
 }

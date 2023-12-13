@@ -18,7 +18,7 @@ public class LoginRequestDTO {
 
     @Schema(description = "The username of the user.")
     @NotBlank
-    @Size(max = 20, min = 5)
+    @Size(max = 20, min = 3)
     private String username;
 
     @Schema(description = "The password of the user.")

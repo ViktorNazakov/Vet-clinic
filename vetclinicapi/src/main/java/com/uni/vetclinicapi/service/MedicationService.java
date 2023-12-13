@@ -96,6 +96,7 @@ public class MedicationService {
         updatePropertyIfNotNull(medication,medDTO.getName(),Medication::setName);
         updatePropertyIfNotNull(medication,medDTO.getDescription(),Medication::setDescription);
         updatePropertyIfNotNull(medication,medDTO.getType(),Medication::setType);
+        updatePropertyIfNotNull(medication,medDTO.getQuantity(),Medication::setQuantity);
 
         Medication persistedMedication = medRepository.save(medication);
 
