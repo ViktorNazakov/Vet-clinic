@@ -74,7 +74,7 @@ public class WebSecurityConfig{
                 .sessionManagement(httpSecuritySessionManagementConfigurer -> httpSecuritySessionManagementConfigurer.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling(httpSecurityExceptionHandlingConfigurer -> httpSecurityExceptionHandlingConfigurer.authenticationEntryPoint(unauthorizedHandler))
                 .authorizeHttpRequests(authorizationManagerRequestMatcherRegistry -> authorizationManagerRequestMatcherRegistry.requestMatchers("/api/v1/auth/register","/api/v1/auth/login").permitAll()
-                        .requestMatchers("/api/v1/users").hasAnyAuthority(CUSTOMER_AUTHORITY,ADMIN_AUTHORITY)
+                        .requestMatchers("/api/v1/users","/api/v1/users/**").hasAnyAuthority(CUSTOMER_AUTHORITY,ADMIN_AUTHORITY)
                         .requestMatchers("/api/v1/users/vets").hasAnyAuthority(CUSTOMER_AUTHORITY,ADMIN_AUTHORITY)
                         .requestMatchers(HttpMethod.PATCH, "/api/v1/users").hasAnyAuthority(CUSTOMER_AUTHORITY, ADMIN_AUTHORITY)
                         .requestMatchers("/api/v1/users/pets").hasAuthority(CUSTOMER_AUTHORITY)
