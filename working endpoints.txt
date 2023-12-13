@@ -244,7 +244,7 @@ DESCRIPTION - Get pets from profile, using UserID
 
 
 --------------------------------------------------------------------------
-(NEED TO PASS JWT AND ADMIN AUTHORITY)
+(NEED TO PASS JWT AND ADMIN OR VET AUTHORITY)
 MEDICATIONS ENDPOINTS:
 
 http://localhost:8080/api/v1/meds{POST}
@@ -267,10 +267,11 @@ REQUIRES - Parameter petId
 
 http://localhost:8080/api/v1/meds?medId=***{PATCH}
 
-REQUIRES - (DONT PASS QUANTITY) DTO with changed property/ies 
+REQUIRES - DTO with changed property/ies 
 {
         "name": "Asd",
         "type": "asd",
+	"quantity" : "21",
         "description": "asd"
 } or
 REQUIRES - 
@@ -293,3 +294,11 @@ REQUIRES - DTO with quantity to subtract
 http://localhost:8080/api/v1/meds{GET}
 
 DESCRIPTION - Retrieves all medications
+
+
+
+-------------------------------------------
+http://localhost:8080/api/v1/users/vets{GET}
+REQUIRES CUSTOMER AUTHORITY
+
+RESPONSE - List of DTOs with information about vets
