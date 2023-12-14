@@ -1,10 +1,10 @@
 package com.uni.vetclinicapi.config;
 
-import com.uni.vetclinicapi.persistance.entity.Medication;
-import com.uni.vetclinicapi.persistance.entity.Role;
-import com.uni.vetclinicapi.persistance.entity.User;
+import com.uni.vetclinicapi.persistance.entity.*;
 import com.uni.vetclinicapi.persistance.repository.MedicationRepository;
+import com.uni.vetclinicapi.persistance.repository.PetRepository;
 import com.uni.vetclinicapi.persistance.repository.UserRepository;
+import com.uni.vetclinicapi.persistance.repository.VisitRepository;
 import com.uni.vetclinicapi.service.RoleService;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +12,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.sql.Date;
+import java.sql.Time;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Set;
 
@@ -21,6 +25,10 @@ import java.util.Set;
 public class OnStartUp {
 
     private final UserRepository userRepository;
+
+    private final PetRepository petRepository;
+
+    private final VisitRepository visitRepository;
 
     private final PasswordEncoder passwordEncoder;
 
@@ -92,14 +100,19 @@ public class OnStartUp {
 
 
         Medication medication = new Medication(
-                "Asd",
-                "asd",
+                "Aspirin",
+                "Tablet",
                 23,
-                "asd"
+                "It just helps"
         );
+
+        Pet pet = new Pet("Pet1","Specie1","Breed1",customer);
+        Visit visit = new Visit(Date.valueOf(LocalDate.now().plusDays(1)), Time.valueOf(LocalTime.now()),true,"Test visit",pet,vet1,customer);
 
         medicationRepository.save(medication);
         userRepository.saveAll(List.of(admin,customer,vet1,vet2,vet3,vet4));
+        petRepository.save(pet);
+        visitRepository.save(visit);
         log.info("Test Entities initialized");
     }
 }

@@ -58,6 +58,7 @@ public class VisitService {
         Visit visit = modelMapper.map(visitDTO, Visit.class);
         visit.setPet(pet);
         visit.setVet(vet);
+        visit.setUser(user);
         Visit persistedVisit = visitRepository.save(visit);
         log.warn("Visit by User: {} with pet: {} and vet: {} was created successfully",user.getId(),pet.getId(),vet.getId());
         return modelMapper.map(persistedVisit, FullVisitDTO.class);
