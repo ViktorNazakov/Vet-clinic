@@ -6,7 +6,7 @@ import { authGuard } from './guards/auth.guard';
 import { AppointmentPage } from './views/appointment/appointment.page';
 import { RegisterPage } from './views/auth/register/register.page';
 import { AboutPage } from './views/about/about.page';
-import { ContactPage } from './views/contact/contact.page';
+
 import { AdminComponent } from './views/admin/admin.component';
 import { adminRoutes } from './views/admin/admin.routing';
 
@@ -18,10 +18,6 @@ export const routes: Routes = [
   {
     path: 'about',
     loadComponent: () => AboutPage,
-  },
-  {
-    path: 'contact',
-    loadComponent: () => ContactPage,
   },
   {
     path: '',

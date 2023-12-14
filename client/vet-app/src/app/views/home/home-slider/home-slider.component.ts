@@ -8,6 +8,7 @@ import {
 import { CommonModule } from '@angular/common';
 import KeenSlider, { KeenSliderInstance } from 'keen-slider';
 import { Subject } from 'rxjs';
+import { InitialService } from 'src/app/services/intial.service';
 @Component({
   selector: 'app-home-slider',
   standalone: true,
@@ -20,6 +21,7 @@ export class HomeSliderComponent implements AfterViewInit, OnDestroy {
   activeSlide = 0;
   ratios: any[] = [];
   revealSlider = false;
+  sliderActive = false;
   contentOpacity = 0;
   slider: KeenSliderInstance | undefined;
   slides: {
@@ -59,19 +61,24 @@ export class HomeSliderComponent implements AfterViewInit, OnDestroy {
       },
     },
   ];
+  constructor(private iService: InitialService) {}
   ngAfterViewInit(): void {
+    this.sliderActive = this.iService.sliderInit;
     this.contentOpacity = 1;
     this.ratios = [];
-    this.slider = new KeenSlider('.slider-container', {
-      slides: this.slides.length,
-      created: (inst) => {
-        this.activeSlide = 0;
-      },
-      slideChanged: (inst) => {
-        this.activeSlide = inst.track.details.rel;
-        this.ratios = inst.track.details.slides.map((slide) => slide.portion);
-      },
-    });
+    if (this.sliderActive === false) {
+      this.slider = new KeenSlider('.slider-container', {
+        slides: this.slides.length,
+        created: (inst) => {
+          this.activeSlide = 0;
+        },
+        slideChanged: (inst) => {
+          this.activeSlide = inst.track.details.rel;
+          this.ratios = inst.track.details.slides.map((slide) => slide.portion);
+        },
+      });
+      this.iService.sliderInit = true;
+    }
     this.checkSlider();
   }
   checkSlider() {

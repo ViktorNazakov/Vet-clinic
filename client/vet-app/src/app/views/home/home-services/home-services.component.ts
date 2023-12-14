@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
 import KeenSlider, { KeenSliderInstance } from 'keen-slider';
 import { Subject } from 'rxjs';
 import { ButtonModule } from 'primeng/button';
+import { InitialService } from 'src/app/services/intial.service';
 @Component({
   selector: 'app-home-services',
   standalone: true,
@@ -19,6 +20,7 @@ import { ButtonModule } from 'primeng/button';
 export class HomeServicesComponent implements AfterViewInit, OnDestroy {
   @Input() destroy: Subject<boolean> | undefined;
   activeSlide = 0;
+  sliderinit = false;
   ratios: any[] = [];
   revealSlider = false;
   contentOpacity = 0;
@@ -89,23 +91,29 @@ export class HomeServicesComponent implements AfterViewInit, OnDestroy {
       },
     },
   ];
+  constructor(private iService: InitialService) {}
   ngAfterViewInit(): void {
     this.contentOpacity = 1;
     this.ratios = [];
-    this.slider = new KeenSlider('.services-container', {
-      loop: true,
-      slides: { number: this.slides.length, perView: 3 },
-      breakpoints: {
-        'max-width: ': {},
-      },
-      created: (inst) => {
-        this.activeSlide = 0;
-      },
-      slideChanged: (inst) => {
-        this.activeSlide = inst.track.details.rel;
-        this.ratios = inst.track.details.slides.map((slide) => slide.portion);
-      },
-    });
+    this.sliderinit = this.iService.sliderFeaturesInit;
+    if (this.sliderinit === false) {
+      this.slider = new KeenSlider('.services-container', {
+        loop: true,
+        slides: { number: this.slides.length, perView: 3 },
+        breakpoints: {
+          'max-width: ': {},
+        },
+        created: (inst) => {
+          this.activeSlide = 0;
+        },
+        slideChanged: (inst) => {
+          this.activeSlide = inst.track.details.rel;
+          this.ratios = inst.track.details.slides.map((slide) => slide.portion);
+        },
+      });
+      this.iService.sliderFeaturesInit = true;
+    }
+
     this.checkSlider();
   }
   checkSlider() {

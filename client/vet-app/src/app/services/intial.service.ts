@@ -5,6 +5,8 @@ import { AuthAPIActions } from '../store/actions/auth.actions';
 
 @Injectable({ providedIn: 'root' })
 export class InitialService {
+  sliderInit = false;
+  sliderFeaturesInit = false;
   initialize = () => {
     const token = this.sService.getToken();
     this.store.dispatch(

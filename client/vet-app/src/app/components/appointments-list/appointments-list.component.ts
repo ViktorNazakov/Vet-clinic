@@ -15,8 +15,6 @@ export class AppointmentsListComponent {
   @Input() canCreate: boolean = true;
   @Input() appointments!: (Appointment | number)[];
 
-  _appointments: (Appointment | number)[] = [];
-
   constructor(private router: Router) {}
 
   addAppointment = () => {
