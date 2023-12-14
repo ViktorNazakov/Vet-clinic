@@ -39,10 +39,10 @@ public class MedicationService {
      */
 
     public FullMedicationDTO create(MedicationDTO medDTO) {
-        medRepository.findByName(medDTO.getName()).orElseThrow(() -> {
+        if(medRepository.findByName(medDTO.getName()).isPresent()) {
             log.warn("Attempted to create a Medication with name: {} which already exist", medDTO.getName());
             throw new MedicationAlreadyExistsException(String.format("Medication with the same name: %s already exists!", medDTO.getName()));
-        });
+        }
 
         Medication med = modelMapper.map(medDTO, Medication.class);
         Medication persistedMed = medRepository.save(med);
