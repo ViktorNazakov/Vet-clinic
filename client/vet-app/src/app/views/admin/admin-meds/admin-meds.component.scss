@@ -1,0 +1,39 @@
+:host {
+  display: block;
+}
+.btn-add {
+  background-color: var(--green-500);
+}
+.btn-delete {
+  background-color: var(--red-500);
+}
+.btn-edit {
+  background-color: var(--yellow-500);
+}
+.btn-table {
+  transition: background-color 0.5s;
+  border-radius: 5px;
+  padding: 5px 10px;
+}
+.active {
+  background-color: var(--gray-500);
+  color: black;
+}
+:host::ng-deep {
+  p-table.delete {
+    th {
+      background-color: var(--red-200) !important;
+    }
+    td {
+      background-color: var(--red-100) !important;
+    }
+  }
+  p-table.edit {
+    th {
+      background-color: var(--yellow-200) !important;
+    }
+    td {
+      background-color: var(--yellow-100) !important;
+    }
+  }
+}

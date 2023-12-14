@@ -1,0 +1,19 @@
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  padding: 20px;
+  & > *,
+  input,
+  textarea {
+    width: 100%;
+    resize: none;
+  }
+  width: min(400px, 80vw);
+}
+:host::ng-deep {
+  .p-dropdown {
+    width: 100%;
+  }
+}

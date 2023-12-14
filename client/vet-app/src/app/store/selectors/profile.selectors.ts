@@ -16,6 +16,7 @@ export const getProfileUser = createSelector(
       fname: state.firstName,
       lname: state.lastName,
       username: state.username,
+      role: state.role,
     } as User)
 );
 export const getUserPets = createSelector(
@@ -26,7 +27,16 @@ export const getUserPetsLoading = createSelector(
   profileAccessor,
   (state: ProfileState) => state.pets.loaded
 );
+export const getUserVisits = createSelector(
+  profileAccessor,
+  (state: ProfileState) => state.visits.items || []
+);
+export const getUserVisitsLoading = createSelector(
+  profileAccessor,
+  (state: ProfileState) => state.visits.loaded
+);
 export const getProfileFullLoad = createSelector(
   profileAccessor,
-  (state: ProfileState) => state.loaded === 1 && state.pets.loaded === 1
+  (state: ProfileState) =>
+    state.loaded === 1 && state.pets.loaded === 1 && state.visits.loaded === 1
 );

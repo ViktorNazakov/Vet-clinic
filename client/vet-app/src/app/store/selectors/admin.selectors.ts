@@ -10,3 +10,11 @@ export const getAdminUsersLoaded = createSelector(
   adminAccessor,
   (state: AdminState) => state.users.loaded
 );
+export const getAdminMedsList = createSelector(
+  adminAccessor,
+  (state: AdminState) => state.meds.items || []
+);
+export const getAdminMedsLoaded = createSelector(
+  adminAccessor,
+  (state: AdminState) => state.meds.loaded
+);

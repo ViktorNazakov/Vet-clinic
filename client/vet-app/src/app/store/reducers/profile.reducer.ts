@@ -1,6 +1,6 @@
 import { createReducer, on } from '@ngrx/store';
 
-import { Pet } from 'src/app/models/user.models';
+import { Appointment, Pet } from 'src/app/models/user.models';
 import { ProfileActions } from '../actions/profile.actions';
 
 export interface ProfileState {
@@ -8,22 +8,32 @@ export interface ProfileState {
   id: string;
   firstName: string;
   lastName: string;
+  role: string;
   phoneNumber: string;
   pets: {
     loaded: number;
     items: Pet[];
   };
+  visits: {
+    loaded: number;
+    items: Appointment[];
+  };
   /** -1/0/1 tri-boolean */
   loaded: number;
 }
-const initialState: ProfileState | undefined = {
+const initialState: ProfileState = {
   username: '',
   id: '',
   firstName: '',
   lastName: '',
   phoneNumber: '',
   loaded: 0,
+  role: '',
   pets: {
+    loaded: 0,
+    items: [],
+  },
+  visits: {
     loaded: 0,
     items: [],
   },
@@ -57,6 +67,20 @@ export const ProfileReducer = createReducer(
   on(ProfileActions.loadPets, (state: ProfileState, props) => ({
     ...state,
     pets: {
+      loaded: 0,
+      items: [],
+    },
+  })),
+  on(ProfileActions.loadVisitsSuccess, (state: ProfileState, props) => ({
+    ...state,
+    visits: {
+      loaded: 1,
+      items: props.visits,
+    },
+  })),
+  on(ProfileActions.loadVisits, (state: ProfileState, props) => ({
+    ...state,
+    visits: {
       loaded: 0,
       items: [],
     },

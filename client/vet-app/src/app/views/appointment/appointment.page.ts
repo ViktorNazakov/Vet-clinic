@@ -45,7 +45,7 @@ export class AppointmentPage {
     pet: ['', Validators.required],
     vet: ['', Validators.required],
     time: [this.baseDate, Validators.required],
-    description: [''],
+    description: ['', [Validators.minLength(10), Validators.required]],
   });
   selectedPet!: Pet;
   selectedVet!: Vet;
@@ -57,7 +57,8 @@ export class AppointmentPage {
   }
   ionViewWillLeave() {}
   createAppointment() {
-    console.log(this.appForm.value);
+    this.appForm.markAllAsTouched();
+
     if (this.appForm.valid) {
       this.store.dispatch(
         ProfileActions.createAppointment({

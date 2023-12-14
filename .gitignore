@@ -22,3 +22,11 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
+vetclinicapi/target/classes/application.properties
+vetclinicapi/src/main/resources/application.properties
+vetclinicapi/.idea/workspace.xml
+vetclinicapi/.idea/vcs.xml
+vetclinicapi/.idea/misc.xml
+vetclinicapi/.idea/jarRepositories.xml
+vetclinicapi/.idea/encodings.xml
+vetclinicapi/.idea/compiler.xml

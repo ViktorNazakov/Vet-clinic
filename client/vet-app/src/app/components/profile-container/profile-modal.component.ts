@@ -9,8 +9,9 @@ import { ModalService } from 'src/app/services/modal.service';
 import { ProfileActions } from 'src/app/store/actions/profile.actions';
 import { PetsListComponent } from '../pets-list/pets-list.component';
 import { AppointmentsListComponent } from '../appointments-list/appointments-list.component';
-import { Pet, User } from 'src/app/models/user.models';
-import { DynamicDialogConfig } from 'primeng/dynamicdialog';
+import { Appointment, Pet, User } from 'src/app/models/user.models';
+import { DynamicDialogConfig, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { AdminActions } from 'src/app/store/actions/admin.actions';
 
 @Component({
   selector: 'app-profile-modal',
@@ -20,7 +21,7 @@ import { DynamicDialogConfig } from 'primeng/dynamicdialog';
     IonicModule,
     ReactiveFormsModule,
     TabViewModule,
-    // PetsListComponent,
+    PetsListComponent,
     AppointmentsListComponent,
   ],
   templateUrl: './profile-container.component.html',
@@ -30,6 +31,7 @@ export class ProfileContainerModal implements OnInit {
   @Input() fromAdmin?: boolean;
   @Input() userDetails?: User;
   @Input() pets!: Pet[];
+  @Input() visits!: Appointment[];
   @Input() loaded!: boolean;
   @Output() onEdit: BehaviorSubject<{
     fname?: string;
@@ -47,13 +49,19 @@ export class ProfileContainerModal implements OnInit {
     private store: Store,
     private fBuilder: FormBuilder,
     private mService: ModalService,
-    private _config: DynamicDialogConfig
+    private _config: DynamicDialogConfig,
+    private _self: DynamicDialogRef
   ) {}
   ngOnInit(): void {
     if (this._config.data) {
-      for (const key in this._config.data) {
+      if (this._config.data.admin) {
         this.fromAdmin = true;
+      }
+      if (!!this._config.data?.user) {
         this.userDetails = this._config?.data?.user;
+      }
+      if (!!this._config.data.pets) {
+        this.pets = this._config.data.pets;
       }
     }
   }
@@ -72,6 +80,24 @@ export class ProfileContainerModal implements OnInit {
       this.editForm.reset();
     }
   }
+  deleteProfile() {
+    this.mService
+      .modalConfirm(
+        `Do you want to delete ${this.userDetails?.fname} ${this.userDetails?.lname} 's account. This action is irreversible`
+      )
+      .pipe(first())
+      .subscribe((res) => {
+        if (res) {
+          if (!!this.userDetails?.id || !!this.userDetails?.userId) {
+            this.store.dispatch(
+              AdminActions.deleteUserAttempt({
+                id: (this.userDetails?.id || this.userDetails?.userId) + '',
+              })
+            );
+          }
+        }
+      });
+  }
   submitChanges() {
     const value = this.editForm.value;
     if (this.editForm.valid) {
@@ -80,11 +106,14 @@ export class ProfileContainerModal implements OnInit {
         .pipe(first())
         .subscribe((val) => {
           if (val) {
-            this.onEdit.next({
-              fname: value.fname || undefined,
-              lname: value.lname || undefined,
-              phone: value.phone || undefined,
-            });
+            this.store.dispatch(
+              AdminActions.editUserAttempt({
+                fname: this.editForm.value.fname || undefined,
+                lname: this.editForm.value.fname || undefined,
+                phoneNumber: this.editForm.value.phone || undefined,
+                id: this.userDetails?.id || this.userDetails?.userId,
+              })
+            );
             this.editForm.reset();
             this.editMode = false;
           }

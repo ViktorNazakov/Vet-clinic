@@ -1,0 +1,60 @@
+<button
+  (click)="initCreateMed()"
+  class="flex btn-add btn-table align-items-center"
+  pButton
+>
+  Add <i class="pi pi-plus"></i>
+</button>
+<div class="flex gap-3 pt-2">
+  <button
+    (click)="swapMode('delete')"
+    [ngClass]="{ active: deleteMode }"
+    class="flex btn-delete btn-table align-items-center"
+    pButton
+  >
+    {{ deleteMode ? "Cancel" : "Delete" }}
+    <i class="pi pi-{{ deleteMode ? 'times' : 'trash' }}"></i>
+  </button>
+  <button
+    (click)="swapMode('edit')"
+    [ngClass]="{ active: editMode }"
+    class="flex btn-edit btn-table align-items-center"
+    pButton
+  >
+    {{ editMode ? "Cancel" : "Edit" }}
+    <i class="pi pi-{{ editMode ? 'times' : 'pencil' }}"></i>
+  </button>
+</div>
+
+<div class="pt-2">
+  <p-table
+    [alwaysShowPaginator]="true"
+    [paginator]="true"
+    [rows]="10"
+    [ngClass]="{ edit: editMode, delete: deleteMode }"
+    [loading]="(loaded | async) !== 1"
+    [value]="(meds | async) || []"
+  >
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Description</th>
+        <th>Quantity</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-med>
+      <tr
+        (click)="
+          editMode ? editMed(med) : null; deleteMode ? deleteMed(med) : null
+        "
+        class="selectable"
+      >
+        <td>{{ med.name }}</td>
+        <td>{{ med.type }}</td>
+        <td>{{ med.description }}</td>
+        <td>{{ med.quantity }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>

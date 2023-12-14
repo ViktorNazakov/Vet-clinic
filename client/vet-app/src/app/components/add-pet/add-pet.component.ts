@@ -65,26 +65,16 @@ export class AddPetComponent implements OnInit {
       !!this.petForm.value.breed &&
       !!this.petForm.value.specie
     ) {
-      this._self.close();
-      if (this.editMode) {
-        this.store.dispatch(
-          ProfileActions.editPet({
-            name: this.petForm.value.name,
-            breed: this.petForm.value.breed,
-            specie: this.petForm.value.specie,
-            petId: this.changeId,
-          })
-        );
-      } else {
-        this.store.dispatch(
-          ProfileActions.createPet({
-            name: this.petForm.value.name,
-            breed: this.petForm.value.breed,
-            specie: this.petForm.value.specie,
-          })
-        );
-      }
-      this.petForm.reset();
+      this._self.close({
+        success: true,
+        pet: {
+          name: this.petForm.value.name,
+          breed: this.petForm.value.breed,
+          specie: this.petForm.value.specie,
+          id: this.changeId,
+        },
+      });
     }
+    this.petForm.reset();
   }
 }

@@ -13,19 +13,9 @@ import { Router, RouterModule } from '@angular/router';
 })
 export class AppointmentsListComponent {
   @Input() canCreate: boolean = true;
-  @Input() set appointments(val: (Appointment | number)[]) {
-    this._appointments = [...val, this.temp, this.temp];
-    if (this.canCreate && val.length < 5) {
-      this._appointments.push(1);
-    }
-  }
+  @Input() appointments!: (Appointment | number)[];
 
   _appointments: (Appointment | number)[] = [];
-  temp: Appointment = {
-    id: '2314234',
-    doctor: 'Dr. John Stevens',
-    time: new Date(),
-  };
 
   constructor(private router: Router) {}
 

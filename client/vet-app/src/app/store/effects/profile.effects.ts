@@ -5,22 +5,11 @@ import { catchError, exhaustMap, first, map, of, switchMap, timer } from 'rxjs';
 import { Appointment, Pet } from 'src/app/models/user.models';
 import { ProfileService } from 'src/app/services/profile.service';
 import { AuthAPIActions } from '../actions/auth.actions';
+import { ModalService } from 'src/app/services/modal.service';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class ProfileEffects {
-  tempDetails: {
-    pets: Pet[];
-    appointments: Appointment[];
-  } = {
-    pets: [
-      { name: 'Chocho', id: '1', specie: 'dog' },
-      { name: 'Djesa', id: '2', specie: 'dog' },
-    ],
-    appointments: [
-      { id: '1', doctor: 'Dr. John', time: new Date() },
-      { id: '2', doctor: 'Dr. John 2', time: new Date() },
-    ],
-  };
   onProfileLoad$ = createEffect(() =>
     this.actions$.pipe(
       ofType(ProfileActions.loadAttempt),
@@ -32,6 +21,7 @@ export class ProfileEffects {
               type: '[Profile] Load Success',
               id: res.userId,
               firstName: res.fname,
+              role: res.role,
               phoneNumber: res.phoneNumber,
               lastName: res.lname,
               username: res.username,
@@ -70,6 +60,17 @@ export class ProfileEffects {
           map((res) => {
             return { type: '[Profile] Load Pets Success', pets: res };
           })
+        )
+      )
+    )
+  );
+  onLoadVisits$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(ProfileActions.loadVisits, ProfileActions.loadSuccess),
+      switchMap(() =>
+        this.pService.getUserAppointents().pipe(
+          first(),
+          map((res) => ({ type: '[Profile] Load Visits Success', visits: res }))
         )
       )
     )
@@ -128,10 +129,22 @@ export class ProfileEffects {
           )
           .pipe(
             first(),
-            map(() => ({ type: '[Profile] Create Appointment Success' }))
+            map(() => {
+              this.router.navigate(['/profile']);
+              this.mService.modalConfirm(
+                `Appointment for ${data.time.toLocaleDateString()} has been created`,
+                false
+              );
+              return { type: '[Profile] Create Appointment Success' };
+            })
           )
       )
     )
   );
-  constructor(private actions$: Actions, private pService: ProfileService) {}
+  constructor(
+    private router: Router,
+    private actions$: Actions,
+    private pService: ProfileService,
+    private mService: ModalService
+  ) {}
 }

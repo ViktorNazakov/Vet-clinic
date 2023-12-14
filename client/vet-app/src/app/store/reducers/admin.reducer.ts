@@ -1,8 +1,13 @@
 import { createReducer, on } from '@ngrx/store';
-import { Pet, User } from 'src/app/models/user.models';
+import { Medicament, Pet, User } from 'src/app/models/user.models';
 import { AdminActions } from '../actions/admin.actions';
 
 export interface AdminState {
+  meds: {
+    loaded: number;
+    items: Medicament[];
+    status: string;
+  };
   users: {
     loaded: number;
     items: User[];
@@ -16,6 +21,11 @@ export interface AdminState {
   };
 }
 const initialState: AdminState = {
+  meds: {
+    loaded: 0,
+    items: [],
+    status: '',
+  },
   users: {
     loaded: 0,
     items: [],
@@ -33,7 +43,7 @@ export const AdminReducer = createReducer(
     ...state,
     users: {
       ...state.users,
-      items: [],
+
       loaded: 0,
       status: '',
     },
@@ -47,11 +57,27 @@ export const AdminReducer = createReducer(
       status: '',
     },
   })),
+
   on(AdminActions.loadUsersError, (state: AdminState, props) => ({
     ...state,
     users: {
       ...state.users,
       loaded: -1,
+    },
+  })),
+  on(AdminActions.loadMedsAttempt, (state: AdminState) => ({
+    ...state,
+    meds: {
+      ...state.meds,
+      loaded: 0,
+    },
+  })),
+  on(AdminActions.loadMedsSuccess, (state: AdminState, props) => ({
+    ...state,
+    meds: {
+      ...state.meds,
+      loaded: 1,
+      items: props.meds || [],
     },
   }))
 );

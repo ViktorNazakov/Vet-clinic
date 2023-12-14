@@ -179,3 +179,87 @@ h5 {
   line-height: 34px;
   font-weight: 700;
 }
+
+.admin-table {
+  table {
+    overflow: hidden;
+    border-radius: 8px;
+  }
+  tr th {
+    text-align: center;
+    padding: 10px 0;
+    font-size: 18px;
+    font-weight: 800;
+    color: black;
+  }
+  td,
+  th {
+    transition: background-color 0.5s;
+  }
+  tr td {
+    text-align: center;
+    padding: 10px 0;
+    font-size: 16px;
+    font-weight: 600;
+    color: black;
+    transition: color 0.25s;
+  }
+  .selectable {
+    transition: 0.5s;
+    position: relative;
+    cursor: pointer;
+    &:hover {
+      background-color: rgba(199, 198, 198, 0.568);
+    }
+  }
+}
+.interact-form {
+  max-width: 600px;
+  margin: auto;
+
+  input,
+  textarea,
+  .p-dropdown {
+    transition: border-color 0.1s;
+    &.ng-invalid.ng-touched {
+      border-color: var(--red-500);
+    }
+  }
+
+  input,
+  textarea,
+  .p-dropdown {
+    padding: 10px;
+    width: 100%;
+    border-radius: 20px;
+    outline: none;
+    border-color: var(--tetiary-color);
+    border-width: 2px;
+    border-style: solid;
+  }
+  .p-float-label,
+  .p-dropdown,
+  p-dropdown,
+  p-calendar,
+  .p-calendar {
+    width: 100%;
+    padding: 0 !important;
+  }
+}
+.profile-modal {
+  box-shadow: none;
+
+  .p-dialog-content {
+    background-color: transparent !important;
+    box-shadow: none;
+  }
+  .p-dialog-header {
+    background-color: transparent;
+    padding: 0 !important;
+    button {
+      color: white;
+      border-radius: 50%;
+      background-color: var(--primary-color);
+    }
+  }
+}

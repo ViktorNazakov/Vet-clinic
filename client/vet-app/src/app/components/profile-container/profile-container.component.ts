@@ -21,7 +21,7 @@ import {
 } from 'src/app/store/selectors/profile.selectors';
 import { PetsListComponent } from '../pets-list/pets-list.component';
 import { AppointmentsListComponent } from '../appointments-list/appointments-list.component';
-import { Pet, User } from 'src/app/models/user.models';
+import { Appointment, Pet, User } from 'src/app/models/user.models';
 import { DynamicDialogConfig } from 'primeng/dynamicdialog';
 
 @Component({
@@ -42,6 +42,7 @@ export class ProfileContainerComponent {
   @Input() fromAdmin?: boolean;
   @Input() userDetails?: User;
   @Input() pets!: Pet[];
+  @Input() visits!: Appointment[];
   @Input() loaded!: boolean;
   @Output() onEdit: BehaviorSubject<{
     fname?: string;
@@ -75,6 +76,7 @@ export class ProfileContainerComponent {
       this.editForm.reset();
     }
   }
+  deleteProfile() {}
   submitChanges() {
     const value = this.editForm.value;
     if (this.editForm.valid) {

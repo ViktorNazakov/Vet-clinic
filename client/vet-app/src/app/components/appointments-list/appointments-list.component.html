@@ -1,9 +1,6 @@
 <p-dataView emptyMessage="No appointments Created Yet" [value]="_appointments">
   <ng-template let-appointment pTemplate="listItem">
-    <div
-      *ngIf="appointment !== 1; else createItem"
-      class="col-12 appointment-col"
-    >
+    <div class="col-12 appointment-col">
       <div class="flex flex-column xl:flex-row xl:align-items-start p-4 gap-4">
         <div
           class="flex flex-column sm:flex-row justify-content-between align-items-center xl:align-items-start flex-1 gap-4"
@@ -24,14 +21,8 @@
     </div>
   </ng-template></p-dataView
 >
-<ng-template #createItem>
-  <div class="col-12 border-0">
-    <button
-      (click)="addAppointment()"
-      class="w-full btn-create btn-cta"
-      pButton
-    >
-      Create An Appointment +
-    </button>
-  </div>
-</ng-template>
+<div *ngIf="(appointments?.length || 0) < 5" class="col-12 border-0">
+  <button (click)="addAppointment()" class="w-full btn-create btn-cta" pButton>
+    Create An Appointment +
+  </button>
+</div>

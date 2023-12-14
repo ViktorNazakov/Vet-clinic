@@ -7,6 +7,7 @@
       <app-profile-container
         (onEdit)="submitChanges($event)"
         [pets]="(pets | async) || []"
+        [visits]="(visits | async) || []"
         [userDetails]="(userDetails | async) || undefined"
       ></app-profile-container>
     </div></section

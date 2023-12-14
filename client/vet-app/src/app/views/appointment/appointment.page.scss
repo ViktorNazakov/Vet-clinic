@@ -1,26 +1,4 @@
 :host::ng-deep {
-  .appointment-form {
-    max-width: 600px;
-    margin: auto;
-
-    input,
-    textarea,
-    .p-dropdown {
-      padding: 10px;
-      width: 100%;
-      border-radius: 20px;
-      outline: none;
-      border: 2px solid var(--tetiary-color);
-    }
-    .p-float-label,
-    .p-dropdown,
-    p-dropdown,
-    p-calendar,
-    .p-calendar {
-      width: 100%;
-      padding: 0 !important;
-    }
-  }
   .pet-item {
     img {
       height: 30px;

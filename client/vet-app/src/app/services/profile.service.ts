@@ -48,6 +48,7 @@ export class ProfileService {
     );
   deleteUserPet = (petId: string) =>
     this.http.delete(this.BASE_ENDPOINT + `users/pets?&petId=${petId}`);
+  getUserAppointents = () => this.http.get(this.BASE_ENDPOINT + 'users/visits');
   createAppointment = (
     time: Date,
     description: string,

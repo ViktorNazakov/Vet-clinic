@@ -10,9 +10,19 @@
           >
             <i class="pi pi-user"></i> Users
           </a>
+          <a
+            class="menu-item"
+            routerLinkActive="active"
+            routerLink="/admin/meds"
+          >
+            <i class="pi pi-info-circle"></i> Medicaments
+          </a>
         </div>
-        <div class="content">
-          <router-outlet></router-outlet>
+        <div
+          [@triggerResize]="prepareRoute(outlet)"
+          class="admin-table content"
+        >
+          <router-outlet class="" #outlet="outlet"></router-outlet>
         </div>
       </section>
     </div>

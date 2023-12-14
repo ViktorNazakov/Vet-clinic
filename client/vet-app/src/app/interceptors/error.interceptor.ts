@@ -16,7 +16,12 @@ export class ErrorInterceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler) {
     return next.handle(req).pipe(
       catchError((res) => {
-        const message = res.error?.message || res?.detail;
+        const message =
+          (Array.isArray(res?.error?.errors)
+            ? res.error.errors[0]
+            : undefined) ||
+          res.error?.message ||
+          res?.detail;
         const status = res.error?.status;
         if (!!message) {
           this.mService.add({
@@ -26,7 +31,7 @@ export class ErrorInterceptor implements HttpInterceptor {
           });
         }
         if (!!res.status) {
-          if (res.status === 401 && !res.message.includes('auth/login')) {
+          if (res.status === 401 && !res?.message?.includes('auth/login')) {
             this.store.dispatch(AuthAPIActions.logoutAttempt());
           }
         }

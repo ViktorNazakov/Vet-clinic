@@ -1,0 +1,26 @@
+<form
+  class="interact-form"
+  [formGroup]="medForm"
+  (submit)="$event.preventDefault(); submitMed()"
+>
+  <input placeholder="Name*" formControlName="name" pInputText />
+
+  <input placeholder="Type*" formControlName="type" pInputText />
+
+  <textarea
+    placeholder="Description*"
+    formControlName="description"
+    pInputText
+  ></textarea>
+
+  <input
+    placeholder="Quantity"
+    type="number"
+    formControlName="quantity"
+    pInputText
+  />
+
+  <div class="flex justify-content-center py-2">
+    <button class="btn-cta">{{ editMode ? "Save" : "Create +" }}</button>
+  </div>
+</form>

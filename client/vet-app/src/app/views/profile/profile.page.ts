@@ -5,20 +5,17 @@ import { IonicModule } from '@ionic/angular';
 import { Store } from '@ngrx/store';
 import { ProfileActions } from 'src/app/store/actions/profile.actions';
 import { TabViewModule } from 'primeng/tabview';
-import { PetsListComponent } from 'src/app/components/pets-list/pets-list.component';
 import { AppointmentsListComponent } from 'src/app/components/appointments-list/appointments-list.component';
 import {
   getProfileDetails,
   getProfileFullLoad,
   getProfileUser,
   getUserPets,
-  getUserPetsLoading,
+  getUserVisits,
 } from 'src/app/store/selectors/profile.selectors';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
 import { first } from 'rxjs';
-import { ModalService } from 'src/app/services/modal.service';
 import { ProfileContainerComponent } from 'src/app/components/profile-container/profile-container.component';
-import { User } from 'src/app/models/user.models';
 
 @Component({
   standalone: true,
@@ -27,7 +24,6 @@ import { User } from 'src/app/models/user.models';
     PageTitleComponent,
     IonicModule,
     TabViewModule,
-    PetsListComponent,
     AppointmentsListComponent,
     ReactiveFormsModule,
     ProfileContainerComponent,
@@ -38,6 +34,7 @@ import { User } from 'src/app/models/user.models';
 export class ProfilePage {
   userDetails = this.store.select(getProfileUser);
   pets = this.store.select(getUserPets);
+  visits = this.store.select(getUserVisits);
   loaded = this.store.select(getProfileFullLoad);
   constructor(private store: Store, private fBuilder: FormBuilder) {}
 
@@ -49,14 +46,15 @@ export class ProfilePage {
       .select(getProfileDetails)
       .pipe(first())
       .subscribe((data) => {
-        this.store.dispatch(
-          ProfileActions.editAttempt({
-            userId: data.id,
-            fname: !!val.fname ? val.fname : undefined,
-            lname: !!val.lname ? val.lname : undefined,
-            phoneNumber: !!val.phone ? val.phone : undefined,
-          })
-        );
+        if (data.id)
+          this.store.dispatch(
+            ProfileActions.editAttempt({
+              userId: data.id,
+              fname: !!val.fname ? val.fname : undefined,
+              lname: !!val.lname ? val.lname : undefined,
+              phoneNumber: !!val.phone ? val.phone : undefined,
+            })
+          );
       });
   }
 }

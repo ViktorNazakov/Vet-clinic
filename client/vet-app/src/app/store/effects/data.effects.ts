@@ -2,27 +2,20 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { DATA_ACTIONS } from '../actions/data.actions';
 import { first, map, switchMap, timer } from 'rxjs';
-import { Vet } from 'src/app/models/user.models';
+import { VetsService } from 'src/app/services/vets.service';
 
 @Injectable({ providedIn: 'root' })
 export class DataEffects {
-  tempVets: Vet[] = [
-    {
-      id: '123123123',
-      name: 'John Stevens',
-      specialty: 'Dog Specialist',
-    },
-  ];
   onVetsLoad$ = createEffect(() =>
     this.actions$.pipe(
       ofType(DATA_ACTIONS.loadVets),
       switchMap(() =>
-        timer(2000).pipe(
+        this.vService.getVetsList().pipe(
           first(),
-          map(() => ({ type: '[Data] Load Vets Success', vets: this.tempVets }))
+          map((res) => ({ type: '[Data] Load Vets Success', vets: res }))
         )
       )
     )
   );
-  constructor(private actions$: Actions) {}
+  constructor(private actions$: Actions, private vService: VetsService) {}
 }

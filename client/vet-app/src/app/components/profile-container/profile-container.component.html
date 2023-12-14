@@ -6,7 +6,7 @@
     <ion-spinner color="light" name="dots"></ion-spinner>
   </div>
   <div [ngClass]="{ edit: editMode }" class="details flex flex-column gap-3">
-    <div class="flex gap-2">
+    <div *ngIf="userDetails?.role !== 'ADMIN'" class="flex gap-2">
       <button
         [ngClass]="{ 'bg-red-500 text-white': editMode }"
         class="edit-btn"
@@ -17,6 +17,14 @@
           class="pi bg-transparent"
         ></i>
         <p>{{ editMode ? "Cancel" : "Edit" }}</p>
+      </button>
+      <button
+        *ngIf="fromAdmin"
+        class="edit-btn bg-red-500 text-white"
+        (click)="deleteProfile()"
+      >
+        <i class="pi pi-trash"></i>
+        <p>Delete</p>
       </button>
     </div>
 
@@ -36,7 +44,9 @@
         <ng-container *ngIf="!!details.phoneNumber"
           ><div class="pi text-xl pi-phone"></div>
           <div class="flex flex-column gap-2">
-            <p class="text-md">{{ details.phoneNumber }}</p>
+            <p class="text-md">
+              {{ details.phoneNumber }}
+            </p>
           </div></ng-container
         >
       </div></ng-container
@@ -83,14 +93,18 @@
       </button>
     </form>
   </ng-template>
-  <p-tabView>
-    <!-- <p-tabPanel header="Pets">
-      <app-pets-list [canCreate]="true" [pets]="pets"></app-pets-list>
-    </p-tabPanel> -->
-    <p-tabPanel header="Appointments">
+  <p-tabView *ngIf="userDetails?.role === 'CUSTOMER'">
+    <p-tabPanel header="Pets">
+      <app-pets-list
+        [fromAdmin]="fromAdmin || false"
+        [canCreate]="!fromAdmin"
+        [pets]="pets"
+      ></app-pets-list>
+    </p-tabPanel>
+    <p-tabPanel *ngIf="!fromAdmin" header="Appointments">
       <app-appointments-list
         [canCreate]="!fromAdmin"
-        [appointments]="[]"
+        [appointments]="visits"
       ></app-appointments-list>
     </p-tabPanel>
   </p-tabView>

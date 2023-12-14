@@ -14,7 +14,7 @@
         (ngSubmit)="createAppointment()"
         *ngIf="(userDetails | async )?.loaded === 1 && (vetsLoading | async) !== true; else loadForm"
         [formGroup]="appForm"
-        class="py-3 appointment-form flex flex-column gap-4 align-items-center"
+        class="py-3 interact-form appointment-form flex flex-column gap-4 align-items-center"
       >
         <p-dropdown
           (onChange)="selectedPet = $event.value; appForm.patchValue({pet: $event.value.id})"
@@ -43,18 +43,20 @@
           </ng-template>
         </p-dropdown>
         <p-dropdown
-          (onChange)="selectedVet = $event.value; appForm.patchValue({vet: $event.value.id})"
+          (onChange)="selectedVet = $event.value; appForm.patchValue({vet: $event.value.userId})"
           [filter]="true"
-          filterBy="name"
+          filterBy="fname"
           [options]="(vets | async) || []"
-          optionLabel="name"
           [showClear]="true"
           placeholder="Choose a Veterinarian"
         >
           <ng-template pTemplate="selectedItem">
             <div class="flex align-items-center gap-2" *ngIf="selectedVet">
               <img src="assets/images/pet-pfp.png" style="width: 18px" />
-              <div>{{ selectedVet.name }}</div>
+              <div>
+                {{ selectedVet.fname }} {{ selectedVet.lname }} - {{
+                selectedVet.vetType }}
+              </div>
             </div>
           </ng-template>
           <ng-template let-vet pTemplate="item">
@@ -62,7 +64,7 @@
               <div class="flex gap-3 align-items-center">
                 <img src="assets/images/pet-pfp.png" alt="" />
                 <div class="flex flex-column justify-content-center gap-2">
-                  <p>{{ vet.name }}</p>
+                  <p>{{ vet.fname }} {{ vet.lname }} - {{ vet.vetType }}</p>
                 </div>
               </div>
             </div>

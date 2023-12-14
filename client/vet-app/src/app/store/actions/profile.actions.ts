@@ -1,5 +1,5 @@
 import { createActionGroup, emptyProps, props } from '@ngrx/store';
-import { Pet } from 'src/app/models/user.models';
+import { Appointment, Pet } from 'src/app/models/user.models';
 
 export const ProfileActions = createActionGroup({
   source: 'Profile',
@@ -23,6 +23,8 @@ export const ProfileActions = createActionGroup({
     'Edit Error': props<{ error: string; code: number }>(),
     'Load Pets': emptyProps(),
     'Load Pets Success': props<{ pets: Pet[] }>(),
+    'Load Visits': emptyProps(),
+    'Load Visits Success': props<{ visits: Appointment[] }>(),
     'Create Pet': props<{ name: string; specie: string; breed: string }>(),
     'Create Pet Error': emptyProps(),
     'Edit Pet': props<{

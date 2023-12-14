@@ -5,6 +5,8 @@
 >
   <ng-template let-pet pTemplate="listItem"
     ><app-single-pet
+      (onEdit)="editPet($event)"
+      (onDelete)="deletePet($event)"
       class="col-12"
       [pet]="pet"
       [canEdit]="true"

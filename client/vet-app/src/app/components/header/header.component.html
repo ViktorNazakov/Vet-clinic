@@ -35,10 +35,7 @@
         </a>
       </li>
       <div class="flex eq-width justify-content-center">
-        <li
-          class="menu-item"
-          *ngIf="(req.data?.isAuth && req?.role === 'ADMIN') || true"
-        >
+        <li class="menu-item" *ngIf="req.data?.isAuth && req?.role === 'ADMIN'">
           <a routerLinkActive="active" routerLink="/admin">Panel</a>
         </li>
         <ng-container *ngIf="validated | async">
@@ -63,12 +60,6 @@
             <a routerLinkActive="active" routerLink="/profile">Profile</a>
           </li>
 
-          <li
-            class="menu-item"
-            *ngIf="req.data?.isAuth && req?.role === 'ADMIN'"
-          >
-            <a routerLinkActive="active" routerLink="/manage">Manage</a>
-          </li>
           <li class="menu-item" *ngIf="req.data?.isAuth">
             <button (click)="logout()">Logout</button>
           </li></ng-container

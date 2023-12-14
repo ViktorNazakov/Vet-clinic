@@ -79,22 +79,3 @@
   border-radius: 20px;
   width: min(400px, 80vw);
 }
-.contact-form {
-  max-width: 600px;
-  margin: auto;
-
-  input,
-  textarea {
-    padding: 10px;
-    width: 100%;
-    border-radius: 20px;
-    outline: none;
-    border: 2px solid var(--tetiary-color);
-  }
-  textarea {
-    resize: vertical;
-  }
-  .p-float-label {
-    width: 100%;
-  }
-}
