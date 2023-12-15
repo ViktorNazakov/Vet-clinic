@@ -21,4 +21,6 @@ public interface VisitRepository extends JpaRepository<Visit, UUID> {
 
     List<Visit> findAllByUser(User user);
 
+    void deleteAllByUser(User user);
+
 }

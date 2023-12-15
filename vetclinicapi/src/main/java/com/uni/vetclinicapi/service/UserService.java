@@ -2,11 +2,14 @@ package com.uni.vetclinicapi.service;
 
 import com.uni.vetclinicapi.persistance.entity.Role;
 import com.uni.vetclinicapi.persistance.entity.User;
+import com.uni.vetclinicapi.persistance.repository.PetRepository;
 import com.uni.vetclinicapi.persistance.repository.RoleRepository;
 import com.uni.vetclinicapi.persistance.repository.UserRepository;
+import com.uni.vetclinicapi.persistance.repository.VisitRepository;
 import com.uni.vetclinicapi.presentation.exceptions.InvalidAuthoritiesException;
 import com.uni.vetclinicapi.presentation.exceptions.UserNotFoundException;
 import com.uni.vetclinicapi.service.dto.UserInfoDTO;
+import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -31,6 +34,10 @@ public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
 
     private final RoleRepository roleRepository;
+
+    private final VisitRepository visitRepository;
+
+    private final PetRepository petRepository;
 
     private final ModelMapper modelMapper;
 
@@ -119,12 +126,15 @@ public class UserService implements UserDetailsService {
      * @param userId - the id of the user to delete.
      * @return - UserInfoDTO object, containing all the information about the deleted User entity.
      */
+    @Transactional
     public UserInfoDTO deleteUser(UUID userId) {
         User user = userRepository.findById(userId).orElseThrow(() -> {
             log.warn("Attempted to delete a User with id: {} , which does not exist.", userId);
             throw new UserNotFoundException(String.format("User with id: %s does not exist!", userId));
         });
 
+        visitRepository.deleteAllByUser(user);
+        petRepository.deleteAllByUser(user);
         userRepository.deleteById(user.getId());
         log.info("User with details : {}, was deleted!", user);
         return modelMapper.map(user, UserInfoDTO.class);
@@ -139,12 +149,13 @@ public class UserService implements UserDetailsService {
      * @return - UserInfoDTO object, containing all the information about the updated User entity.
      */
     public UserInfoDTO updateUserProperty(UUID userId, UserInfoDTO userInfoDTO) {
+        Optional<Role> adminRole = roleRepository.findByAuthority(Role.RoleType.ADMIN);
         User loggedUser = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         User user = userRepository.findById(userId).orElseThrow(() -> {
             log.warn("Attempted to update a User with id: {} , which does not exist.", userId);
             throw new UserNotFoundException(String.format("User with id: %s does not exist!", userId));
         });
-        if (!loggedUser.getId().equals(userId) && !loggedUser.getAuthorities().contains(Role.RoleType.ADMIN)) {
+        if (!loggedUser.getId().equals(userId) && !loggedUser.getAuthorities().contains(adminRole.get())) {
             log.warn("Attempted to update a User with id: {} , but currently logged User does not have the authority.", userId);
             throw new InvalidAuthoritiesException(String.format("User with id: %s cannot be updated, because currently logged User does not have the authority!", userId));
         }
@@ -155,7 +166,11 @@ public class UserService implements UserDetailsService {
         User persistedUser = userRepository.save(user);
 
         log.info("User with details : {}, was updated!", user);
-        return modelMapper.map(persistedUser, UserInfoDTO.class);
+        Set<String> role = user.getAuthorities().stream()
+                .map(GrantedAuthority::getAuthority).collect(Collectors.toSet());
+        UserInfoDTO userInfoDTOResponse = modelMapper.map(persistedUser, UserInfoDTO.class);
+        userInfoDTO.setRole(role.iterator().next());
+        return userInfoDTOResponse;
     }
 
     private <T> void updatePropertyIfNotNull(User user, T value, BiConsumer<User, T> setter) {

@@ -21,4 +21,6 @@ public interface PetRepository extends JpaRepository<Pet, UUID> {
      * @return - collection of cars related to the user.
      */
     List<Pet> findAllByUser(User user);
+
+    void deleteAllByUser(User user);
 }
